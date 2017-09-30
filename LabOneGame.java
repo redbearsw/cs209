@@ -2,6 +2,8 @@ package edu.virginia.lab1test;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.awt.event.KeyEvent;
+import java.awt.Point;
 
 import edu.virginia.engine.display.Game;
 import edu.virginia.engine.display.Sprite;
@@ -29,19 +31,67 @@ public class LabOneGame extends Game{
 	@Override
 	public void update(ArrayList<Integer> pressedKeys){
 		super.update(pressedKeys);
-
+		
 		/* Make sure mario is not null. Sometimes Swing can auto cause an extra frame to go before everything is initialized */
 		if(mario != null) mario.update(pressedKeys);
 
+		/* arrow key presses */
+		if(pressedKeys.contains(KeyEvent.VK_UP)){
+			mario.setPosition(new Point(mario.getPosition().x, mario.getPosition().y-5));
+		}
+		if(pressedKeys.contains(KeyEvent.VK_DOWN)){
+			mario.setPosition(new Point(mario.getPosition().x, mario.getPosition().y+5));
+		}
+		if(pressedKeys.contains(KeyEvent.VK_LEFT)){
+			mario.setPosition(new Point(mario.getPosition().x-5, mario.getPosition().y));
+		}
+		if(pressedKeys.contains(KeyEvent.VK_RIGHT)){
+			mario.setPosition(new Point(mario.getPosition().x+5, mario.getPosition().y));
+		}
+
+		/* IJKL presses */
+		if(pressedKeys.contains(KeyEvent.VK_I)){
+			mario.setPivotPoint(new Point(mario.getPivotPoint().x, mario.getPivotPoint().y-5));
+		}
+		if(pressedKeys.contains(KeyEvent.VK_K)){
+			mario.setPivotPoint(new Point(mario.getPivotPoint().x, mario.getPivotPoint().y+5));
+		}
+		if(pressedKeys.contains(KeyEvent.VK_J)){
+			mario.setPivotPoint(new Point(mario.getPivotPoint().x-5, mario.getPivotPoint().y));
+		}
+		if(pressedKeys.contains(KeyEvent.VK_L)){
+			mario.setPivotPoint(new Point(mario.getPivotPoint().x+5, mario.getPivotPoint().y));
+		}
+
+		/* rotation counterclockwise and clockwise */
+		if(pressedKeys.contains(KeyEvent.VK_Q)){
+			mario.setRotation(mario.getRotation() - 10);
+		}
+		if(pressedKeys.contains(KeyEvent.VK_W)){
+			mario.setRotation(mario.getRotation() + 10);
+		}
+		/* set visibility */
 		if(pressedKeys.contains(KeyEvent.VK_V)){
 			mario.setVisible(!mario.getVisible());
 		}
+		/* set alpha */
 		if(pressedKeys.contains(KeyEvent.VK_Z)){
-			mario.setAlpha(mario.getAlpha() + .1f);
+			if (mario.getAlpha() >= 1.0f) {
+				mario.setAlpha(1.0f);
+			} else {
+				if (mario.getAlpha() * 1.1f >=1.0f) {
+					mario.setAlpha(1.0f);
+				} else {
+					mario.setAlpha(mario.getAlpha() * 1.1f);
+				}
+			}
 		}
+
 		if(pressedKeys.contains(KeyEvent.VK_X)){
-			mario.setAlpha(mario.getAlpha() - .1f);
+			mario.setAlpha(mario.getAlpha() * .9f);
 		}
+
+		/* scale mario */
 		if(pressedKeys.contains(KeyEvent.VK_A)){
 			mario.setScaleX(mario.getScaleX()*1.1);
 			mario.setScaleY(mario.getScaleY()*1.1);
@@ -50,7 +100,6 @@ public class LabOneGame extends Game{
 			mario.setScaleX(mario.getScaleX()*.9);
 			mario.setScaleY(mario.getScaleY()*.9);
 		}
-		
 	}
 	
 	/**

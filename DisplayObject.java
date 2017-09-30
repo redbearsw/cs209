@@ -1,5 +1,6 @@
 package edu.virginia.engine.display;
 
+import java.awt.Point;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -31,11 +32,18 @@ public class DisplayObject {
 	/* oldAlpha: alpha value from previous frame */
 	private Float oldAlpha;
 
-	 /* scaleX: double which scales the image up or down (1.0 is original size) */
-	 private Double scaleX;
+	/* scaleX: double which scales the image up or down (1.0 is original size) */
+	private Double scaleX;
 
-	 /* scaleY: double which scales the image up or down (1.0 is original size) */
-	 private Double scaleY;
+	/* scaleY: double which scales the image up or down (1.0 is original size) */
+	private Double scaleY;
+
+	private Point position;
+
+	private Point pivotPoint;
+
+	private int rotation;
+
 
 	/**
 	 * Constructors: can pass in the id OR the id and image's file path and
@@ -43,12 +51,24 @@ public class DisplayObject {
 	 */
 	public DisplayObject(String id) {
 		this.setId(id);
+		this.setPosition(new Point (0, 0));
+		this.setPivotPoint(new Point (0, 0));
+		this.setRotation(0);
+		this.setVisible(true);
+		this.setAlpha(1.0f);
+		this.setOldAlpha(0.0f);
+		this.setScaleX(1.0);
+		this.setScaleY(1.0);
 	}
 
 	public DisplayObject(String id, String fileName) {
 		this.setId(id);
 		this.setImage(fileName);
-		this.setVisible(Boolean.TRUE);
+		this.setPosition(new Point (0, 0));
+		this.setPivotPoint(new Point (0, 0));
+		this.setRotation(0);
+		this.setImage(fileName);
+		this.setVisible(true);
 		this.setAlpha(1.0f);
 		this.setOldAlpha(0.0f);
 		this.setScaleX(1.0);
@@ -63,25 +83,6 @@ public class DisplayObject {
 		return id;
 	}
 
-	public void setVisible(Boolean v) { this.visible = v; }
-
-	public Boolean getVisible() { return visible; }
-
-	public void setAlpha(Float a) { this.alpha = a; }
-
-	public Float getAlpha() { return alpha; }
-
-	public void setOldAlpha(Float a) { this.oldAlpha = a; }
-
-	public Float getOldAlpha() { return oldAlpha; }
-
-	public void setScaleX(Double s) { this.scaleX = s; }
-
-	public Double getScaleX() { return scaleX; }
-
-	public void setScaleY(Double s) { this.scaleY = s; }
-
-	public Double getScaleY() { return scaleY; }
 
 	/**
 	 * Returns the unscaled width and height of this display object
@@ -109,6 +110,50 @@ public class DisplayObject {
 			System.err.println("[DisplayObject.setImage] ERROR: " + imageName + " does not exist!");
 		}
 	}
+
+	public Point getPosition() {
+		return position;
+	}
+
+	public void setPosition(Point pos) {
+		this.position = pos;
+	}
+
+	public Point getPivotPoint() {
+		return pivotPoint;
+	}
+
+	public void setPivotPoint(Point piv) {
+		this.pivotPoint = piv;
+	}
+
+	public int getRotation() {
+		return this.rotation;
+	}
+
+	public void setRotation(int rot) {
+		this.rotation = rot;
+	}
+
+	public void setVisible(Boolean v) { this.visible = v; }
+
+	public Boolean getVisible() { return visible; }
+
+	public void setAlpha(Float a) { this.alpha = a; }
+
+	public Float getAlpha() { return alpha; }
+
+	public void setOldAlpha(Float a) { this.oldAlpha = a; }
+
+	public Float getOldAlpha() { return oldAlpha; }
+
+	public void setScaleX(Double s) { this.scaleX = s; }
+
+	public Double getScaleX() { return scaleX; }
+
+	public void setScaleY(Double s) { this.scaleY = s; }
+
+	public Double getScaleY() { return scaleY; }
 
 
 	/**
@@ -159,9 +204,11 @@ public class DisplayObject {
 			applyTransformations(g2d);
 
 			/* Actually draw the image, perform the pivot point translation here */
-			g2d.drawImage(displayImage, 0, 0,
-					(int) (getUnscaledWidth()),
-					(int) (getUnscaledHeight()), null);
+			if(this.getVisible()) {
+				g2d.drawImage(displayImage, 0, 0,
+						(int) (getUnscaledWidth()),
+						(int) (getUnscaledHeight()), null);
+			}
 			
 			/*
 			 * undo the transformations so this doesn't affect other display
@@ -176,14 +223,13 @@ public class DisplayObject {
 	 * object
 	 * */
 	protected void applyTransformations(Graphics2D g2d) {
-		g2d.translate(this.position.x, this.postion.y);
+		g2d.translate(this.position.x, this.position.y);
 		g2d.rotate(Math.toRadians(this.getRotation()));
 		g2d.scale(this.scaleX, this.scaleY);
 		float curAlpha;
 		this.oldAlpha = curAlpha = ((AlphaComposite)
 				g2d.getComposite()).getAlpha();
 		g2d.setComposite(AlphaComposite.getInstance(3, curAlpha * this.alpha));
-
 	}
 
 	/**
@@ -191,6 +237,12 @@ public class DisplayObject {
 	 * object
 	 * */
 	protected void reverseTransformations(Graphics2D g2d) {
+
+		g2d.setComposite(AlphaComposite.getInstance(3, this.oldAlpha));
+		g2d.scale(1/this.scaleX, 1/this.scaleY);
+		g2d.rotate(Math.toRadians(-this.getRotation()));
+		g2d.translate(-this.position.x, -this.position.y);
+
 
 	}
 
