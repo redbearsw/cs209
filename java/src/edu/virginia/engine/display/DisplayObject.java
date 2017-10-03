@@ -232,7 +232,7 @@ public class DisplayObject {
 	 * */
 	protected void applyTransformations(Graphics2D g2d) {
 		g2d.translate(this.position.x, this.position.y);
-		g2d.rotate(Math.toRadians(this.getRotation()));
+		g2d.rotate(Math.toRadians(this.getRotation()), getPivotPoint().x, getPivotPoint().y);
 		g2d.scale(this.scaleX, this.scaleY);
 		float curAlpha;
 		this.oldAlpha = curAlpha = ((AlphaComposite)
