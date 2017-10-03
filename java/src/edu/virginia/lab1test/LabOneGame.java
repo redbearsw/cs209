@@ -31,11 +31,13 @@ public class LabOneGame extends Game{
 	@Override
 	public void update(ArrayList<Integer> pressedKeys){
 		super.update(pressedKeys);
+
+		/* Make sure mario is not null. Sometimes Swing can auto cause an extra frame to go before everything is initialized */
+		if(mario != null) mario.update(pressedKeys);
+
 		if (mario.getCount() < 30) {
 			mario.setCount(mario.getCount() + 1);
 		}
-		/* Make sure mario is not null. Sometimes Swing can auto cause an extra frame to go before everything is initialized */
-		if(mario != null) mario.update(pressedKeys);
 
 		/* arrow key presses */
 		if(pressedKeys.contains(KeyEvent.VK_UP)){
