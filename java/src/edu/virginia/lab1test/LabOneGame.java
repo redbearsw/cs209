@@ -31,7 +31,9 @@ public class LabOneGame extends Game{
 	@Override
 	public void update(ArrayList<Integer> pressedKeys){
 		super.update(pressedKeys);
-		
+		if (mario.getCount() < 30) {
+			mario.setCount(mario.getCount() + 1);
+		}
 		/* Make sure mario is not null. Sometimes Swing can auto cause an extra frame to go before everything is initialized */
 		if(mario != null) mario.update(pressedKeys);
 
@@ -72,7 +74,11 @@ public class LabOneGame extends Game{
 		}
 		/* set visibility */
 		if(pressedKeys.contains(KeyEvent.VK_V)){
-			mario.setVisible(!mario.getVisible());
+			if (mario.getCount() == 30) {
+				mario.setVisible(!mario.getVisible());
+				mario.setCount(0);
+			}
+
 		}
 		/* set alpha */
 		if(pressedKeys.contains(KeyEvent.VK_Z)){

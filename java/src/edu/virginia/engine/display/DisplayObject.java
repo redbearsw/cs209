@@ -25,6 +25,7 @@ public class DisplayObject {
 
 	/* Visible: True iff the display object is meant to be drawn */
 	private Boolean visible;
+	private int count;
 
 	/* Alpha: defines how transparent to draw the display object */
 	private Float alpha;
@@ -59,6 +60,7 @@ public class DisplayObject {
 		this.setOldAlpha(0.0f);
 		this.setScaleX(1.0);
 		this.setScaleY(1.0);
+		this.setCount(30);
 	}
 
 	public DisplayObject(String id, String fileName) {
@@ -73,6 +75,7 @@ public class DisplayObject {
 		this.setOldAlpha(0.0f);
 		this.setScaleX(1.0);
 		this.setScaleY(1.0);
+		this.setCount(30);
 	}
 
 	public void setId(String id) {
@@ -138,6 +141,10 @@ public class DisplayObject {
 	public void setVisible(Boolean v) { this.visible = v; }
 
 	public Boolean getVisible() { return visible; }
+
+	public void setCount(int c) {this.count = c;}
+
+	public int getCount() {return count;}
 
 	public void setAlpha(Float a) { this.alpha = a; }
 
