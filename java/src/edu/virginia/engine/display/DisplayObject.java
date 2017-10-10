@@ -69,7 +69,6 @@ public class DisplayObject {
 		this.setPosition(new Point (0, 0));
 		this.setPivotPoint(new Point (0, 0));
 		this.setRotation(0);
-		this.setImage(fileName);
 		this.setVisible(true);
 		this.setAlpha(1.0f);
 		this.setOldAlpha(0.0f);

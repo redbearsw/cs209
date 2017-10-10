@@ -22,10 +22,26 @@ public class AnimatedSprite extends Sprite {
 
     public void AnimatedSprite(String id, String fn, Point pos) {
         this.initGameClock();
+        this.setId(id);
+        this.setImage(fn);
+        this.setPosition(pos);
+        this.setAnimationSpeed(1);
     }
 
     public void initGameClock() {
         if (this.gameClock == null)
             this.gameClock = new GameClock();
     }
+
+    private void setAnimationSpeed(spd) {
+        this.animationSpeed = spd;
+    }
+    private void addFrame(String imageName) {
+        if (imageName == null) {
+            return;
+        }
+        BufferedImage frame = readImage(imageName);
+        frames.add(frame);
+    }
+
 }
