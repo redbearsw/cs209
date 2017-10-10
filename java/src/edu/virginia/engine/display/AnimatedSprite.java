@@ -43,5 +43,14 @@ public class AnimatedSprite extends Sprite {
         BufferedImage frame = readImage(imageName);
         frames.add(frame);
     }
+    private animation getAnimation(String id){
+        int i;
+        for (i = 0; i < this.animations.size(); i++) {
+            if(animations[i].id.equals(id)) {
+                return animations[i];
+            }
+            return null;
+        }
+    }
 
 }
