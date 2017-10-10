@@ -53,4 +53,18 @@ public class AnimatedSprite extends Sprite {
         }
     }
 
+    private void animate(Animation an){
+        this.setStartFrame(an.getStartFrame());
+        this.setEndFrame(an.getEndFrame());
+    }
+
+    private animation animate(String id) {
+        return getAnimation(id);
+    }
+    
+    private void animate(startFrame st, endFrame end) {
+        this.setStartFrame(st);
+        this.setEndFrame(end);
+    }
+
 }
