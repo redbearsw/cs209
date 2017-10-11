@@ -81,8 +81,11 @@ public class AnimatedSprite extends Sprite {
     private Animation animate(String id) {
         return getAnimation(id);
     }
-    
-    private void animate(int st, int end) {
+
+
+
+    private void animate(startFrame st, endFrame end) {
+        master
         this.setStartFrame(st);
         this.setEndFrame(end);
     }
