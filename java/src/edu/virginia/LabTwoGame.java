@@ -108,6 +108,20 @@ public class LabTwoGame extends Game {
             mario.setScaleX(mario.getScaleX() * .9);
             mario.setScaleY(mario.getScaleY() * .9);
         }
+        if (pressedKeys.contains(KeyEvent.VK_SPACE)) {
+            //check if mario's still jumping (currentFrame = 0)
+            //call animate on mario
+            //iterate through and draw images
+        }
+        if(pressedKeys.contains(KeyEvent.VK_BRACELEFT)) {
+            //decrease speed
+        }
+        if(pressedKeys.contains(KeyEvent.VK_BRACERIGHT)) {
+            //increase speed
+        }
+        if(pressedKeys.contains(KeyEvent.VK_ENTER)) {
+            //start and stop animation
+        }
     }
 
     /**
