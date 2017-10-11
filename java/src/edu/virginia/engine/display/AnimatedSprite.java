@@ -50,8 +50,8 @@ public class AnimatedSprite extends Sprite {
     private Animation getAnimation(String id){
         int i;
         for (i = 0; i < this.animations.size(); i++) {
-            if(animations[i].id.equals(id)) {
-                return animations[i];
+            if(animations.get(i).getId().equals(id)) {
+                return animations.get(i);
             }
             return null;
         }
@@ -84,8 +84,7 @@ public class AnimatedSprite extends Sprite {
 
 
 
-    private void animate(startFrame st, endFrame end) {
-        master
+    private void animate(int st, int end) {
         this.setStartFrame(st);
         this.setEndFrame(end);
     }
