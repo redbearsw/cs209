@@ -36,6 +36,7 @@ public class AnimatedSprite extends Sprite {
     private void setAnimationSpeed(spd) {
         this.animationSpeed = spd;
     }
+
     private void addFrame(String imageName) {
         if (imageName == null) {
             return;
@@ -66,5 +67,7 @@ public class AnimatedSprite extends Sprite {
         this.setStartFrame(st);
         this.setEndFrame(end);
     }
+
+    private void
 
 }
