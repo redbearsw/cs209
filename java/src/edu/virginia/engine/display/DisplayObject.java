@@ -45,6 +45,7 @@ public class DisplayObject {
 
 	private int rotation;
 
+	private int frameCount;
 
 	/**
 	 * Constructors: can pass in the id OR the id and image's file path and
@@ -161,6 +162,9 @@ public class DisplayObject {
 
 	public Double getScaleY() { return scaleY; }
 
+	public void setFrameCount(int fc) {this.frameCount = fc;}
+
+	public int getFrameCount() {return this.frameCount;}
 
 	/**
 	 * Helper function that simply reads an image from the given image name
