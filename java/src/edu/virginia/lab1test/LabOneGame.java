@@ -39,6 +39,8 @@ public class LabOneGame extends Game{
 			mario.setCount(mario.getCount() + 1);
 		}
 
+		mario.setFrameCount(mario.getFrameCount()+1);
+
 		/* arrow key presses */
 		if(pressedKeys.contains(KeyEvent.VK_UP)){
 			mario.setPosition(new Point(mario.getPosition().x, mario.getPosition().y-5));
