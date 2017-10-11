@@ -90,12 +90,6 @@ public class AnimatedSprite extends Sprite {
         this.setStartFrame(st);
         this.setEndFrame(end);
     }
-
-<<<<<<< HEAD
-
-
-=======
->>>>>>> ccdf5059caa5fdd6701c674e1bca1843cd4c7f4e
     public void draw(Graphics g) {
 
         Animation an = getAnimation(super.getId());
@@ -128,9 +122,5 @@ public class AnimatedSprite extends Sprite {
             reverseTransformations(g2d);
 
         }
-<<<<<<< HEAD
-=======
-
->>>>>>> ccdf5059caa5fdd6701c674e1bca1843cd4c7f4e
 }
 
