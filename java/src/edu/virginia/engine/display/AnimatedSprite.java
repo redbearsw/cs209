@@ -26,7 +26,7 @@ public class AnimatedSprite extends Sprite {
         this.setId(id);
         this.setImage(fn);
         this.setPosition(pos);
-        this.setAnimationSpeed(60);
+        this.setAnimationSpeed(DEFAULT_ANIMATION_SPEED);
     }
 
     public void initGameClock() {
@@ -36,6 +36,10 @@ public class AnimatedSprite extends Sprite {
 
     private void setAnimationSpeed(int spd) {
         this.animationSpeed = spd;
+    }
+
+    private void getAnimationSpeed() {
+        return this.animationSpeed;
     }
 
     private void addFrame(String imageName) {

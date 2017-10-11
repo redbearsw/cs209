@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.awt.event.KeyEvent;
 import java.awt.Point;
 
+import edu.virginia.engine.display.AnimatedSprite;
 import edu.virginia.engine.display.Game;
 import edu.virginia.engine.display.Sprite;
 
@@ -15,7 +16,7 @@ import edu.virginia.engine.display.Sprite;
 public class LabTwoGame extends Game {
 
     /* Create a sprite object for our game. We'll use mario */
-    Sprite mario = new Sprite("Mario", "Mario.png");
+    AnimatedSprite mario = new Sprite("Mario", "Mario.png");
 
     /**
      * Constructor. See constructor in Game.java for details on the parameters given
@@ -114,10 +115,10 @@ public class LabTwoGame extends Game {
             //iterate through and draw images
         }
         if(pressedKeys.contains(KeyEvent.VK_BRACELEFT)) {
-            //decrease speed
+            mario.setAnimationSpeed(mario.getAnimationSpeed() - 5);
         }
         if(pressedKeys.contains(KeyEvent.VK_BRACERIGHT)) {
-            //increase speed
+            mario.setAnimationSpeed(mario.getAnimationSpeed() + 5)
         }
         if(pressedKeys.contains(KeyEvent.VK_ENTER)) {
             //start and stop animation
