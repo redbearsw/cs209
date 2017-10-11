@@ -21,7 +21,7 @@ public class AnimatedSprite extends Sprite {
     private GameClock gameClock;
     private int frameCount;
 
-    public AnimatedSprite AnimatedSprite(String id, String fn, Point pos) {
+    public void AnimatedSprite(String id, String fn, Point pos) {
         this.initGameClock();
         this.setId(id);
         this.setImage(fn);
@@ -54,12 +54,13 @@ public class AnimatedSprite extends Sprite {
             if(animations.get(i).getId().equals(id)) {
                 return animations.get(i);
             }
-            return null;
+
         }
+        return null;
     }
 
-    private Animation setAnimation(String id, int sF, int eF){
-        new Animation(id, sF, eF);
+    private void setAnimations(Animation an){
+        this.animations.add(an);
     }
 
     // getters/setters for frames
@@ -90,8 +91,11 @@ public class AnimatedSprite extends Sprite {
         this.setEndFrame(end);
     }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> ccdf5059caa5fdd6701c674e1bca1843cd4c7f4e
     public void draw(Graphics g) {
 
         Animation an = getAnimation(super.getId());
@@ -124,5 +128,9 @@ public class AnimatedSprite extends Sprite {
             reverseTransformations(g2d);
 
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> ccdf5059caa5fdd6701c674e1bca1843cd4c7f4e
 }
 
