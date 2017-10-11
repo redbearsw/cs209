@@ -7,6 +7,7 @@ import java.awt.Point;
 
 import edu.virginia.engine.display.Game;
 import edu.virginia.engine.display.Sprite;
+import edu.virginia.engine.display.AnimatedSprite;
 
 /**
  * Example game that utilizes our engine. We can create a simple prototype game with just a couple lines of code
@@ -21,7 +22,7 @@ public class LabTwoGame extends Game {
      * Constructor. See constructor in Game.java for details on the parameters given
      */
     public LabTwoGame() {
-        super("Lab One Test Game", 500, 300);
+        super("Lab One Test Game", 800, 400);
     }
 
     /**
