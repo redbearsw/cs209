@@ -8,6 +8,7 @@ import java.awt.Point;
 import edu.virginia.engine.display.AnimatedSprite;
 import edu.virginia.engine.display.Game;
 import edu.virginia.engine.display.Sprite;
+import edu.virginia.engine.display.Animation;
 
 /**
  * Example game that utilizes our engine. We can create a simple prototype game with just a couple lines of code
@@ -16,7 +17,30 @@ import edu.virginia.engine.display.Sprite;
 public class LabTwoGame extends Game {
 
     /* Create a sprite object for our game. We'll use mario */
-    AnimatedSprite mario = new Sprite("Mario", "Mario.png");
+
+    AnimatedSprite mario = new AnimatedSprite("Mario", "Mario.png", new Point(0,0));
+
+
+    private void populateFrames() {
+        mario.addFrame("jump_00.png");
+        mario.addFrame("jump_01.png");
+        mario.addFrame("jump_02.png");
+        mario.addFrame("jump_03.png");
+        mario.addFrame("jump_04.png");
+        mario.addFrame("jump_05.png");
+        mario.addFrame("jump_06.png");
+        mario.addFrame("jump_07.png");
+        mario.addFrame("jump_08.png");
+        mario.addFrame("jump_09.png");
+        mario.addFrame("jump_10.png");
+        mario.addFrame("jump_11.png");
+    }
+
+    private void populateAnimations() {
+        Animation an = new Animation("jump", 0, 11);
+        mario.setAnimations(an);
+    }
+
 
     /**
      * Constructor. See constructor in Game.java for details on the parameters given
@@ -118,7 +142,7 @@ public class LabTwoGame extends Game {
             mario.setAnimationSpeed(mario.getAnimationSpeed() - 5);
         }
         if(pressedKeys.contains(KeyEvent.VK_BRACERIGHT)) {
-            mario.setAnimationSpeed(mario.getAnimationSpeed() + 5)
+            mario.setAnimationSpeed(mario.getAnimationSpeed() + 5);
         }
         if(pressedKeys.contains(KeyEvent.VK_ENTER)) {
             //start and stop animation
@@ -143,7 +167,10 @@ public class LabTwoGame extends Game {
      */
     public static void main(String[] args) {
         LabTwoGame game = new LabTwoGame();
+        game.populateFrames();
+        game.populateAnimations();
         game.start();
+
 
     }
 }

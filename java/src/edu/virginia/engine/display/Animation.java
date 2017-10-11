@@ -16,7 +16,7 @@ public class Animation {
     private int startFrame;
     private int endFrame;
 
-    public void Animation(String id, int sF, int eF){
+    public Animation(String id, int sF, int eF){
         this.setId(id);
         this.setStartFrame(sF);
         this.setEndFrame(eF);

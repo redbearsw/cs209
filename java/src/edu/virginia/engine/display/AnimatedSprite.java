@@ -21,12 +21,16 @@ public class AnimatedSprite extends Sprite {
     private GameClock gameClock;
     private int frameCount;
 
-    public void AnimatedSprite(String id, String fn, Point pos) {
+    public AnimatedSprite(String id, String fn, Point pos) {
         this.initGameClock();
         this.setId(id);
         this.setImage(fn);
         this.setPosition(pos);
         this.setAnimationSpeed(DEFAULT_ANIMATION_SPEED);
+        this.setStartFrame(0);
+        this.setEndFrame(0);
+        this.setCurrentFrame(0);
+
     }
 
     public void initGameClock() {
@@ -34,15 +38,19 @@ public class AnimatedSprite extends Sprite {
             this.gameClock = new GameClock();
     }
 
-    private void setAnimationSpeed(int spd) {
+    public void setDefaultImage(BufferedImage im) {
+        this.defaultImage = im;
+    }
+
+    public void setAnimationSpeed(int spd) {
         this.animationSpeed = spd;
     }
 
-    private void getAnimationSpeed() {
+    public int getAnimationSpeed() {
         return this.animationSpeed;
     }
 
-    private void addFrame(String imageName) {
+    public void addFrame(String imageName) {
         if (imageName == null) {
             return;
         }
@@ -63,7 +71,7 @@ public class AnimatedSprite extends Sprite {
         return null;
     }
 
-    private void setAnimations(Animation an){
+    public void setAnimations(Animation an){
         this.animations.add(an);
     }
 
