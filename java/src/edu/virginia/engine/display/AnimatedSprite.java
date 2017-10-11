@@ -21,7 +21,7 @@ public class AnimatedSprite extends Sprite {
     private GameClock gameClock;
     private int frameCount;
 
-    public void AnimatedSprite(String id, String fn, Point pos) {
+    public AnimatedSprite AnimatedSprite(String id, String fn, Point pos) {
         this.initGameClock();
         this.setId(id);
         this.setImage(fn);

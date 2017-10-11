@@ -51,6 +51,9 @@ public class DisplayObject {
 	 * Constructors: can pass in the id OR the id and image's file path and
 	 * position OR the id and a buffered image and position
 	 */
+
+	public DisplayObject() {}
+
 	public DisplayObject(String id) {
 		this.setId(id);
 		this.setPosition(new Point (0, 0));
