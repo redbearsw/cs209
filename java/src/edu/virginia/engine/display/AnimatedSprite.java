@@ -60,7 +60,7 @@ public class AnimatedSprite extends Sprite {
 
     // getter/setter for animations
 
-    private Animation getAnimation(String id){
+    public Animation getAnimation(String id){
         int i;
         for (i = 0; i < this.animations.size(); i++) {
             if(animations.get(i).getId().equals(id)) {
@@ -104,11 +104,12 @@ public class AnimatedSprite extends Sprite {
     }
     public void draw(Graphics g) {
 
-        Animation an = getAnimation(super.getId());
-        int sf = an.getStartFrame();
-        int ef = an.getEndFrame();
+
+        int sf = this.getStartFrame();
+        int ef = this.getEndFrame();
         int cf = this.getCurrentFrame();
-        BufferedImage frame = super.getDisplayImage();
+        BufferedImage frame = readImage(this.fileName);
+
         if (super.getFrameCount() % this.animationSpeed == 0) {
 
             frame = this.frames.get(cf);
@@ -117,6 +118,7 @@ public class AnimatedSprite extends Sprite {
             }
             this.setCurrentFrame(this.getCurrentFrame() + 1);
         }
+
 
             Graphics2D g2d = (Graphics2D) g;
             applyTransformations(g2d);
