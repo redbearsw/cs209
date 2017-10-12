@@ -33,7 +33,9 @@ public class AnimatedSprite extends Sprite {
         this.setStartFrame(0);
         this.setEndFrame(0);
         this.setCurrentFrame(0);
-
+        this.frames = new ArrayList<BufferedImage>();
+        this.animations = new ArrayList<Animation>();
+        this.playing = false;
 
 
     }
@@ -57,8 +59,9 @@ public class AnimatedSprite extends Sprite {
             return;
         }
         BufferedImage frame = readImage(imageName);
+
         if (frame!= null) {
-            frames.add(frame);
+            this.frames.add(frame);
         }
     }
 
@@ -110,24 +113,25 @@ public class AnimatedSprite extends Sprite {
     public void draw(Graphics g) {
 
 
-//        int sf = this.getStartFrame();
-//        int ef = this.getEndFrame();
-//        int cf = this.getCurrentFrame();
+        int sf = this.getStartFrame();
+        int ef = this.getEndFrame();
+        int cf = this.getCurrentFrame();
 
         BufferedImage frame = getDisplayImage();
-       
+
         if (frame != null) {
 
 
-//            if (super.getFrameCount() % this.animationSpeed == 0) {
-//
-//                frame = this.frames.get(cf);
-//                if (cf == ef) {
-//                    this.setCurrentFrame(sf - 1);
-//                }
-//                this.setCurrentFrame(this.getCurrentFrame() + 1);
-//            }
 
+            if (playing == true) {
+                if (super.getFrameCount() % this.animationSpeed == 0) {
+                    frame = this.frames.get(cf);
+                    if (cf == ef) {
+                        this.setCurrentFrame(sf - 1);
+                    }
+                    this.setCurrentFrame(this.getCurrentFrame() + 1);
+                }
+            }
 
             Graphics2D g2d = (Graphics2D) g;
 
