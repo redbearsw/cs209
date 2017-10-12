@@ -144,6 +144,9 @@ public class AnimatedSprite extends Sprite {
                     }
                     this.setCurrentFrame(this.getCurrentFrame() + 1);
                 }
+                if(this.getCurrentFrame() == this.getEndFrame()){
+                   setPlaying(false);
+                }
             }
 
             Graphics2D g2d = (Graphics2D) g;

@@ -142,6 +142,7 @@ public class LabTwoGame extends Game {
         if (pressedKeys.contains(KeyEvent.VK_SPACE)) {
             mario.setPlaying(true);
             mario.animate("jump");
+            // mario.setPosition(new Point(mario.getPosition().x, mario.getPosition().y - 5));
         }
         if(pressedKeys.contains(KeyEvent.VK_BRACELEFT)) {
             mario.setAnimationSpeed(mario.getAnimationSpeed() - 5);
