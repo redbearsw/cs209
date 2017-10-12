@@ -47,6 +47,8 @@ public class DisplayObject {
 
 	private int frameCount;
 
+	private DisplayObject parent;
+
 	/**
 	 * Constructors: can pass in the id OR the id and image's file path and
 	 * position OR the id and a buffered image and position
@@ -168,6 +170,10 @@ public class DisplayObject {
 	public void setFrameCount(int fc) {this.frameCount = fc;}
 
 	public int getFrameCount() {return this.frameCount;}
+
+	public DisplayObject getParent() {return this.parent;}
+
+	public void setParent(DisplayObject obj) {this.parent = obj;}
 
 	/**
 	 * Helper function that simply reads an image from the given image name
