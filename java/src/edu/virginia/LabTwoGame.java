@@ -149,12 +149,12 @@ public class LabTwoGame extends Game {
             mario.animate("jump");
             // mario.setPosition(new Point(mario.getPosition().x, mario.getPosition().y - 5));
         }
-        if(pressedKeys.contains(KeyEvent.VK_Y)) {
+        if(pressedKeys.contains(KeyEvent.VK_U)) {
             if (mario.getAnimationSpeed() >= 2) {
                 mario.setAnimationSpeed(mario.getAnimationSpeed() - 1);
             }
         }
-        if(pressedKeys.contains(KeyEvent.VK_U)) {
+        if(pressedKeys.contains(KeyEvent.VK_Y)) {
             mario.setAnimationSpeed(mario.getAnimationSpeed() + 1);
         }
         if(pressedKeys.contains(KeyEvent.VK_ENTER)) {
