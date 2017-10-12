@@ -140,9 +140,8 @@ public class LabTwoGame extends Game {
             mario.setScaleY(mario.getScaleY() * .9);
         }
         if (pressedKeys.contains(KeyEvent.VK_SPACE)) {
-            //check if mario's still jumping (currentFrame = 0)
-            //call animate on mario
-            //iterate through and draw images
+            mario.setPlaying(true);
+            mario.animate("jump");
         }
         if(pressedKeys.contains(KeyEvent.VK_BRACELEFT)) {
             mario.setAnimationSpeed(mario.getAnimationSpeed() - 5);
@@ -151,7 +150,10 @@ public class LabTwoGame extends Game {
             mario.setAnimationSpeed(mario.getAnimationSpeed() + 5);
         }
         if(pressedKeys.contains(KeyEvent.VK_ENTER)) {
-            //start and stop animation
+            if(mario.getPlaying() == true){
+                mario.stopAnimation(mario.getCurrentFrame());
+            }
+            else mario.setPlaying(false);
         }
     }
 
