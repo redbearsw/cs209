@@ -27,7 +27,6 @@ public class LabTwoGame extends Game {
 
     private void populateFrames() {
         if (mario != null) {
-            mario.addFrame("jump_00.png");
             mario.addFrame("jump_01.png");
             mario.addFrame("jump_02.png");
             mario.addFrame("jump_03.png");
@@ -43,7 +42,7 @@ public class LabTwoGame extends Game {
     }
 
     private void populateAnimations() {
-        Animation an = new Animation("jump", 0, 11);
+        Animation an = new Animation("jump", 0, 10);
         mario.setAnimations(an);
     }
 
@@ -69,7 +68,13 @@ public class LabTwoGame extends Game {
         if (mario.getCount() < 30) {
             mario.setCount(mario.getCount() + 1);
         }
-
+        if (!mario.getPaused()) {
+            if (mario.getFrameCount() < mario.getAnimationSpeed()) {
+                mario.setFrameCount(mario.getFrameCount() + 1);
+            } else if (mario.getFrameCount() > mario.getAnimationSpeed()) {
+                mario.setFrameCount(0);
+            }
+        }
 		/* arrow key presses */
         if (pressedKeys.contains(KeyEvent.VK_UP)) {
             mario.setPosition(new Point(mario.getPosition().x, mario.getPosition().y - 5));
@@ -144,17 +149,25 @@ public class LabTwoGame extends Game {
             mario.animate("jump");
             // mario.setPosition(new Point(mario.getPosition().x, mario.getPosition().y - 5));
         }
-        if(pressedKeys.contains(KeyEvent.VK_BRACELEFT)) {
-            mario.setAnimationSpeed(mario.getAnimationSpeed() - 5);
+        if(pressedKeys.contains(KeyEvent.VK_Y)) {
+            if (mario.getAnimationSpeed() >= 2) {
+                mario.setAnimationSpeed(mario.getAnimationSpeed() - 1);
+            }
         }
-        if(pressedKeys.contains(KeyEvent.VK_BRACERIGHT)) {
-            mario.setAnimationSpeed(mario.getAnimationSpeed() + 5);
+        if(pressedKeys.contains(KeyEvent.VK_U)) {
+            mario.setAnimationSpeed(mario.getAnimationSpeed() + 1);
         }
         if(pressedKeys.contains(KeyEvent.VK_ENTER)) {
-            if(mario.getPlaying() == true){
-                mario.stopAnimation(mario.getCurrentFrame());
-            }
-            else mario.setPlaying(false);
+            if(mario.getPlaying()){
+                if (!mario.getPaused())
+                    mario.stopAnimation(mario.getCurrentFrame());
+                else
+                    mario.setPaused(false);
+
+            } else
+                mario.setPaused(false);
+            
+
         }
     }
 

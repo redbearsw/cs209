@@ -17,10 +17,12 @@ public class AnimatedSprite extends Sprite {
     private int currentFrame;
     private int startFrame;
     private int endFrame;
-    static final int DEFAULT_ANIMATION_SPEED = 60;
+    static final int DEFAULT_ANIMATION_SPEED = 3;
     private int animationSpeed;
     private GameClock gameClock;
     private int frameCount;
+    private Boolean paused;
+
 
     public AnimatedSprite(String id, String fn, Point pos) {
         super(id);
@@ -36,6 +38,7 @@ public class AnimatedSprite extends Sprite {
         this.frames = new ArrayList<BufferedImage>();
         this.animations = new ArrayList<Animation>();
         this.playing = false;
+        this.paused = false;
 
 
     }
@@ -97,6 +100,9 @@ public class AnimatedSprite extends Sprite {
     public void setPlaying(Boolean b) {this.playing = b;}
     public Boolean getPlaying() {return this.playing;}
 
+    public void setPaused(Boolean b) {this.paused = b;}
+    public Boolean getPaused() {return this.paused;}
+
     private void animate(Animation an){
         this.setStartFrame(an.getStartFrame());
         this.setEndFrame(an.getEndFrame());
@@ -115,7 +121,8 @@ public class AnimatedSprite extends Sprite {
     }
 
     public void stopAnimation(int fNum) {
-        this.playing = false;
+        // this.playing = false;
+        this.setPaused(true);
         this.startFrame = fNum;
     }
 
@@ -129,26 +136,28 @@ public class AnimatedSprite extends Sprite {
         int sf = this.getStartFrame();
         int ef = this.getEndFrame();
         int cf = this.getCurrentFrame();
-
-        BufferedImage frame = getDisplayImage();
-
-        if (frame != null) {
-
+        BufferedImage frame;
 
 
             if (playing == true) {
-                if (super.getFrameCount() % this.animationSpeed == 0) {
+                if (super.getFrameCount() == this.animationSpeed) {
+
                     frame = this.frames.get(cf);
                     if (cf == ef) {
                         this.setCurrentFrame(sf - 1);
                     }
                     this.setCurrentFrame(this.getCurrentFrame() + 1);
+                    super.setFrameCount(0);
+                } else {
+                    frame = this.frames.get(cf);
                 }
                 if(this.getCurrentFrame() == this.getEndFrame()){
                    setPlaying(false);
                 }
+            } else {
+                frame = getDisplayImage();
             }
-
+        if (frame != null) {
             Graphics2D g2d = (Graphics2D) g;
 
             applyTransformations(g2d);
@@ -163,8 +172,9 @@ public class AnimatedSprite extends Sprite {
 			 * objects
 			 */
             reverseTransformations(g2d);
-
         }
+
+
     }
 }
 
