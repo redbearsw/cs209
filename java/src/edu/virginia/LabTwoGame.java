@@ -8,11 +8,11 @@ import java.awt.Point;
 import edu.virginia.engine.display.AnimatedSprite;
 import edu.virginia.engine.display.Game;
 import edu.virginia.engine.display.Sprite;
-<<<<<<< HEAD
+
 import edu.virginia.engine.display.Animation;
-=======
+
 import edu.virginia.engine.display.AnimatedSprite;
->>>>>>> c3287b0edb8ddd6a167b3a0c770e8cb2b2cf0534
+
 
 /**
  * Example game that utilizes our engine. We can create a simple prototype game with just a couple lines of code
@@ -26,18 +26,20 @@ public class LabTwoGame extends Game {
 
 
     private void populateFrames() {
-        mario.addFrame("jump_00.png");
-        mario.addFrame("jump_01.png");
-        mario.addFrame("jump_02.png");
-        mario.addFrame("jump_03.png");
-        mario.addFrame("jump_04.png");
-        mario.addFrame("jump_05.png");
-        mario.addFrame("jump_06.png");
-        mario.addFrame("jump_07.png");
-        mario.addFrame("jump_08.png");
-        mario.addFrame("jump_09.png");
-        mario.addFrame("jump_10.png");
-        mario.addFrame("jump_11.png");
+        if (mario != null) {
+            mario.addFrame("jump_00.png");
+            mario.addFrame("jump_01.png");
+            mario.addFrame("jump_02.png");
+            mario.addFrame("jump_03.png");
+            mario.addFrame("jump_04.png");
+            mario.addFrame("jump_05.png");
+            mario.addFrame("jump_06.png");
+            mario.addFrame("jump_07.png");
+            mario.addFrame("jump_08.png");
+            mario.addFrame("jump_09.png");
+            mario.addFrame("jump_10.png");
+            mario.addFrame("jump_11.png");
+        }
     }
 
     private void populateAnimations() {
@@ -171,8 +173,8 @@ public class LabTwoGame extends Game {
      */
     public static void main(String[] args) {
         LabTwoGame game = new LabTwoGame();
-        game.populateFrames();
-        game.populateAnimations();
+        //game.populateFrames();
+        //game.populateAnimations();
         game.start();
 
 

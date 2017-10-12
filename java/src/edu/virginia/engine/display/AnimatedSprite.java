@@ -1,6 +1,7 @@
 package edu.virginia.engine.display;
 
 import edu.virginia.engine.util.GameClock;
+import edu.virginia.engine.util.GameClock;
 
 
 import java.awt.*;
@@ -22,6 +23,8 @@ public class AnimatedSprite extends Sprite {
     private int frameCount;
 
     public AnimatedSprite(String id, String fn, Point pos) {
+        super(id);
+        this.setCount(30);
         this.initGameClock();
         this.setId(id);
         this.setImage(fn);
@@ -31,6 +34,8 @@ public class AnimatedSprite extends Sprite {
         this.setEndFrame(0);
         this.setCurrentFrame(0);
 
+
+
     }
 
     public void initGameClock() {
@@ -38,9 +43,6 @@ public class AnimatedSprite extends Sprite {
             this.gameClock = new GameClock();
     }
 
-    public void setDefaultImage(BufferedImage im) {
-        this.defaultImage = im;
-    }
 
     public void setAnimationSpeed(int spd) {
         this.animationSpeed = spd;
@@ -55,7 +57,9 @@ public class AnimatedSprite extends Sprite {
             return;
         }
         BufferedImage frame = readImage(imageName);
-        frames.add(frame);
+        if (frame!= null) {
+            frames.add(frame);
+        }
     }
 
     // getter/setter for animations
@@ -102,29 +106,34 @@ public class AnimatedSprite extends Sprite {
         this.setStartFrame(st);
         this.setEndFrame(end);
     }
+
     public void draw(Graphics g) {
 
 
-        int sf = this.getStartFrame();
-        int ef = this.getEndFrame();
-        int cf = this.getCurrentFrame();
-        BufferedImage frame = readImage(this.fileName);
+//        int sf = this.getStartFrame();
+//        int ef = this.getEndFrame();
+//        int cf = this.getCurrentFrame();
 
-        if (super.getFrameCount() % this.animationSpeed == 0) {
+        BufferedImage frame = getDisplayImage();
+       
+        if (frame != null) {
 
-            frame = this.frames.get(cf);
-            if (cf == ef) {
-                this.setCurrentFrame(sf - 1);
-            }
-            this.setCurrentFrame(this.getCurrentFrame() + 1);
-        }
+
+//            if (super.getFrameCount() % this.animationSpeed == 0) {
+//
+//                frame = this.frames.get(cf);
+//                if (cf == ef) {
+//                    this.setCurrentFrame(sf - 1);
+//                }
+//                this.setCurrentFrame(this.getCurrentFrame() + 1);
+//            }
 
 
             Graphics2D g2d = (Graphics2D) g;
-            applyTransformations(g2d);
 
+            applyTransformations(g2d);
 			/* Actually draw the image, perform the pivot point translation here */
-            if(super.getVisible()) {
+            if (super.getVisible()) {
                 g2d.drawImage(frame, 0, 0, (int) (getUnscaledWidth()),
                         (int) (getUnscaledHeight()), null);
             }
@@ -136,5 +145,6 @@ public class AnimatedSprite extends Sprite {
             reverseTransformations(g2d);
 
         }
+    }
 }
 
