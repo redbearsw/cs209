@@ -94,20 +94,33 @@ public class AnimatedSprite extends Sprite {
     public void setCount(int c) {this.frameCount = c;}
     public int getCount() {return this.frameCount;}
 
+    public void setPlaying(Boolean b) {this.playing = b;}
+    public Boolean getPlaying() {return this.playing;}
+
     private void animate(Animation an){
         this.setStartFrame(an.getStartFrame());
         this.setEndFrame(an.getEndFrame());
     }
 
-    private Animation animate(String id) {
-        return getAnimation(id);
+    public void animate(String id) {
+        this.setStartFrame(getAnimation(id).getStartFrame());
+        this.setEndFrame(getAnimation(id).getEndFrame());
     }
 
 
 
-    private void animate(int st, int end) {
+    public void animate(int st, int end) {
         this.setStartFrame(st);
         this.setEndFrame(end);
+    }
+
+    public void stopAnimation(int fNum) {
+        this.playing = false;
+        this.startFrame = fNum;
+    }
+
+    public void stopAnimation(){
+        stopAnimation(this.startFrame);
     }
 
     public void draw(Graphics g) {
