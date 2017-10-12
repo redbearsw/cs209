@@ -132,12 +132,10 @@ public class AnimatedSprite extends Sprite {
 
     public void draw(Graphics g) {
 
-
         int sf = this.getStartFrame();
         int ef = this.getEndFrame();
         int cf = this.getCurrentFrame();
         BufferedImage frame;
-
 
             if (playing == true) {
                 if (super.getFrameCount() == this.animationSpeed) {

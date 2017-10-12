@@ -158,16 +158,17 @@ public class LabTwoGame extends Game {
             mario.setAnimationSpeed(mario.getAnimationSpeed() + 1);
         }
         if(pressedKeys.contains(KeyEvent.VK_ENTER)) {
-            if(mario.getPlaying()){
-                if (!mario.getPaused())
-                    mario.stopAnimation(mario.getCurrentFrame());
-                else
+            if (mario.getCount() > 15) {
+                if (mario.getPlaying()) {
+                    if (!mario.getPaused())
+                        mario.stopAnimation(mario.getCurrentFrame());
+                    else
+                        mario.setPaused(false);
+
+                } else
                     mario.setPaused(false);
-
-            } else
-                mario.setPaused(false);
-            
-
+            mario.setCount(0);
+            }
         }
     }
 
