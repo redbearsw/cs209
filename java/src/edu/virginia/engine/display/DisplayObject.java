@@ -265,4 +265,19 @@ public class DisplayObject {
 
 	}
 
+	public Point localToGlobal(){
+		if (parent == null)
+			return this.getPosition();
+		else
+			return new Point(this.getPosition().x + this.getParent().localToGlobal().x, this.getPosition().y + this.getParent().localToGlobal().y);
+	}
+
+	public Point globalToLocal(){
+		if (parent == null)
+			return this.getPosition();
+		else
+			return new Point(this.getPosition().x - this.getParent().globalToLocal().x, this.getPosition().y - this.getParent().globalToLocal().y);
+
+	}
+
 }
