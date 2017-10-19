@@ -32,14 +32,7 @@ public class DisplayObjectContainer extends DisplayObject{
         return null;
 
     }
-
-    // recursive draw tree
-    public void drawChildren(ArrayList<DisplayObject> c) {
-        if (this.children == c){
-            return;
-        }
-
-    }
+    
 
 
     // draw
@@ -71,6 +64,7 @@ public class DisplayObjectContainer extends DisplayObject{
             reverseTransformations(g2d);
         }
     }
+
 
 
     //getter
@@ -112,7 +106,7 @@ public class DisplayObjectContainer extends DisplayObject{
     }
 
     //rmvAll
-    public DisplayObject rmvAll() {
+    public void rmvAll() {
         int i;
         for(i = 0; i < this.children.size(); i++) {
             rmvAtIndex(i);

@@ -196,7 +196,6 @@ public class DisplayObject {
 		displayImage = image;
 	}
 
-
 	/**
 	 * Invoked on every frame before drawing. Used to update this display
 	 * objects state before the draw occurs. Should be overridden if necessary
