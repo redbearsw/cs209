@@ -33,7 +33,16 @@ public class DisplayObjectContainer extends DisplayObject{
 
     }
     
+    // update
 
+    public void update(ArrayList<Integer> pressedKeys) {
+        super.update(pressedKeys);
+
+        for (int i = 0; i < children.size(); i++) {
+            children.get(i).update(pressedKeys);
+        }
+
+    }
 
     // draw
     public void draw(Graphics g) {
@@ -49,18 +58,10 @@ public class DisplayObjectContainer extends DisplayObject{
             Graphics2D g2d = (Graphics2D) g;
             applyTransformations(g2d);
 
-           
-			/* Actually draw the image, perform the pivot point translation here */
+            for (int i = 0; i < children.size(); i++) {
+                children.get(i).draw(g);
+            }
 
-//            if(this.getVisible()) {
-//                g2d.drawImage(super.getDisplayImage(), 0 , 0, (int) (getUnscaledWidth()),
-//                        (int) (getUnscaledHeight()),null);
-//            }
-
-			/*
-			 * undo the transformations so this doesn't affect other display
-			 * objects
-			 */
             reverseTransformations(g2d);
         }
     }
@@ -98,6 +99,8 @@ public class DisplayObjectContainer extends DisplayObject{
                 return child;
             }
         }
+        System.out.println("CHILD DOES NOT EXIST, RETURNING NULL");
+        return null;
     }
 
     //rmvAtIndex
