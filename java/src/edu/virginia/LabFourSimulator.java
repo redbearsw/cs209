@@ -39,8 +39,7 @@ public class LabFourSimulator extends Game {
         sun.setPivotPoint(new Point (sun.getUnscaledHeight()/2, sun.getUnscaledWidth()/2));
         sun.addChild(planet);
         planet.setPosition(new Point (-20,30));
-        planet.setPivotPoint(new Point (-planet.getPosition().x + sun.getUnscaledWidth()/2,
-                -planet.getPosition().y + sun.getUnscaledHeight()/2));
+
     }
     /**
      * Engine will automatically call this update method once per frame and pass to us
@@ -56,7 +55,8 @@ public class LabFourSimulator extends Game {
         if (sun.getCount() < 30) {
             sun.setCount(sun.getCount() + 1);
         }
-        planet.setRotation(planet.getRotation() - 1);
+       planet.setRotation(planet.getRotation() - 1);
+
 
         /* scale mario */
         if (pressedKeys.contains(KeyEvent.VK_Q)) {
@@ -89,6 +89,9 @@ public class LabFourSimulator extends Game {
         if(pressedKeys.contains(KeyEvent.VK_S)) {
             sun.setRotation(sun.getRotation() + 10);
         }
+
+        planet.setPivotPoint(new Point (-planet.getPosition().x + sun.getUnscaledWidth()/2,
+                -planet.getPosition().y + sun.getUnscaledHeight()/2));
 
     }
 
