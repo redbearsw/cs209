@@ -8,6 +8,35 @@ public class DisplayObjectContainer extends DisplayObject{
 
     private ArrayList<DisplayObject> children;
 
+    // constructors (same as DisplayObject)
+    public DisplayObjectContainer(String id) {
+        this.setId(id);
+        this.setPosition(new Point (0, 0));
+        this.setPivotPoint(new Point (0, 0));
+        this.setRotation(0);
+        this.setVisible(true);
+        this.setAlpha(1.0f);
+        this.setOldAlpha(0.0f);
+        this.setScaleX(1.0);
+        this.setScaleY(1.0);
+        this.setCount(30);
+    }
+
+    public DisplayObjectContainer(String id, String fileName) {
+        this.setId(id);
+        this.setImage(fileName);
+        this.setPosition(new Point (0, 0));
+        this.setPivotPoint(new Point (0, 0));
+        this.setRotation(0);
+        this.setVisible(true);
+        this.setAlpha(1.0f);
+        this.setOldAlpha(0.0f);
+        this.setScaleX(1.0);
+        this.setScaleY(1.0);
+        this.setCount(30);
+    }
+
+
 
     // Returns true iff given display object is already a child of this container
     public Boolean contains(DisplayObject DO) {
@@ -36,10 +65,15 @@ public class DisplayObjectContainer extends DisplayObject{
     // update
 
     public void update(ArrayList<Integer> pressedKeys) {
+
+
         super.update(pressedKeys);
 
-        for (int i = 0; i < children.size(); i++) {
-            children.get(i).update(pressedKeys);
+        if (children!=null) {
+            for (int i = 0; i < children.size(); i++) {
+
+                children.get(i).update(pressedKeys);
+            }
         }
 
     }
