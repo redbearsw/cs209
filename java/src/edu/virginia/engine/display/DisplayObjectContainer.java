@@ -20,6 +20,7 @@ public class DisplayObjectContainer extends DisplayObject{
         this.setScaleX(1.0);
         this.setScaleY(1.0);
         this.setCount(30);
+        this.children = new ArrayList<DisplayObject>();
     }
 
     public DisplayObjectContainer(String id, String fileName) {
@@ -34,6 +35,7 @@ public class DisplayObjectContainer extends DisplayObject{
         this.setScaleX(1.0);
         this.setScaleY(1.0);
         this.setCount(30);
+        this.children = new ArrayList<DisplayObject>();
     }
 
 
@@ -91,9 +93,10 @@ public class DisplayObjectContainer extends DisplayObject{
 
             Graphics2D g2d = (Graphics2D) g;
             applyTransformations(g2d);
-
-            for (int i = 0; i < children.size(); i++) {
-                children.get(i).draw(g);
+            if(children!=null) {
+                for (int i = 0; i < children.size(); i++) {
+                    children.get(i).draw(g);
+                }
             }
 
             reverseTransformations(g2d);
