@@ -35,6 +35,7 @@ public class LabFourSimulator extends Game {
 
     public void addPlanets() {
         sun.setPosition(new Point (300,150));
+        sun.setPivotPoint(new Point (sun.getUnscaledHeight()/2, sun.getUnscaledWidth()/2));
         sun.addChild(planet);
         planet.setPosition(new Point (-20,30));
     }
@@ -51,6 +52,27 @@ public class LabFourSimulator extends Game {
 
         if (sun.getCount() < 30) {
             sun.setCount(sun.getCount() + 1);
+        }
+
+        if(pressedKeys.contains(KeyEvent.VK_DOWN)){
+            sun.setPosition(new Point(sun.getPosition().x, sun.getPosition().y-5));
+        }
+        if(pressedKeys.contains(KeyEvent.VK_UP)){
+            sun.setPosition(new Point(sun.getPosition().x, sun.getPosition().y+5));
+        }
+        if(pressedKeys.contains(KeyEvent.VK_RIGHT)){
+            sun.setPosition(new Point(sun.getPosition().x-5, sun.getPosition().y));
+        }
+        if(pressedKeys.contains(KeyEvent.VK_LEFT)){
+            sun.setPosition(new Point(sun.getPosition().x+5, sun.getPosition().y));
+        }
+
+		/* rotation counterclockwise and clockwise */
+        if(pressedKeys.contains(KeyEvent.VK_A)){
+            sun.setRotation(sun.getRotation() - 10);
+        }
+        if(pressedKeys.contains(KeyEvent.VK_S)) {
+            sun.setRotation(sun.getRotation() + 10);
         }
 
     }
