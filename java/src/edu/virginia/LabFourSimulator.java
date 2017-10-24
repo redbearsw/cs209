@@ -52,23 +52,27 @@ public class LabFourSimulator extends Game {
 		/* Make sure sun is not null. Sometimes Swing can auto cause an extra frame to go before everything is initialized */
         if (sun != null) sun.update(pressedKeys);
 
+        if (sun == null) return;
+
         if (sun.getCount() < 30) {
             sun.setCount(sun.getCount() + 1);
         }
        planet.setRotation(planet.getRotation() - 1);
 
-
-        /* scale mario */
+        /* zoom in or out */
         if (pressedKeys.contains(KeyEvent.VK_Q)) {
+            sun.setPosition(new Point(sun.getPosition().x - sun.getUnscaledWidth()/2, sun.getPosition().y - sun.getUnscaledHeight()/2)); //this is not working
             sun.setScaleX(sun.getScaleX() * 1.1);
             sun.setScaleY(sun.getScaleY() * 1.1);
-            
         }
+
         if (pressedKeys.contains(KeyEvent.VK_W)) {
+            sun.setPosition(new Point(sun.getPosition().x + sun.getUnscaledWidth()/2, sun.getPosition().y + sun.getUnscaledHeight()/2)); //this is not working
             sun.setScaleX(sun.getScaleX() * .9);
             sun.setScaleY(sun.getScaleY() * .9);
-
         }
+
+
         if(pressedKeys.contains(KeyEvent.VK_DOWN)){
             sun.setPosition(new Point(sun.getPosition().x, sun.getPosition().y-5));
         }
