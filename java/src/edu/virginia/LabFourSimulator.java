@@ -38,7 +38,7 @@ public class LabFourSimulator extends Game {
         sun.setPosition(new Point (300,150));
         sun.setPivotPoint(new Point (sun.getUnscaledHeight()/2, sun.getUnscaledWidth()/2));
         sun.addChild(planet);
-        planet.setPosition(new Point (-20,30));
+        planet.setPosition(new Point (0,0));
 
     }
     /**
@@ -97,7 +97,7 @@ public class LabFourSimulator extends Game {
             sun.setRotation(sun.getRotation() + 10);
         }
 
-        planet.setPivotPoint(new Point (sun.getPivotPoint().x + 20, sun.getPivotPoint().y - 30));
+        planet.setPivotPoint(new Point (sun.getPivotPoint().x + 50, sun.getPivotPoint().y - 30));
 
 
     }
