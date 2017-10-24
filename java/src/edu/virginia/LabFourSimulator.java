@@ -37,11 +37,12 @@ public class LabFourSimulator extends Game {
 
     public void addPlanets() {
         sun.setPosition(new Point (300,150));
-        sun.setPivotPoint(new Point (sun.getUnscaledHeight()/2, sun.getUnscaledWidth()/2));
+        //sun.setPivotPoint(new Point (sun.getUnscaledHeight()/2, sun.getUnscaledWidth()/2));
+        sun.setPivotPoint(new Point (0,0));
         sun.addChild(planet);
         planet.addChild(planet2);
-        // planet.setPosition(new Point (0,0));
-        // planet2.setPosition
+        planet.setPosition(new Point (100,100));
+        planet2.setPosition(new Point (120, 120));
 
 
     }
@@ -103,9 +104,8 @@ public class LabFourSimulator extends Game {
         }
 
 
-        planet.setPivotPoint(new Point (sun.getPivotPoint().x + 50, sun.getPivotPoint().y - 30));
-        planet2.setPivotPoint(new Point (planet.getUnscaledHeight()/2 + 30, planet.getUnscaledWidth()/2 - 10));
-
+        planet.setPivotPoint(new Point (sun.getPivotPoint().x - 100, sun.getPivotPoint().y - 100));
+        planet2.setPivotPoint(new Point (planet.getUnscaledHeight()/2 + 20, planet.getUnscaledWidth()/2 + 20));
 
     }
 
