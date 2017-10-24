@@ -105,6 +105,20 @@ public class DisplayObject {
 		return displayImage.getHeight();
 	}
 
+	public int getScaledWidth(double scale) {
+		if(displayImage == null) return 0;
+		double width = (displayImage.getWidth() * scale);
+		return (int) width;
+	}
+
+	public int getScaledHeight(double scale) {
+		if(displayImage == null) return 0;
+		double height = (displayImage.getHeight() * scale);
+		return (int) height;
+	}
+
+
+
 	public BufferedImage getDisplayImage() {
 		return this.displayImage;
 	}
@@ -221,6 +235,7 @@ public class DisplayObject {
 			 */
 			Graphics2D g2d = (Graphics2D) g;
 			applyTransformations(g2d);
+			g2d.translate(-this.getPivotPoint().x, -this.getPivotPoint().y);
 
 			/* Actually draw the image, perform the pivot point translation here */
 			if(this.getVisible()) {
@@ -232,6 +247,7 @@ public class DisplayObject {
 			 * undo the transformations so this doesn't affect other display
 			 * objects
 			 */
+			g2d.translate(this.getPivotPoint().x, this.getPivotPoint().y);
 			reverseTransformations(g2d);
 		}
 	}
@@ -243,7 +259,7 @@ public class DisplayObject {
 	protected void applyTransformations(Graphics2D g2d) {
 
 		g2d.translate(this.position.x, this.position.y);
-		g2d.rotate(Math.toRadians(this.getRotation()), getPivotPoint().x, getPivotPoint().y);
+		g2d.rotate(Math.toRadians(this.getRotation()));
 		g2d.scale(this.scaleX, this.scaleY);
 		float curAlpha;
 		this.oldAlpha = curAlpha = ((AlphaComposite)

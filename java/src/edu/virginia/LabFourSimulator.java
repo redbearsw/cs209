@@ -51,28 +51,31 @@ public class LabFourSimulator extends Game {
 
 		/* Make sure sun is not null. Sometimes Swing can auto cause an extra frame to go before everything is initialized */
         if (sun != null) sun.update(pressedKeys);
-
         if (sun == null) return;
 
+        //frame count
         if (sun.getCount() < 30) {
             sun.setCount(sun.getCount() + 1);
         }
-       planet.setRotation(planet.getRotation() - 1);
+
+        //setting planet orbits
+        planet.setRotation(planet.getRotation() - 1);
 
         /* zoom in or out */
         if (pressedKeys.contains(KeyEvent.VK_Q)) {
-            sun.setPosition(new Point(sun.getPosition().x - sun.getUnscaledWidth()/2, sun.getPosition().y - sun.getUnscaledHeight()/2)); //this is not working
             sun.setScaleX(sun.getScaleX() * 1.1);
             sun.setScaleY(sun.getScaleY() * 1.1);
+            sun.setPosition(new Point(sun.getPosition().x - sun.getScaledWidth(1.1)/2, sun.getPosition().y - sun.getScaledHeight(1.1)/2)); //this is not working
+
         }
 
         if (pressedKeys.contains(KeyEvent.VK_W)) {
-            sun.setPosition(new Point(sun.getPosition().x + sun.getUnscaledWidth()/2, sun.getPosition().y + sun.getUnscaledHeight()/2)); //this is not working
             sun.setScaleX(sun.getScaleX() * .9);
             sun.setScaleY(sun.getScaleY() * .9);
+            sun.setPosition(new Point(sun.getPosition().x - sun.getScaledWidth(.9)/2, sun.getPosition().y - sun.getScaledHeight(.9)/2)); //this is not working
         }
 
-
+        /* panning around system */
         if(pressedKeys.contains(KeyEvent.VK_DOWN)){
             sun.setPosition(new Point(sun.getPosition().x, sun.getPosition().y-5));
         }
@@ -94,8 +97,8 @@ public class LabFourSimulator extends Game {
             sun.setRotation(sun.getRotation() + 10);
         }
 
-        planet.setPivotPoint(new Point (-planet.getPosition().x + sun.getUnscaledWidth()/2,
-                -planet.getPosition().y + sun.getUnscaledHeight()/2));
+        planet.setPivotPoint(new Point (sun.getPivotPoint().x + 20, sun.getPivotPoint().y - 30));
+
 
     }
 
