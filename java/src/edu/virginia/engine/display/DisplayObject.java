@@ -105,6 +105,9 @@ public class DisplayObject {
 		return displayImage.getHeight();
 	}
 
+	/**
+	 * Returns the scaled width and height of this display object
+	 **/
 	public int getScaledWidth(double scale) {
 		if(displayImage == null) return 0;
 		double width = (displayImage.getWidth() * scale);
@@ -133,6 +136,7 @@ public class DisplayObject {
 		}
 	}
 
+	/* Setters and Getters */
 	public Point getPosition() {
 		return position;
 	}
@@ -235,7 +239,6 @@ public class DisplayObject {
 			 */
 			Graphics2D g2d = (Graphics2D) g;
 			applyTransformations(g2d);
-			//g2d.translate(-this.getPivotPoint().x, -this.getPivotPoint().y);
 
 			/* Actually draw the image, perform the pivot point translation here */
 			if(this.getVisible()) {
@@ -247,7 +250,6 @@ public class DisplayObject {
 			 * undo the transformations so this doesn't affect other display
 			 * objects
 			 */
-			//g2d.translate(this.getPivotPoint().x, this.getPivotPoint().y);
 			reverseTransformations(g2d);
 		}
 	}
@@ -281,6 +283,8 @@ public class DisplayObject {
 
 	}
 
+
+	/* Convert given point from global to Display Object's coordinates or vice versa */
 	public Point localToGlobal(Point p){
 		if (parent == null)
 			return p;

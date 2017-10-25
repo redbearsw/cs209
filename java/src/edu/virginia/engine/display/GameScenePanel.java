@@ -1,6 +1,7 @@
 package edu.virginia.engine.display;
 
 import java.awt.Graphics;
+import java.awt.Color;
 
 import javax.swing.JPanel;
 
@@ -22,6 +23,7 @@ public class GameScenePanel extends JPanel {
 		this.setLayout(null);
 		this.setGameRef(gameRef);
 		this.setBounds(0,0,gameRef.getUnscaledWidth(), gameRef.getUnscaledHeight());
+		this.setBackground(Color.black);
 	}
 
 	public Game getGameRef() {
