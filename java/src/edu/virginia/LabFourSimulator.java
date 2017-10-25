@@ -25,7 +25,6 @@ public class LabFourSimulator extends Game {
     Sprite sun = new Sprite("Sun", "sun.png");
     /* Create the Sprites*/
 
-    Sprite sun = new Sprite("Sun", "Artboard 1.png");
     Sprite planet = new Sprite("Planet", "planet.png");
     Sprite planet2 = new Sprite("Planet2", "planet.png"); //child of planet
     Sprite planet3 = new Sprite("Planet3", "planet.png"); //child of planet
@@ -40,12 +39,14 @@ public class LabFourSimulator extends Game {
 
 
     public void addPlanets() {
+
         blank.setPosition(new Point(250,250));
         blank.addChild(sun);
 
         sun.setPosition(new Point (-sun.getUnscaledHeight()/2,-sun.getUnscaledWidth()/2));
+
         //set position and pivot point of sun
-        sun.setPosition(new Point (100,100));
+
         sun.setPivotPoint(new Point (sun.getUnscaledHeight()/2, sun.getUnscaledWidth()/2));
 
         //add sun's children and set their pivot points and positions
@@ -88,30 +89,17 @@ public class LabFourSimulator extends Game {
 
         /* zoom in or out */
         if (pressedKeys.contains(KeyEvent.VK_Q)) {
-<<<<<<< HEAD
             blank.setScaleX(blank.getScaleX() * 1.1);
             blank.setScaleY(blank.getScaleY() * 1.1);
             // sun.setPosition(new Point(sun.getPosition().x - sun.getScaledWidth(1.1)/2, sun.getPosition().y - sun.getScaledHeight(1.1)/2)); //this is not working
-=======
-            sun.setScaleX(sun.getScaleX() * 1.1);
-            sun.setScaleY(sun.getScaleY() * 1.1);
-            sun.setPosition(new Point(sun.getPosition().x - sun.getScaledWidth(1.1)/2,
-                    sun.getPosition().y - sun.getScaledHeight(1.1)/2)); //this is not working
->>>>>>> 1eb270f2f0bf30bd4454d72f19e4a9d2e819ea39
 
         }
 
         if (pressedKeys.contains(KeyEvent.VK_W)) {
-<<<<<<< HEAD
+
             blank.setScaleX(blank.getScaleX() * .9);
             blank.setScaleY(blank.getScaleY() * .9);
             // sun.setPosition(new Point(sun.getPosition().x + sun.getScaledWidth(.9)/2, sun.getPosition().y + sun.getScaledHeight(.9)/2)); //this is not working
-=======
-            sun.setScaleX(sun.getScaleX() * .9);
-            sun.setScaleY(sun.getScaleY() * .9);
-            sun.setPosition(new Point(sun.getPosition().x - sun.getScaledWidth(.9)/2,
-                    sun.getPosition().y - sun.getScaledHeight(.9)/2)); //this is not working
->>>>>>> 1eb270f2f0bf30bd4454d72f19e4a9d2e819ea39
         }
 
         /* panning around system */
