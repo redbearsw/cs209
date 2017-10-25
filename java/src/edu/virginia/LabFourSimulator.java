@@ -126,7 +126,6 @@ public class LabFourSimulator extends Game {
     public static void main(String[] args) {
         LabFourSimulator game = new LabFourSimulator();
         game.addPlanets();
-
         game.start();
 
 
