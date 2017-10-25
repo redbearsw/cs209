@@ -23,9 +23,12 @@ public class LabFourSimulator extends Game {
     /* Create a sprite object for our game. We'll use sun */
     Sprite blank = new Sprite("Screen", "blank.png");
     Sprite sun = new Sprite("Sun", "sun.png");
+    /* Create the Sprites*/
+
+    Sprite sun = new Sprite("Sun", "Artboard 1.png");
     Sprite planet = new Sprite("Planet", "planet.png");
-    Sprite planet2 = new Sprite("Planet2", "planet.png");
-    Sprite planet3 = new Sprite("Planet3", "planet.png");
+    Sprite planet2 = new Sprite("Planet2", "planet.png"); //child of planet
+    Sprite planet3 = new Sprite("Planet3", "planet.png"); //child of planet
 
 
     /**
@@ -41,18 +44,25 @@ public class LabFourSimulator extends Game {
         blank.addChild(sun);
 
         sun.setPosition(new Point (-sun.getUnscaledHeight()/2,-sun.getUnscaledWidth()/2));
+        //set position and pivot point of sun
+        sun.setPosition(new Point (100,100));
         sun.setPivotPoint(new Point (sun.getUnscaledHeight()/2, sun.getUnscaledWidth()/2));
 
+        //add sun's children and set their pivot points and positions
         sun.addChild(planet);
+        planet.setPosition(new Point (100,100));
+        planet.setPivotPoint(new Point (sun.getUnscaledWidth()/2 - planet.getPosition().x,
+                sun.getUnscaledWidth()/2 - planet.getPosition().y));
+
+        //add planet's children and set their pivot points and positions
         planet.addChild(planet2);
         planet.addChild(planet3);
-        planet.setPosition(new Point (100,100));
-        planet.setPivotPoint(new Point (sun.getUnscaledWidth()/2 - planet.getPosition().x, sun.getUnscaledWidth()/2 - planet.getPosition().y));
         planet2.setPosition(new Point (100, 100));
-        planet2.setPivotPoint(new Point(planet.getUnscaledWidth()/2 - planet2.getPosition().x, planet.getUnscaledHeight()/2 - planet2.getPosition().y));
+        planet2.setPivotPoint(new Point(planet.getUnscaledWidth()/2 - planet2.getPosition().x,
+                planet.getUnscaledHeight()/2 - planet2.getPosition().y));
         planet3.setPosition(new Point (-30, -30));
-        planet3.setPivotPoint(new Point (planet.getUnscaledWidth()/2 - planet3.getPosition().x, planet.getUnscaledHeight()/2 - planet3.getPosition().y));
-
+        planet3.setPivotPoint(new Point (planet.getUnscaledWidth()/2 - planet3.getPosition().x,
+                planet.getUnscaledHeight()/2 - planet3.getPosition().y));
     }
     /**
      * Engine will automatically call this update method once per frame and pass to us
@@ -71,42 +81,54 @@ public class LabFourSimulator extends Game {
             sun.setCount(sun.getCount() + 1);
         }
 
-        /* setting planet orbits*/
+        /* setting planet and moon orbits*/
         planet.setRotation(planet.getRotation() - 1);
-
-        //planet's children
         planet2.setRotation(planet2.getRotation() + 5);
         planet3.setRotation(planet3.getRotation() - 7);
 
         /* zoom in or out */
         if (pressedKeys.contains(KeyEvent.VK_Q)) {
+<<<<<<< HEAD
             blank.setScaleX(blank.getScaleX() * 1.1);
             blank.setScaleY(blank.getScaleY() * 1.1);
             // sun.setPosition(new Point(sun.getPosition().x - sun.getScaledWidth(1.1)/2, sun.getPosition().y - sun.getScaledHeight(1.1)/2)); //this is not working
+=======
+            sun.setScaleX(sun.getScaleX() * 1.1);
+            sun.setScaleY(sun.getScaleY() * 1.1);
+            sun.setPosition(new Point(sun.getPosition().x - sun.getScaledWidth(1.1)/2,
+                    sun.getPosition().y - sun.getScaledHeight(1.1)/2)); //this is not working
+>>>>>>> 1eb270f2f0bf30bd4454d72f19e4a9d2e819ea39
 
         }
 
         if (pressedKeys.contains(KeyEvent.VK_W)) {
+<<<<<<< HEAD
             blank.setScaleX(blank.getScaleX() * .9);
             blank.setScaleY(blank.getScaleY() * .9);
             // sun.setPosition(new Point(sun.getPosition().x + sun.getScaledWidth(.9)/2, sun.getPosition().y + sun.getScaledHeight(.9)/2)); //this is not working
+=======
+            sun.setScaleX(sun.getScaleX() * .9);
+            sun.setScaleY(sun.getScaleY() * .9);
+            sun.setPosition(new Point(sun.getPosition().x - sun.getScaledWidth(.9)/2,
+                    sun.getPosition().y - sun.getScaledHeight(.9)/2)); //this is not working
+>>>>>>> 1eb270f2f0bf30bd4454d72f19e4a9d2e819ea39
         }
 
         /* panning around system */
         if(pressedKeys.contains(KeyEvent.VK_DOWN)){
-            sun.setPosition(new Point(sun.getPosition().x, sun.getPosition().y-5));
+            sun.setPosition(new Point(sun.getPosition().x, sun.getPosition().y - 5));
         }
         if(pressedKeys.contains(KeyEvent.VK_UP)){
-            sun.setPosition(new Point(sun.getPosition().x, sun.getPosition().y+5));
+            sun.setPosition(new Point(sun.getPosition().x, sun.getPosition().y + 5));
         }
         if(pressedKeys.contains(KeyEvent.VK_RIGHT)){
-            sun.setPosition(new Point(sun.getPosition().x-5, sun.getPosition().y));
+            sun.setPosition(new Point(sun.getPosition().x - 5, sun.getPosition().y));
         }
         if(pressedKeys.contains(KeyEvent.VK_LEFT)){
-            sun.setPosition(new Point(sun.getPosition().x+5, sun.getPosition().y));
+            sun.setPosition(new Point(sun.getPosition().x + 5, sun.getPosition().y));
         }
 
-		/* rotation counterclockwise and clockwise */
+		/* rotation counterclockwise and clockwise of system */
         if(pressedKeys.contains(KeyEvent.VK_A)){
             sun.setRotation(sun.getRotation() - 10);
         }
