@@ -31,18 +31,20 @@ public class LabFourSimulator extends Game {
      * Constructor. See constructor in Game.java for details on the parameters given
      */
     public LabFourSimulator() {
-        super("Lab Four Simulator", 800, 400);
+        super("Lab Four Simulator", 1000, 1000);
     }
 
 
     public void addPlanets() {
-        sun.setPosition(new Point (300,150));
-        //sun.setPivotPoint(new Point (sun.getUnscaledHeight()/2, sun.getUnscaledWidth()/2));
-        sun.setPivotPoint(new Point (0,0));
+        sun.setPosition(new Point (100,100));
+        sun.setPivotPoint(new Point (sun.getUnscaledHeight()/2, sun.getUnscaledWidth()/2));
+
         sun.addChild(planet);
         planet.addChild(planet2);
         planet.setPosition(new Point (100,100));
-        planet2.setPosition(new Point (120, 120));
+        planet.setPivotPoint(new Point (sun.getPivotPoint().x - 100, sun.getPivotPoint().y - 100));
+        planet2.setPosition(new Point (20, 20));
+
 
 
     }
@@ -102,10 +104,6 @@ public class LabFourSimulator extends Game {
         if(pressedKeys.contains(KeyEvent.VK_S)) {
             sun.setRotation(sun.getRotation() + 10);
         }
-
-
-        planet.setPivotPoint(new Point (sun.getPivotPoint().x - 100, sun.getPivotPoint().y - 100));
-        planet2.setPivotPoint(new Point (planet.getUnscaledHeight()/2 + 20, planet.getUnscaledWidth()/2 + 20));
 
     }
 

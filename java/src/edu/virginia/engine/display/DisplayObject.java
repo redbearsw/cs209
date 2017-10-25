@@ -235,7 +235,7 @@ public class DisplayObject {
 			 */
 			Graphics2D g2d = (Graphics2D) g;
 			applyTransformations(g2d);
-			g2d.translate(-this.getPivotPoint().x, -this.getPivotPoint().y);
+			//g2d.translate(-this.getPivotPoint().x, -this.getPivotPoint().y);
 
 			/* Actually draw the image, perform the pivot point translation here */
 			if(this.getVisible()) {
@@ -247,7 +247,7 @@ public class DisplayObject {
 			 * undo the transformations so this doesn't affect other display
 			 * objects
 			 */
-			g2d.translate(this.getPivotPoint().x, this.getPivotPoint().y);
+			//g2d.translate(this.getPivotPoint().x, this.getPivotPoint().y);
 			reverseTransformations(g2d);
 		}
 	}
@@ -259,7 +259,7 @@ public class DisplayObject {
 	protected void applyTransformations(Graphics2D g2d) {
 
 		g2d.translate(this.position.x, this.position.y);
-		g2d.rotate(Math.toRadians(this.getRotation()));
+		g2d.rotate(Math.toRadians(this.getRotation()), this.globalToLocal().x, this.globalToLocal().y);
 		g2d.scale(this.scaleX, this.scaleY);
 		float curAlpha;
 		this.oldAlpha = curAlpha = ((AlphaComposite)
@@ -275,7 +275,7 @@ public class DisplayObject {
 
 		g2d.setComposite(AlphaComposite.getInstance(3, this.oldAlpha));
 		g2d.scale(1/this.scaleX, 1/this.scaleY);
-		g2d.rotate(Math.toRadians(-this.getRotation()));
+		g2d.rotate(Math.toRadians(-this.getRotation()), this.globalToLocal().x, this.globalToLocal().y);
 		g2d.translate(-this.position.x, -this.position.y);
 
 
@@ -283,14 +283,14 @@ public class DisplayObject {
 
 	public Point localToGlobal(){
 		if (parent == null)
-			return this.getPosition();
+			return this.getPivotPoint();
 		else
 			return new Point(this.getPosition().x + this.getParent().localToGlobal().x, this.getPosition().y + this.getParent().localToGlobal().y);
 	}
 
 	public Point globalToLocal(){
 		if (parent == null)
-			return this.getPosition();
+			return this.getPivotPoint();
 		else
 			return new Point(this.getPosition().x - this.getParent().globalToLocal().x, this.getPosition().y - this.getParent().globalToLocal().y);
 
