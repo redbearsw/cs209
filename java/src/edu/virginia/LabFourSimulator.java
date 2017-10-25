@@ -21,8 +21,8 @@ import edu.virginia.engine.display.AnimatedSprite;
 public class LabFourSimulator extends Game {
 
     /* Create a sprite object for our game. We'll use sun */
-
-    Sprite sun = new Sprite("Sun", "Artboard 1.png");
+    Sprite blank = new Sprite("Screen", "blank.png");
+    Sprite sun = new Sprite("Sun", "sun.png");
     Sprite planet = new Sprite("Planet", "planet.png");
     Sprite planet2 = new Sprite("Planet2", "planet.png");
     Sprite planet3 = new Sprite("Planet3", "planet.png");
@@ -32,12 +32,15 @@ public class LabFourSimulator extends Game {
      * Constructor. See constructor in Game.java for details on the parameters given
      */
     public LabFourSimulator() {
-        super("Lab Four Simulator", 1000, 1000);
+        super("Lab Four Simulator", 500, 500);
     }
 
 
     public void addPlanets() {
-        sun.setPosition(new Point (100,100));
+        blank.setPosition(new Point(250,250));
+        blank.addChild(sun);
+
+        sun.setPosition(new Point (-sun.getUnscaledHeight()/2,-sun.getUnscaledWidth()/2));
         sun.setPivotPoint(new Point (sun.getUnscaledHeight()/2, sun.getUnscaledWidth()/2));
 
         sun.addChild(planet);
@@ -77,16 +80,16 @@ public class LabFourSimulator extends Game {
 
         /* zoom in or out */
         if (pressedKeys.contains(KeyEvent.VK_Q)) {
-            sun.setScaleX(sun.getScaleX() * 1.1);
-            sun.setScaleY(sun.getScaleY() * 1.1);
-            sun.setPosition(new Point(sun.getPosition().x - sun.getScaledWidth(1.1)/2, sun.getPosition().y - sun.getScaledHeight(1.1)/2)); //this is not working
+            blank.setScaleX(blank.getScaleX() * 1.1);
+            blank.setScaleY(blank.getScaleY() * 1.1);
+            // sun.setPosition(new Point(sun.getPosition().x - sun.getScaledWidth(1.1)/2, sun.getPosition().y - sun.getScaledHeight(1.1)/2)); //this is not working
 
         }
 
         if (pressedKeys.contains(KeyEvent.VK_W)) {
-            sun.setScaleX(sun.getScaleX() * .9);
-            sun.setScaleY(sun.getScaleY() * .9);
-            sun.setPosition(new Point(sun.getPosition().x - sun.getScaledWidth(.9)/2, sun.getPosition().y - sun.getScaledHeight(.9)/2)); //this is not working
+            blank.setScaleX(blank.getScaleX() * .9);
+            blank.setScaleY(blank.getScaleY() * .9);
+            // sun.setPosition(new Point(sun.getPosition().x + sun.getScaledWidth(.9)/2, sun.getPosition().y + sun.getScaledHeight(.9)/2)); //this is not working
         }
 
         /* panning around system */
@@ -122,7 +125,7 @@ public class LabFourSimulator extends Game {
         super.draw(g);
 
 		/* Same, just check for null in case a frame gets thrown in before sun is initialized */
-        if (sun != null) sun.draw(g);
+        if (blank != null) blank.draw(g);
     }
 
     /**
