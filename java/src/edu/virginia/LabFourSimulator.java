@@ -26,8 +26,9 @@ public class LabFourSimulator extends Game {
     /* Create the Sprites*/
 
     Sprite planet = new Sprite("Planet", "planet.png");
-    Sprite planet2 = new Sprite("Planet2", "planet.png"); //child of planet
-    Sprite planet3 = new Sprite("Planet3", "planet.png"); //child of planet
+    Sprite planet2 = new Sprite("Planet2", "planet2.png");
+    Sprite moon2 = new Sprite("Moon2", "moon2.png");
+    Sprite moon = new Sprite("Moon1", "moon1.png"); //child of planet
 
 
     /**
@@ -51,19 +52,23 @@ public class LabFourSimulator extends Game {
 
         //add sun's children and set their pivot points and positions
         sun.addChild(planet);
+        sun.addChild(planet2);
         planet.setPosition(new Point (100,100));
         planet.setPivotPoint(new Point (sun.getUnscaledWidth()/2 - planet.getPosition().x,
                 sun.getUnscaledWidth()/2 - planet.getPosition().y));
+        planet2.setPosition(new Point (240,240));
+        planet2.setPivotPoint(new Point (sun.getUnscaledWidth()/2 - planet2.getPosition().x,
+                sun.getUnscaledWidth()/2 - planet2.getPosition().y));
 
         //add planet's children and set their pivot points and positions
-        planet.addChild(planet2);
-        planet.addChild(planet3);
-        planet2.setPosition(new Point (100, 100));
-        planet2.setPivotPoint(new Point(planet.getUnscaledWidth()/2 - planet2.getPosition().x,
-                planet.getUnscaledHeight()/2 - planet2.getPosition().y));
-        planet3.setPosition(new Point (-30, -30));
-        planet3.setPivotPoint(new Point (planet.getUnscaledWidth()/2 - planet3.getPosition().x,
-                planet.getUnscaledHeight()/2 - planet3.getPosition().y));
+        planet.addChild(moon2);
+        planet.addChild(moon);
+        moon2.setPosition(new Point (50, 50));
+        moon2.setPivotPoint(new Point(planet.getUnscaledWidth()/2 - moon2.getPosition().x,
+                planet.getUnscaledHeight()/2 - moon2.getPosition().y));
+        moon.setPosition(new Point (-30, -30));
+        moon.setPivotPoint(new Point (planet.getUnscaledWidth()/2 - moon.getPosition().x,
+                planet.getUnscaledHeight()/2 - moon.getPosition().y));
     }
     /**
      * Engine will automatically call this update method once per frame and pass to us
@@ -83,9 +88,10 @@ public class LabFourSimulator extends Game {
         }
 
         /* setting planet and moon orbits*/
-        planet.setRotation(planet.getRotation() - 1);
-        planet2.setRotation(planet2.getRotation() + 5);
-        planet3.setRotation(planet3.getRotation() - 7);
+        planet.setRotation(planet.getRotation() - 2);
+        planet2.setRotation(planet2.getRotation() + 1);
+        moon2.setRotation(moon2.getRotation() + 5);
+        moon.setRotation(moon.getRotation() - 7);
 
         /* zoom in or out */
         if (pressedKeys.contains(KeyEvent.VK_Q)) {
