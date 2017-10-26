@@ -229,6 +229,7 @@ public class DisplayObjectContainer extends DisplayObject{
 
         //rotate boundaries if necessary
         coords = this.applyRotate(coords);
+
         //convert to scaled if necessary
         coords = this.applyScale(coords);
 

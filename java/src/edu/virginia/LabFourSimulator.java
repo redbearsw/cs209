@@ -131,7 +131,6 @@ public class LabFourSimulator extends Game {
             sun.setRotation(sun.getRotation() + 10);
         }
 
-        System.out.println("Postion of sun:" + sun.getPosition());
 
     }
 
