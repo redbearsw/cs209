@@ -153,4 +153,16 @@ public class DisplayObjectContainer extends DisplayObject{
         }
     }
 
+    public DisplayObject findChild(String id) {
+        int i;
+        int sz = this.children.size();
+        for(i = 0; i < sz; i++){
+            if(id == this.children.get(i).getId()) { ;
+                return child;
+            }
+        }
+        System.out.println("CHILD DOES NOT EXIST, RETURNING NULL");
+        return null;
+    }
+
 }
