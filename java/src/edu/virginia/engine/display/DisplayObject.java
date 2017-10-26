@@ -49,7 +49,7 @@ public class DisplayObject {
 
 	private DisplayObject parent;
 
-	private Sprite hitbox;
+	private DisplayObject hitbox;
 
 	/**
 	 * Constructors: can pass in the id OR the id and image's file path and
