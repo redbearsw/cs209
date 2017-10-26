@@ -168,6 +168,26 @@ public class DisplayObjectContainer extends DisplayObject{
         return this.children.get(index);
         }
 
+    public int[] applyRotate(int[] coords) {
+        //retrieve l and theta
+        double theta = Math.toRadians(this.getRotation());
+        Point globPos = this.localToGlobal(this.getPosition());
+        Point globPiv = this.localToGlobal(this.getPivotPoint());
+        double l = Math.sqrt(Math.pow(globPos.x - globPiv.x, 2) + Math.pow(globPos.y - globPiv.y, 2));
+        //calculate x and y
+        double x = l * Math.sin(theta);
+        double y = l - (l * Math.cos(theta));
+
+        //shift boundaries based on rotation
+        coords[0] += (int) x;
+        coords[1] += (int) x;
+        coords[2] += (int) y;
+        coords[3] += (int) y;
+
+        return coords;
+
+    }
+
 
     public int[] getHitbox() {
 
