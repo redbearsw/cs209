@@ -164,10 +164,14 @@ public class DisplayObjectContainer extends DisplayObject{
     public DisplayObject findChild(String id) {
         int i;
         int sz = this.children.size();
-        for(i = 0; i < sz; i++){
-            if(id == this.children.get(i).getId()) { ;
-                return ;
+        for (i = 0; i < sz; i++) {
+            if (id == this.children.get(i).getId()) {
+                return this.getChild(i);
             }
+        }
+        return null;
+    }
+
     //find methods
 
     //findChild at given index
@@ -246,7 +250,7 @@ public class DisplayObjectContainer extends DisplayObject{
         return scaledCoords;
     }
 
-    public boolean collidesWith(DisplayObject other){
+    public boolean collidesWith(DisplayObjectContainer other){
         int [] myHitbox;
         int [] otherHitbox;
         myHitbox = new int[4];

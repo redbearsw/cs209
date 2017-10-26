@@ -195,16 +195,7 @@ public class DisplayObject {
 
 	public void setParent(DisplayObject obj) {this.parent = obj;}
 
-	public int[] getHitbox() {
-		//findChild("hitbox");
-		//calculate the 2 x and y coords
-		//convert to rotated if necessary
-		//convert to scaled if necessary
-		//convert coord to global
-		//store in array
-		//reorder array if necessary
-		//return array
-	}
+
 
 	/**
 	 * Helper function that simply reads an image from the given image name
