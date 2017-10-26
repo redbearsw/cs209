@@ -1,22 +1,19 @@
 package edu.virginia;
 
-import java.awt.Graphics;
-import java.util.ArrayList;
-import java.awt.event.KeyEvent;
-import java.awt.Point;
-
-import edu.virginia.engine.display.AnimatedSprite;
 import edu.virginia.engine.display.Game;
 import edu.virginia.engine.display.Sprite;
 
-import edu.virginia.engine.display.Animation;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
-import edu.virginia.engine.display.AnimatedSprite;
+import java.awt.Graphics;
+import java.awt.Point;
 
     /**
      * Example game that utilizes our engine. We can create a simple prototype game with just a couple lines of code
      * although, for now, it won't be a very fun game :)
-     * */
+     */
+
     public class LabFourGame extends Game {
 
         /* Create a sprite object for our game. We'll use sun */
@@ -41,6 +38,7 @@ import edu.virginia.engine.display.AnimatedSprite;
         public void addObjects() {
 
         }
+
         /**
          * Engine will automatically call this update method once per frame and pass to us
          * the set of keys (as strings) that are currently being pressed down
@@ -80,24 +78,24 @@ import edu.virginia.engine.display.AnimatedSprite;
             }
 
         /* panning around system */
-            if(pressedKeys.contains(KeyEvent.VK_DOWN)){
+            if (pressedKeys.contains(KeyEvent.VK_DOWN)) {
                 sun.setPosition(new Point(sun.getPosition().x, sun.getPosition().y - 5));
             }
-            if(pressedKeys.contains(KeyEvent.VK_UP)){
+            if (pressedKeys.contains(KeyEvent.VK_UP)) {
                 sun.setPosition(new Point(sun.getPosition().x, sun.getPosition().y + 5));
             }
-            if(pressedKeys.contains(KeyEvent.VK_RIGHT)){
+            if (pressedKeys.contains(KeyEvent.VK_RIGHT)) {
                 sun.setPosition(new Point(sun.getPosition().x - 5, sun.getPosition().y));
             }
-            if(pressedKeys.contains(KeyEvent.VK_LEFT)){
+            if (pressedKeys.contains(KeyEvent.VK_LEFT)) {
                 sun.setPosition(new Point(sun.getPosition().x + 5, sun.getPosition().y));
             }
 
 		/* rotation counterclockwise and clockwise of system */
-            if(pressedKeys.contains(KeyEvent.VK_A)){
+            if (pressedKeys.contains(KeyEvent.VK_A)) {
                 sun.setRotation(sun.getRotation() - 10);
             }
-            if(pressedKeys.contains(KeyEvent.VK_S)) {
+            if (pressedKeys.contains(KeyEvent.VK_S)) {
                 sun.setRotation(sun.getRotation() + 10);
             }
 
@@ -123,7 +121,6 @@ import edu.virginia.engine.display.AnimatedSprite;
             edu.virginia.LabFourSimulator game = new edu.virginia.LabFourSimulator();
             game.addPlanets();
             game.start();
-
 
         }
     }

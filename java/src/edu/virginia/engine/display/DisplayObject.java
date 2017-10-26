@@ -197,9 +197,6 @@ public class DisplayObject {
 
 
 
-
-
-
 	/**
 	 * Helper function that simply reads an image from the given image name
 	 * (looks in resources\\) and returns the bufferedimage for that filename
@@ -276,6 +273,7 @@ public class DisplayObject {
 		g2d.setComposite(AlphaComposite.getInstance(3, curAlpha * this.alpha));
 	}
 
+
 	/**
 	 * Reverses transformations for this display object to the given graphics
 	 * object
@@ -289,6 +287,7 @@ public class DisplayObject {
 
 
 	}
+
 
 
 	/* Convert given point from global to Display Object's coordinates or vice versa */
