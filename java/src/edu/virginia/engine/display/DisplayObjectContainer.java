@@ -1,8 +1,16 @@
 package edu.virginia.engine.display;
-import java.util.ArrayList;
 
-import java.awt.*;
+import java.awt.Point;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.awt.AlphaComposite;
+
+import javax.imageio.ImageIO;
+
 
 public class DisplayObjectContainer extends DisplayObject{
 
@@ -153,16 +161,61 @@ public class DisplayObjectContainer extends DisplayObject{
         }
     }
 
-    public DisplayObject findChild(String id) {
-        int i;
-        int sz = this.children.size();
-        for(i = 0; i < sz; i++){
-            if(id == this.children.get(i).getId()) { ;
-                return child;
-            }
+    //find methods
+
+    //findChild at given index
+    public DisplayObject findChild(int index) {
+        return this.children.get(index);
         }
-        System.out.println("CHILD DOES NOT EXIST, RETURNING NULL");
-        return null;
+
+
+    public int[] getHitbox() {
+
+        //find hitbox
+        DisplayObject hb = this.findChild(0);
+        //set up array
+        int[] coords = new int[4];
+
+        //find initial x and y boundaries of hitbox
+        int x1 = hb.getPosition().x;
+        int x2 = x1 + hb.getUnscaledWidth();
+        int y1 = hb.getPosition().y;
+        int y2 = y1 + hb.getUnscaledHeight();
+
+        //convert boundaries to global coordinates
+        Point xy1 = this.localToGlobal(new Point (x1, y1));
+        Point xy2 = this.localToGlobal(new Point (x2, y2));
+        x1 = xy1.x;
+        x2 = xy2.x;
+        y1 = xy1.y;
+        y2 = xy2.y;
+
+        //store in array
+        coords[0] = x1;
+        coords[1] = x2;
+        coords[2] = y1;
+        coords[3] = y2;
+
+        //rotate boundaries if necessary
+        coords = this.applyRotate(coords);
+        //convert to scaled if necessary
+        coords = this.applyScale(coords);
+
+        //reorder array if rotation has flipped the shape
+        //reorder x's
+        if(coords[0] > coords[1]) {
+            x1 = coords[1];
+            coords[1] = coords[0];
+            coords[0] = x1;
+        }
+        //reorder y's
+        if(coords[2] > coords[3]) {
+            y1 = coords[3];
+            coords[3] = coords[2];
+            coords[2] = y1;
+        }
+
+        return coords;
     }
 
 }

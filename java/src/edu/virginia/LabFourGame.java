@@ -1,15 +1,5 @@
 package edu.virginia;
 
-import edu.virginia.engine.display.Game;
-import edu.virginia.engine.display.Sprite;
-
-import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-
-public class LabFourGame {
-    package edu.virginia;
-
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.awt.event.KeyEvent;
@@ -23,12 +13,11 @@ import edu.virginia.engine.display.Animation;
 
 import edu.virginia.engine.display.AnimatedSprite;
 
-
     /**
      * Example game that utilizes our engine. We can create a simple prototype game with just a couple lines of code
      * although, for now, it won't be a very fun game :)
      * */
-    public class LabFourSimulator extends Game {
+    public class LabFourGame extends Game {
 
         /* Create a sprite object for our game. We'll use sun */
         Sprite blank = new Sprite("Screen", "blank.png");
@@ -44,7 +33,7 @@ import edu.virginia.engine.display.AnimatedSprite;
         /**
          * Constructor. See constructor in Game.java for details on the parameters given
          */
-        public LabFourSimulator() {
+        public LabFourGame() {
             super("Lab Four Simulator", 500, 500);
         }
 
@@ -139,4 +128,4 @@ import edu.virginia.engine.display.AnimatedSprite;
         }
     }
 
-}
+
