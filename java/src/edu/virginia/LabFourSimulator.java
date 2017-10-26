@@ -69,6 +69,7 @@ public class LabFourSimulator extends Game {
         moon.setPosition(new Point (-30, -30));
         moon.setPivotPoint(new Point (planet.getUnscaledWidth()/2 - moon.getPosition().x,
                 planet.getUnscaledHeight()/2 - moon.getPosition().y));
+
     }
     /**
      * Engine will automatically call this update method once per frame and pass to us
@@ -129,6 +130,8 @@ public class LabFourSimulator extends Game {
         if(pressedKeys.contains(KeyEvent.VK_S)) {
             sun.setRotation(sun.getRotation() + 10);
         }
+
+        System.out.println("Postion of sun:" + sun.getPosition());
 
     }
 

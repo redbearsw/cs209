@@ -158,11 +158,53 @@ public class DisplayObjectContainer extends DisplayObject{
         int sz = this.children.size();
         for(i = 0; i < sz; i++){
             if(id == this.children.get(i).getId()) { ;
-                return child;
+                return ;
             }
         }
         System.out.println("CHILD DOES NOT EXIST, RETURNING NULL");
         return null;
     }
+
+    public int[] applyScale(int[] coords){
+
+        if (coords.length != 4){
+            System.out.println("ERROR: NOT FULL SET OF COORDS");
+        }
+        int[] scaledCoords;
+        int xdiff;
+        int ydiff;
+        scaledCoords = new int[4];
+
+        xdiff = (this.getScaledWidth(this.getScaleX()) - this.getUnscaledWidth())/2;
+        ydiff = (this.getScaledHeight(this.getScaleY()) - this.getUnscaledHeight())/2;
+
+        scaledCoords[0] = coords[0] - xdiff;
+        scaledCoords[1] = coords[1] - xdiff;
+        scaledCoords[2] = coords[2] - ydiff;
+        scaledCoords[3] = coords[3] - ydiff;
+
+        return scaledCoords;
+    }
+
+    public boolean collidesWith(DisplayObject other){
+        int [] myHitbox;
+        int [] otherHitbox;
+        myHitbox = new int[4];
+        otherHitbox = new int[4];
+
+        otherHitbox = other.getHitbox();
+        myHitbox = this.getHitbox();
+
+        if(otherHitbox[0] > myHitbox[0] || otherHitbox[1] < myHitbox[1]){
+            if(otherHitbox[2] > myHitbox[2] || otherHitbox[3] < myHitbox[3]) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+
+    }
+
 
 }

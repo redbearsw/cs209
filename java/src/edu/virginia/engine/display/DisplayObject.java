@@ -195,7 +195,7 @@ public class DisplayObject {
 
 	public void setParent(DisplayObject obj) {this.parent = obj;}
 
-	public Array <int> getHitbox() {
+	public int[] getHitbox() {
 		//findChild("hitbox");
 		//calculate the 2 x and y coords
 		//convert to rotated if necessary
@@ -282,6 +282,7 @@ public class DisplayObject {
 		g2d.setComposite(AlphaComposite.getInstance(3, curAlpha * this.alpha));
 	}
 
+
 	/**
 	 * Reverses transformations for this display object to the given graphics
 	 * object
@@ -295,6 +296,7 @@ public class DisplayObject {
 
 
 	}
+
 
 
 	/* Convert given point from global to Display Object's coordinates or vice versa */
