@@ -292,8 +292,10 @@ public class DisplayObject {
 
 	/* Convert given point from global to Display Object's coordinates or vice versa */
 	public Point localToGlobal(Point p){
-		if (parent == null)
+		if (parent == null) {
+			// System.out.println("PARENT IS NULL");
 			return p;
+		}
 		else
 			return new Point(this.getPosition().x + this.getParent().localToGlobal(p).x, this.getPosition().y + this.getParent().localToGlobal(p).y);
 	}

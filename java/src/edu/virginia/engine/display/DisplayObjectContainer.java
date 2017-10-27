@@ -171,6 +171,15 @@ public class DisplayObjectContainer extends DisplayObject{
         }
         return null;
     }
+    public void printArray(int[] anArray) {
+        for (int i = 0; i < anArray.length; i++) {
+            if (i > 0) {
+                System.out.print(", ");
+            }
+            System.out.print(anArray[i]);
+            }
+    }
+
 
     //find methods
 
@@ -213,14 +222,19 @@ public class DisplayObjectContainer extends DisplayObject{
         int y1 = hb.getPosition().y;
         int y2 = y1 + hb.getUnscaledHeight();
 
+        // System.out.println("LOCAL COORDS - X1: " + x1 + "X2: " + x2 + "Y1: " + y1 + "Y2: " + y2);
+
         //convert boundaries to global coordinates
-        Point xy1 = this.localToGlobal(new Point (x1, y1));
-        Point xy2 = this.localToGlobal(new Point (x2, y2));
+        Point xy1 = new Point (this.getPosition().x + x1, this.getPosition().y + y1);
+        Point xy2 = new Point (this.getPosition().x + x2, this.getPosition().y + y2);
+        //Point xy1 = hb.localToGlobal(new Point (x1, y1));
+        //Point xy2 = hb.localToGlobal(new Point (x2, y2));
         x1 = xy1.x;
         x2 = xy2.x;
         y1 = xy1.y;
         y2 = xy2.y;
 
+        // System.out.println("GLOBAL COORDS - X1: " + x1 + "X2: " + x2 + "Y1: " + y1 + "Y2: " + y2);
         //store in array
         coords[0] = x1;
         coords[1] = x2;
@@ -280,13 +294,29 @@ public class DisplayObjectContainer extends DisplayObject{
         otherHitbox = other.getHitbox();
         myHitbox = this.getHitbox();
 
-        if(otherHitbox[0] > myHitbox[0] || otherHitbox[1] < myHitbox[1]){
-            if(otherHitbox[2] > myHitbox[2] || otherHitbox[3] < myHitbox[3]) {
+        if(otherHitbox[0] >= myHitbox[0] && (otherHitbox[0] <= myHitbox[1])){
+            if(otherHitbox[2] >= myHitbox[2] && (otherHitbox[2] <= myHitbox[3])) {
                 return true;
-            } else {
-                return false;
             }
         }
+        if(otherHitbox[1] >= myHitbox[0] && (otherHitbox[1] <= myHitbox[1])){
+            if(otherHitbox[2] >= myHitbox[2] && (otherHitbox[2] <= myHitbox[3])) {
+                return true;
+            }
+        }
+
+        if(otherHitbox[1] >= myHitbox[0] && (otherHitbox[1] <= myHitbox[1])){
+            if(otherHitbox[3] >= myHitbox[2] && (otherHitbox[3] <= myHitbox[3])) {
+                return true;
+            }
+        }
+
+        if(otherHitbox[0] >= myHitbox[0] && (otherHitbox[0] <= myHitbox[1])){
+            if(otherHitbox[3] >= myHitbox[2] && (otherHitbox[3] <= myHitbox[3])) {
+                return true;
+            }
+        }
+
         return false;
 
     }

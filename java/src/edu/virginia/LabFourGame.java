@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import java.awt.Graphics;
 import java.awt.Point;
-
+import java.awt.Shape;
     /**
      * Example game that utilizes our engine. We can create a simple prototype game with just a couple lines of code
      * although, for now, it won't be a very fun game :)
@@ -17,26 +17,34 @@ import java.awt.Point;
     public class LabFourGame extends Game {
 
         /* Create a sprite object for our game. We'll use sun */
-        Sprite blank = new Sprite("Screen", "blank.png");
-        Sprite sun = new Sprite("Sun", "sun.png");
+        // Sprite blank = new Sprite("Screen", "blank.png");
+        Sprite mario = new Sprite("Mario", "Mario.png");
+        Sprite mario_hb = new Sprite("mario_hb", "mario_hb.png");
+        Sprite mario2 = new Sprite("Mario2", "Mario.png");
+        Sprite mario2_hb = new Sprite("mario2_hb", "mario_hb.png");
     /* Create the Sprites*/
 
-        Sprite planet = new Sprite("Planet", "planet.png");
-        Sprite planet2 = new Sprite("Planet2", "planet2.png");
-        Sprite moon2 = new Sprite("Moon2", "moon2.png");
-        Sprite moon = new Sprite("Moon1", "moon1.png"); //child of planet
+//        Sprite planet = new Sprite("Planet", "planet.png");
+//        Sprite planet2 = new Sprite("Planet2", "planet2.png");
+//        Sprite moon2 = new Sprite("Moon2", "moon2.png");
+//        Sprite moon = new Sprite("Moon1", "moon1.png"); //child of planet
 
 
         /**
          * Constructor. See constructor in Game.java for details on the parameters given
          */
         public LabFourGame() {
-            super("Lab Four Simulator", 500, 500);
+            super("Lab Four Game", 500, 500);
         }
 
 
         public void addObjects() {
-
+            mario.addChild(mario_hb);
+            mario2.addChild(mario2_hb);
+            mario2.setPosition(new  Point(250,250));
+            mario.printArray(mario.getHitbox());
+            System.out.println("\n");
+            mario2.printArray(mario2.getHitbox());
         }
 
         /**
@@ -48,58 +56,92 @@ import java.awt.Point;
             super.update(pressedKeys);
 
 		/* Make sure sun is not null. Sometimes Swing can auto cause an extra frame to go before everything is initialized */
-            if (sun != null) sun.update(pressedKeys);
-            if (sun == null) return;
+            if(mario != null) mario.update(pressedKeys);
 
-            //frame count
-            if (sun.getCount() < 30) {
-                sun.setCount(sun.getCount() + 1);
+            if (mario.getCount() < 30) {
+                mario.setCount(mario.getCount() + 1);
             }
 
-        /* setting planet and moon orbits*/
-            planet.setRotation(planet.getRotation() - 2);
-            planet2.setRotation(planet2.getRotation() + 1);
-            moon2.setRotation(moon2.getRotation() + 5);
-            moon.setRotation(moon.getRotation() - 7);
+            mario.setFrameCount(mario.getFrameCount()+1);
 
-        /* zoom in or out */
-            if (pressedKeys.contains(KeyEvent.VK_Q)) {
-                blank.setScaleX(blank.getScaleX() * 1.1);
-                blank.setScaleY(blank.getScaleY() * 1.1);
-                // sun.setPosition(new Point(sun.getPosition().x - sun.getScaledWidth(1.1)/2, sun.getPosition().y - sun.getScaledHeight(1.1)/2)); //this is not working
-
+		/* arrow key presses */
+            if(pressedKeys.contains(KeyEvent.VK_UP)){
+                mario.setPosition(new Point(mario.getPosition().x, mario.getPosition().y-5));
             }
-
-            if (pressedKeys.contains(KeyEvent.VK_W)) {
-
-                blank.setScaleX(blank.getScaleX() * .9);
-                blank.setScaleY(blank.getScaleY() * .9);
-                // sun.setPosition(new Point(sun.getPosition().x + sun.getScaledWidth(.9)/2, sun.getPosition().y + sun.getScaledHeight(.9)/2)); //this is not working
+            if(pressedKeys.contains(KeyEvent.VK_DOWN)){
+                mario.setPosition(new Point(mario.getPosition().x, mario.getPosition().y+5));
+            }
+            if(pressedKeys.contains(KeyEvent.VK_LEFT)){
+                mario.setPosition(new Point(mario.getPosition().x-5, mario.getPosition().y));
+            }
+            if(pressedKeys.contains(KeyEvent.VK_RIGHT)){
+                mario.setPosition(new Point(mario.getPosition().x+5, mario.getPosition().y));
             }
 
-        /* panning around system */
-            if (pressedKeys.contains(KeyEvent.VK_DOWN)) {
-                sun.setPosition(new Point(sun.getPosition().x, sun.getPosition().y - 5));
+		/* IJKL presses */
+            if(pressedKeys.contains(KeyEvent.VK_I)){
+                mario.setPivotPoint(new Point(mario.getPivotPoint().x, mario.getPivotPoint().y-5));
             }
-            if (pressedKeys.contains(KeyEvent.VK_UP)) {
-                sun.setPosition(new Point(sun.getPosition().x, sun.getPosition().y + 5));
+            if(pressedKeys.contains(KeyEvent.VK_K)){
+                mario.setPivotPoint(new Point(mario.getPivotPoint().x, mario.getPivotPoint().y+5));
             }
-            if (pressedKeys.contains(KeyEvent.VK_RIGHT)) {
-                sun.setPosition(new Point(sun.getPosition().x - 5, sun.getPosition().y));
+            if(pressedKeys.contains(KeyEvent.VK_J)){
+                mario.setPivotPoint(new Point(mario.getPivotPoint().x-5, mario.getPivotPoint().y));
             }
-            if (pressedKeys.contains(KeyEvent.VK_LEFT)) {
-                sun.setPosition(new Point(sun.getPosition().x + 5, sun.getPosition().y));
+            if(pressedKeys.contains(KeyEvent.VK_L)){
+                mario.setPivotPoint(new Point(mario.getPivotPoint().x+5, mario.getPivotPoint().y));
             }
 
-		/* rotation counterclockwise and clockwise of system */
-            if (pressedKeys.contains(KeyEvent.VK_A)) {
-                sun.setRotation(sun.getRotation() - 10);
+		/* rotation counterclockwise and clockwise */
+            if(pressedKeys.contains(KeyEvent.VK_Q)){
+                mario.setRotation(mario.getRotation() - 10);
             }
-            if (pressedKeys.contains(KeyEvent.VK_S)) {
-                sun.setRotation(sun.getRotation() + 10);
+            if(pressedKeys.contains(KeyEvent.VK_W)){
+                mario.setRotation(mario.getRotation() + 10);
             }
+		/* set visibility */
+            if(pressedKeys.contains(KeyEvent.VK_V)){
+                if (mario.getCount() == 30) {
+                    mario.setVisible(!mario.getVisible());
+                    mario.setCount(0);
+                }
+
+            }
+		/* set alpha */
+            if(pressedKeys.contains(KeyEvent.VK_Z)){
+                if (mario.getAlpha() >= 1.0f) {
+                    mario.setAlpha(1.0f);
+                } else {
+                    if (mario.getAlpha() * 1.1f >=1.0f) {
+                        mario.setAlpha(1.0f);
+                    } else {
+                        mario.setAlpha(mario.getAlpha() * 1.1f);
+                    }
+                }
+            }
+
+            if(pressedKeys.contains(KeyEvent.VK_X)){
+                mario.setAlpha(mario.getAlpha() * .9f);
+            }
+
+		/* scale mario */
+            if(pressedKeys.contains(KeyEvent.VK_A)){
+                mario.setScaleX(mario.getScaleX()*1.1);
+                mario.setScaleY(mario.getScaleY()*1.1);
+            }
+            if(pressedKeys.contains(KeyEvent.VK_S)){
+                mario.setScaleX(mario.getScaleX()*.9);
+                mario.setScaleY(mario.getScaleY()*.9);
+            }
+
+        /* Checking for collisions */
+        if (mario.collidesWith(mario2)){
+            System.out.println("COLLISION");
+        }
+
 
         }
+
 
         /**
          * Engine automatically invokes draw() every frame as well. If we want to make sure sun gets drawn to
@@ -110,7 +152,8 @@ import java.awt.Point;
             super.draw(g);
 
 		/* Same, just check for null in case a frame gets thrown in before sun is initialized */
-            if (blank != null) blank.draw(g);
+            if (mario != null) mario.draw(g);
+            if (mario2 != null) mario2.draw(g);
         }
 
         /**
@@ -118,8 +161,8 @@ import java.awt.Point;
          * that calls update() and draw() every frame
          */
         public static void main(String[] args) {
-            edu.virginia.LabFourSimulator game = new edu.virginia.LabFourSimulator();
-            game.addPlanets();
+            edu.virginia.LabFourGame game = new edu.virginia.LabFourGame();
+            game.addObjects();;
             game.start();
 
         }
