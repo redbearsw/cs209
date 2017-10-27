@@ -242,10 +242,12 @@ public class DisplayObjectContainer extends DisplayObject{
         coords[3] = y2;
 
         //rotate boundaries if necessary
-        coords = this.applyRotate(coords);
+        if (this.getRotation() != 0)
+            coords = this.applyRotate(coords);
 
         //convert to scaled if necessary
-        coords = this.applyScale(coords);
+        if (this.getScaleX() != 1.0)
+            coords = this.applyScale(coords);
 
         //reorder array if rotation has flipped the shape
         //reorder x's
