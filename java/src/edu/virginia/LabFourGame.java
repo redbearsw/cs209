@@ -66,7 +66,7 @@ import java.awt.Point;
             if (pressedKeys.contains(KeyEvent.VK_Q)) {
                 blank.setScaleX(blank.getScaleX() * 1.1);
                 blank.setScaleY(blank.getScaleY() * 1.1);
-                // sun.setPosition(new Point(sun.getPosition().x - sun.getScaledWidth(1.1)/2, sun.getPosition().y - sun.getScaledHeight(1.1)/2)); //this is not working
+
 
             }
 
@@ -74,7 +74,6 @@ import java.awt.Point;
 
                 blank.setScaleX(blank.getScaleX() * .9);
                 blank.setScaleY(blank.getScaleY() * .9);
-                // sun.setPosition(new Point(sun.getPosition().x + sun.getScaledWidth(.9)/2, sun.getPosition().y + sun.getScaledHeight(.9)/2)); //this is not working
             }
 
         /* panning around system */
