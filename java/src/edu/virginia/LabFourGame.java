@@ -43,7 +43,6 @@ import java.awt.Shape;
             mario2.addChild(mario2_hb);
             mario2.setPosition(new  Point(250,250));
             mario.printArray(mario.getHitbox());
-            System.out.println("\n");
             mario2.printArray(mario2.getHitbox());
         }
 
@@ -55,91 +54,100 @@ import java.awt.Shape;
         public void update(ArrayList<Integer> pressedKeys) {
             super.update(pressedKeys);
 
+            if (mario != null && mario2 != null) {
 		/* Make sure sun is not null. Sometimes Swing can auto cause an extra frame to go before everything is initialized */
-            if(mario != null) mario.update(pressedKeys);
+                if (mario != null) mario.update(pressedKeys);
 
-            if (mario.getCount() < 30) {
-                mario.setCount(mario.getCount() + 1);
-            }
 
-            mario.setFrameCount(mario.getFrameCount()+1);
+                if (mario.getCount() < 30) {
+                    mario.setCount(mario.getCount() + 1);
+                }
+
+
+                mario.setFrameCount(mario.getFrameCount() + 1);
+
 
 		/* arrow key presses */
-            if(pressedKeys.contains(KeyEvent.VK_UP)){
-                mario.setPosition(new Point(mario.getPosition().x, mario.getPosition().y-5));
-            }
-            if(pressedKeys.contains(KeyEvent.VK_DOWN)){
-                mario.setPosition(new Point(mario.getPosition().x, mario.getPosition().y+5));
-            }
-            if(pressedKeys.contains(KeyEvent.VK_LEFT)){
-                mario.setPosition(new Point(mario.getPosition().x-5, mario.getPosition().y));
-            }
-            if(pressedKeys.contains(KeyEvent.VK_RIGHT)){
-                mario.setPosition(new Point(mario.getPosition().x+5, mario.getPosition().y));
-            }
+                if (pressedKeys.contains(KeyEvent.VK_UP)) {
+                    mario.setPosition(new Point(mario.getPosition().x, mario.getPosition().y - 5));
+                }
+                if (pressedKeys.contains(KeyEvent.VK_DOWN)) {
+                    mario.setPosition(new Point(mario.getPosition().x, mario.getPosition().y + 5));
+                }
+                if (pressedKeys.contains(KeyEvent.VK_LEFT)) {
+                    mario.setPosition(new Point(mario.getPosition().x - 5, mario.getPosition().y));
+                }
+                if (pressedKeys.contains(KeyEvent.VK_RIGHT)) {
+                    mario.setPosition(new Point(mario.getPosition().x + 5, mario.getPosition().y));
+                }
+
 
 		/* IJKL presses */
-            if(pressedKeys.contains(KeyEvent.VK_I)){
-                mario.setPivotPoint(new Point(mario.getPivotPoint().x, mario.getPivotPoint().y-5));
-            }
-            if(pressedKeys.contains(KeyEvent.VK_K)){
-                mario.setPivotPoint(new Point(mario.getPivotPoint().x, mario.getPivotPoint().y+5));
-            }
-            if(pressedKeys.contains(KeyEvent.VK_J)){
-                mario.setPivotPoint(new Point(mario.getPivotPoint().x-5, mario.getPivotPoint().y));
-            }
-            if(pressedKeys.contains(KeyEvent.VK_L)){
-                mario.setPivotPoint(new Point(mario.getPivotPoint().x+5, mario.getPivotPoint().y));
-            }
+                if (pressedKeys.contains(KeyEvent.VK_I)) {
+                    mario.setPivotPoint(new Point(mario.getPivotPoint().x, mario.getPivotPoint().y - 5));
+                }
+                if (pressedKeys.contains(KeyEvent.VK_K)) {
+                    mario.setPivotPoint(new Point(mario.getPivotPoint().x, mario.getPivotPoint().y + 5));
+                }
+                if (pressedKeys.contains(KeyEvent.VK_J)) {
+                    mario.setPivotPoint(new Point(mario.getPivotPoint().x - 5, mario.getPivotPoint().y));
+                }
+                if (pressedKeys.contains(KeyEvent.VK_L)) {
+                    mario.setPivotPoint(new Point(mario.getPivotPoint().x + 5, mario.getPivotPoint().y));
+                }
 
 		/* rotation counterclockwise and clockwise */
-            if(pressedKeys.contains(KeyEvent.VK_Q)){
-                mario.setRotation(mario.getRotation() - 10);
-            }
-            if(pressedKeys.contains(KeyEvent.VK_W)){
-                mario.setRotation(mario.getRotation() + 10);
-            }
-		/* set visibility */
-            if(pressedKeys.contains(KeyEvent.VK_V)){
-                if (mario.getCount() == 30) {
-                    mario.setVisible(!mario.getVisible());
-                    mario.setCount(0);
+                if (pressedKeys.contains(KeyEvent.VK_Q)) {
+                    mario.setRotation(mario.getRotation() - 10);
                 }
+                if (pressedKeys.contains(KeyEvent.VK_W)) {
+                    mario.setRotation(mario.getRotation() + 10);
+                }
+		/* set visibility */
+                if (pressedKeys.contains(KeyEvent.VK_V)) {
+                    if (mario.getCount() == 30) {
+                        mario.setVisible(!mario.getVisible());
+                        mario.setCount(0);
+                    }
 
-            }
+                }
 		/* set alpha */
-            if(pressedKeys.contains(KeyEvent.VK_Z)){
-                if (mario.getAlpha() >= 1.0f) {
-                    mario.setAlpha(1.0f);
-                } else {
-                    if (mario.getAlpha() * 1.1f >=1.0f) {
+                if (pressedKeys.contains(KeyEvent.VK_Z)) {
+                    if (mario.getAlpha() >= 1.0f) {
                         mario.setAlpha(1.0f);
                     } else {
-                        mario.setAlpha(mario.getAlpha() * 1.1f);
+                        if (mario.getAlpha() * 1.1f >= 1.0f) {
+                            mario.setAlpha(1.0f);
+                        } else {
+                            mario.setAlpha(mario.getAlpha() * 1.1f);
+                        }
                     }
                 }
-            }
 
-            if(pressedKeys.contains(KeyEvent.VK_X)){
-                mario.setAlpha(mario.getAlpha() * .9f);
-            }
+                if (pressedKeys.contains(KeyEvent.VK_X)) {
+                    mario.setAlpha(mario.getAlpha() * .9f);
+                }
 
 		/* scale mario */
-            if(pressedKeys.contains(KeyEvent.VK_A)){
-                mario.setScaleX(mario.getScaleX()*1.1);
-                mario.setScaleY(mario.getScaleY()*1.1);
-            }
-            if(pressedKeys.contains(KeyEvent.VK_S)){
-                mario.setScaleX(mario.getScaleX()*.9);
-                mario.setScaleY(mario.getScaleY()*.9);
-            }
+                if (pressedKeys.contains(KeyEvent.VK_A)) {
+                    mario.setScaleX(mario.getScaleX() * 1.1);
+                    mario.setScaleY(mario.getScaleY() * 1.1);
+                }
+                if (pressedKeys.contains(KeyEvent.VK_S)) {
+                    mario.setScaleX(mario.getScaleX() * .9);
+                    mario.setScaleY(mario.getScaleY() * .9);
+                }
 
+                mario.printArray(mario.getHitbox());
+                System.out.println("\n");
+                mario2.printArray(mario2.getHitbox());
         /* Checking for collisions */
-        if (mario.collidesWith(mario2)){
-            System.out.println("COLLISION");
-        }
+                if (mario.collidesWith(mario2)) {
+                    System.out.println("COLLISION");
+                }
 
 
+            }
         }
 
 

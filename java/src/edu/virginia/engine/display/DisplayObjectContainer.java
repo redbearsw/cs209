@@ -276,13 +276,14 @@ public class DisplayObjectContainer extends DisplayObject{
         int ydiff;
         scaledCoords = new int[4];
 
-        xdiff = (this.getScaledWidth(this.getScaleX()) - this.getUnscaledWidth())/2;
-        ydiff = (this.getScaledHeight(this.getScaleY()) - this.getUnscaledHeight())/2;
-
-        scaledCoords[0] = coords[0] - xdiff;
-        scaledCoords[1] = coords[1] - xdiff;
-        scaledCoords[2] = coords[2] - ydiff;
-        scaledCoords[3] = coords[3] - ydiff;
+        xdiff = (this.getScaledWidth(this.getScaleX()));
+        ydiff = (this.getScaledHeight(this.getScaleY()));
+         // System.out.println("SCALED:" + this.getScaledHeight(this.getScaleY()));
+        // System.out.println("SCALED:" + this.getScaledWidth(this.getScaleX()));
+        scaledCoords[0] = coords[0];
+        scaledCoords[1] = coords[0] + xdiff;
+        scaledCoords[2] = coords[2];
+        scaledCoords[3] = coords[2] + ydiff;
 
         return scaledCoords;
     }
