@@ -188,25 +188,7 @@ public class DisplayObjectContainer extends DisplayObject{
         return this.children.get(index);
         }
 
-    public int[] applyRotate(int[] coords) {
-        //retrieve l and theta
-        double theta = Math.toRadians(this.getRotation());
-        Point globPos = this.localToGlobal(this.getPosition());
-        Point globPiv = this.localToGlobal(this.getPivotPoint());
-        double l = Math.sqrt(Math.pow(globPos.x - globPiv.x, 2) + Math.pow(globPos.y - globPiv.y, 2));
-        //calculate x and y
-        double x = l * Math.sin(theta);
-        double y = l - (l * Math.cos(theta));
 
-        //shift boundaries based on rotation
-        coords[0] += (int) x;
-        coords[1] += (int) x;
-        coords[2] += (int) y;
-        coords[3] += (int) y;
-
-        return coords;
-
-    }
 
 
     public int[] getHitbox() {
@@ -225,14 +207,10 @@ public class DisplayObjectContainer extends DisplayObject{
         // System.out.println("LOCAL COORDS - X1: " + x1 + "X2: " + x2 + "Y1: " + y1 + "Y2: " + y2);
 
         //convert boundaries to global coordinates
-        Point xy1 = new Point (this.getPosition().x + x1, this.getPosition().y + y1);
-        Point xy2 = new Point (this.getPosition().x + x2, this.getPosition().y + y2);
-        //Point xy1 = hb.localToGlobal(new Point (x1, y1));
-        //Point xy2 = hb.localToGlobal(new Point (x2, y2));
-        x1 = xy1.x;
-        x2 = xy2.x;
-        y1 = xy1.y;
-        y2 = xy2.y;
+        x1 += this.getPosition().x;
+        x2 += this.getPosition().x;
+        y1 += this.getPosition().y;
+        y2 += this.getPosition().y;
 
         // System.out.println("GLOBAL COORDS - X1: " + x1 + "X2: " + x2 + "Y1: " + y1 + "Y2: " + y2);
         //store in array
@@ -278,7 +256,7 @@ public class DisplayObjectContainer extends DisplayObject{
 
         xdiff = (this.getScaledWidth(this.getScaleX()));
         ydiff = (this.getScaledHeight(this.getScaleY()));
-         // System.out.println("SCALED:" + this.getScaledHeight(this.getScaleY()));
+        // System.out.println("SCALED:" + this.getScaledHeight(this.getScaleY()));
         // System.out.println("SCALED:" + this.getScaledWidth(this.getScaleX()));
         scaledCoords[0] = coords[0];
         scaledCoords[1] = coords[0] + xdiff;
@@ -286,6 +264,47 @@ public class DisplayObjectContainer extends DisplayObject{
         scaledCoords[3] = coords[2] + ydiff;
 
         return scaledCoords;
+    }
+
+
+    private Point rotatePoint(Point c) {
+        //angle of rotation
+        double theta = Math.toRadians(this.getRotation());
+
+        //pivot point in same coordinate system as c
+        Point globPiv = new Point(this.getPivotPoint().x + this.getPosition().x, this.getPivotPoint().y + this.getPosition().y);
+
+        //distance from point to pivot point
+        double d = Math.sqrt(Math.pow(c.x - globPiv.x, 2) + Math.pow(c.y - globPiv.y, 2));
+
+        //calculating x and y
+        double x = d * Math.sin(theta);
+        double y = d - (d * Math.cos(theta));
+        //System.out.println("theta: " +theta+"\npivpt: "+globPiv+"\nx change: "+x+"\ny change: "+y+"\n");
+
+        //adding offset to points
+        c.x += (int) x;
+        c.y += (int) y;
+
+        return c;
+
+    }
+
+    public int[] applyRotate(int[] coords) {
+
+        Point xy1 = this.rotatePoint(new Point (coords[0], coords[2]));
+        Point xy2 = this.rotatePoint(new Point (coords[1], coords[3]));
+        coords[0] = xy1.x;
+        coords[1] = xy1.y;
+        coords[2] = xy2.x;
+        coords[3] = xy2.y;
+
+        //System.out.println("Rotated array: ");
+        //this.printArray(coords);
+        //System.out.println("\n");
+
+        return coords;
+
     }
 
     public boolean collidesWith(DisplayObjectContainer other){
@@ -296,6 +315,13 @@ public class DisplayObjectContainer extends DisplayObject{
 
         otherHitbox = other.getHitbox();
         myHitbox = this.getHitbox();
+
+
+        System.out.println("Mario 1: ");
+        this.printArray(myHitbox);
+        System.out.println("\nMario 2: ");
+        this.printArray(otherHitbox);
+        System.out.println("\n");
 
         if(otherHitbox[0] >= myHitbox[0] && (otherHitbox[0] <= myHitbox[1])){
             if(otherHitbox[2] >= myHitbox[2] && (otherHitbox[2] <= myHitbox[3])) {

@@ -98,6 +98,7 @@ import java.awt.Shape;
 
 		/* rotation counterclockwise and clockwise */
                 if (pressedKeys.contains(KeyEvent.VK_Q)) {
+                    System.out.println("ROTATING");
                     mario.setRotation(mario.getRotation() - 10);
                 }
                 if (pressedKeys.contains(KeyEvent.VK_W)) {
@@ -138,9 +139,11 @@ import java.awt.Shape;
                     mario.setScaleY(mario.getScaleY() * .9);
                 }
 
-                mario.printArray(mario.getHitbox());
-                System.out.println("\n");
-                mario2.printArray(mario2.getHitbox());
+                //System.out.println("Mario 1: ");
+                //mario.printArray(mario.getHitbox());
+                //System.out.println("\nMario 2: ");
+                //mario2.printArray(mario2.getHitbox());
+                //System.out.println("\n");
         /* Checking for collisions */
                 if (mario.collidesWith(mario2)) {
                     System.out.println("COLLISION");
