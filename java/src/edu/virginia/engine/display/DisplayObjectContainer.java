@@ -278,25 +278,24 @@ public class DisplayObjectContainer extends DisplayObject{
         double d = Math.sqrt(Math.pow(c.x - globPiv.x, 2) + Math.pow(c.y - globPiv.y, 2));
 
         //calculating x and y
-        double x = d * Math.sin(theta);
-        double y = d - (d * Math.cos(theta));
+        double delx = d * Math.sin(theta);
+        double dely = d - (d * Math.cos(theta));
         //System.out.println("theta: " +theta+"\npivpt: "+globPiv+"\nx change: "+x+"\ny change: "+y+"\n");
 
         //adding offset to points
-        c.x += (int) x;
-        c.y += (int) y;
+        c.x += (int) delx;
+        c.y += (int) dely;
 
         return c;
 
     }
 
     public int[] applyRotate(int[] coords) {
-
         Point xy1 = this.rotatePoint(new Point (coords[0], coords[2]));
         Point xy2 = this.rotatePoint(new Point (coords[1], coords[3]));
         coords[0] = xy1.x;
-        coords[1] = xy1.y;
-        coords[2] = xy2.x;
+        coords[1] = xy2.x;
+        coords[2] = xy1.y;
         coords[3] = xy2.y;
 
         //System.out.println("Rotated array: ");
