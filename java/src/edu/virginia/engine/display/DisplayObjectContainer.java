@@ -283,8 +283,8 @@ public class DisplayObjectContainer extends DisplayObject{
         //System.out.println("theta: " +theta+"\npivpt: "+globPiv+"\nx change: "+x+"\ny change: "+y+"\n");
 
         //adding offset to points
-        c.x += (int) delx;
-        c.y += (int) dely;
+        c.x -= (int) delx;
+        c.y -= (int) dely;
 
         return c;
 
@@ -316,11 +316,11 @@ public class DisplayObjectContainer extends DisplayObject{
         myHitbox = this.getHitbox();
 
 
-        System.out.println("Mario 1: ");
-        this.printArray(myHitbox);
-        System.out.println("\nMario 2: ");
-        this.printArray(otherHitbox);
-        System.out.println("\n");
+//        System.out.println("Mario 1: ");
+//        this.printArray(myHitbox);
+//        System.out.println("\nMario 2: ");
+//        this.printArray(otherHitbox);
+//        System.out.println("\n");
 
         if(otherHitbox[0] >= myHitbox[0] && (otherHitbox[0] <= myHitbox[1])){
             if(otherHitbox[2] >= myHitbox[2] && (otherHitbox[2] <= myHitbox[3])) {

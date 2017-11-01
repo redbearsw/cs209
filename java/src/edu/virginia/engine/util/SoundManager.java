@@ -45,7 +45,6 @@ public class SoundManager {
         } catch (LineUnavailableException ex) {
             ex.printStackTrace();
         }
->>>>>>> 72a921e27e2ea7f50ad47f7006da0318e2a7a945
     }
 
     public void PlaySoundEffect(String id) {

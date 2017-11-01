@@ -139,11 +139,11 @@ import java.awt.Shape;
                     mario.setScaleY(mario.getScaleY() * .9);
                 }
 
-                //System.out.println("Mario 1: ");
-                //mario.printArray(mario.getHitbox());
-                //System.out.println("\nMario 2: ");
-                //mario2.printArray(mario2.getHitbox());
-                //System.out.println("\n");
+                System.out.println("Mario 1: ");
+                mario.printArray(mario.getHitbox());
+                System.out.println("\nMario 2: ");
+                mario2.printArray(mario2.getHitbox());
+                System.out.println("\n");
         /* Checking for collisions */
                 if (mario.collidesWith(mario2) || mario2.collidesWith(mario)) {
                     System.out.println("COLLISION");
