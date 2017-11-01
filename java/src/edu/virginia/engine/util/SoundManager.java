@@ -3,6 +3,7 @@ package edu.virginia.engine.util;
 import javax.sound.sampled.*;
 import java.util.HashMap;
 import java.io.File;
+import java.io.*;
 
 public class SoundManager {
     private String id;
@@ -31,11 +32,20 @@ public class SoundManager {
 
 
     public void LoadSoundEffect(String id, String filename) {
+        try {
         File file = new File(filename);
         AudioInputStream audioIn = AudioSystem.getAudioInputStream(file);
         Clip clip = AudioSystem.getClip();
         clip.open(audioIn);
         this.soundeffects.put(id, clip);
+        } catch (UnsupportedAudioFileException ex) {
+            ex.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (LineUnavailableException ex) {
+            ex.printStackTrace();
+        }
+>>>>>>> 72a921e27e2ea7f50ad47f7006da0318e2a7a945
     }
 
     public void PlaySoundEffect(String id) {
@@ -43,10 +53,18 @@ public class SoundManager {
     }
 
     public void LoadMusic(String id, String filename){
-        File soundFile = new File(filename);
-        AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
-        this.music = AudioSystem.getClip();
-        this.music.open(audioIn);
+        try {
+            File soundFile = new File(filename);
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+            this.music = AudioSystem.getClip();
+            this.music.open(audioIn);
+        }catch (UnsupportedAudioFileException ex) {
+        ex.printStackTrace();
+    } catch (IOException ex) {
+        ex.printStackTrace();
+    } catch (LineUnavailableException ex) {
+        ex.printStackTrace();
+    }
 
     }
     public void PlayMusic(String id){
