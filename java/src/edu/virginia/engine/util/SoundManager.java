@@ -35,7 +35,7 @@ public class SoundManager {
         AudioInputStream audioIn = AudioSystem.getAudioInputStream(file);
         Clip clip = AudioSystem.getClip();
         clip.open(audioIn);
-        this.soundeffects.put(id, clip));
+        this.soundeffects.put(id, clip);
     }
 
     public void PlaySoundEffect(String id) {
