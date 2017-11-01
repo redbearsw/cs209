@@ -41,4 +41,17 @@ public class SoundManager {
     public void PlaySoundEffect(String id) {
         this.soundeffects.get(id).start();
     }
+
+    public void LoadMusic(String id, String filename){
+        File soundFile = new File(filename);
+        AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+        this.music = AudioSystem.getClip();
+        this.music.open(audioIn);
+
+    }
+    public void PlayMusic(String id){
+        this.music.loop(Clip.LOOP_CONTINUOUSLY);
+    }
+
+
 }

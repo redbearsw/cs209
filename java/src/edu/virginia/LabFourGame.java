@@ -145,7 +145,7 @@ import java.awt.Shape;
                 //mario2.printArray(mario2.getHitbox());
                 //System.out.println("\n");
         /* Checking for collisions */
-                if (mario.collidesWith(mario2)) {
+                if (mario.collidesWith(mario2) || mario2.collidesWith(mario)) {
                     System.out.println("COLLISION");
                 }
 
