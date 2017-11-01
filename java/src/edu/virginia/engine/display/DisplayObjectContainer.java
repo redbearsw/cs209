@@ -14,7 +14,7 @@ import javax.imageio.ImageIO;
 
 public class DisplayObjectContainer extends DisplayObject{
 
-    private ArrayList<DisplayObject> children;
+    private ArrayList<DisplayObjectContainer> children;
 
     // constructors (same as DisplayObject)
     public DisplayObjectContainer(String id) {
@@ -28,7 +28,7 @@ public class DisplayObjectContainer extends DisplayObject{
         this.setScaleX(1.0);
         this.setScaleY(1.0);
         this.setCount(30);
-        this.children = new ArrayList<DisplayObject>();
+        this.children = new ArrayList<DisplayObjectContainer>();
     }
 
     public DisplayObjectContainer(String id, String fileName) {
@@ -43,7 +43,7 @@ public class DisplayObjectContainer extends DisplayObject{
         this.setScaleX(1.0);
         this.setScaleY(1.0);
         this.setCount(30);
-        this.children = new ArrayList<DisplayObject>();
+        this.children = new ArrayList<DisplayObjectContainer>();
     }
 
 
@@ -54,12 +54,12 @@ public class DisplayObjectContainer extends DisplayObject{
     }
 
     // Returns child given the index of it in children
-    public DisplayObject getChild(int index) {
+    public DisplayObjectContainer getChild(int index) {
         return this.children.get(index);
     }
 
     // Returns child given its id
-    public DisplayObject getChildId(String id) {
+    public DisplayObjectContainer getChildId(String id) {
         int size = this.children.size();
         int i;
         for (i = 0; i<size; i++) {
@@ -70,6 +70,11 @@ public class DisplayObjectContainer extends DisplayObject{
         System.out.println("CHILD DOES NOT EXIST");
         return null;
 
+    }
+
+    //getter for children
+    public ArrayList<DisplayObjectContainer> getChildren() {
+        return this.children;
     }
     
     // update
@@ -111,22 +116,15 @@ public class DisplayObjectContainer extends DisplayObject{
         }
     }
 
-
-
-    //getter
-    public ArrayList<DisplayObject> getChildren() {
-        return this.children;
-    }
-
     //add methods
 
     //addChild adds Child to the end of the ArrayList
-    public void addChild(DisplayObject obj) {
+    public void addChild(DisplayObjectContainer obj) {
         this.children.add(obj);
     }
 
     //addAtIndex
-    public void addAtIndex(int i, DisplayObject obj) {
+    public void addAtIndex(int i, DisplayObjectContainer obj) {
         this.children.add(i, obj);
     }
 
@@ -185,6 +183,8 @@ public class DisplayObjectContainer extends DisplayObject{
 
     //findChild at given index
     public DisplayObject findChild(int index) {
+        if(this.children == null || this.children.isEmpty())
+            return null;
         return this.children.get(index);
         }
 
@@ -195,6 +195,10 @@ public class DisplayObjectContainer extends DisplayObject{
 
         //find hitbox
         DisplayObject hb = this.findChild(0);
+
+        if(hb == null)
+            return null;
+
         //set up array
         int[] coords = new int[4];
 
@@ -314,6 +318,9 @@ public class DisplayObjectContainer extends DisplayObject{
 
         otherHitbox = other.getHitbox();
         myHitbox = this.getHitbox();
+
+        if(myHitbox == null || otherHitbox == null)
+            return false;
 
 
 //        System.out.println("Mario 1: ");

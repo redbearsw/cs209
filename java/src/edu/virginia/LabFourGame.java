@@ -16,18 +16,18 @@ import java.awt.Shape;
 
     public class LabFourGame extends Game {
 
-        /* Create a sprite object for our game. We'll use sun */
-        // Sprite blank = new Sprite("Screen", "blank.png");
+        /* Create the Sprites*/
         Sprite mario = new Sprite("Mario", "Mario.png");
         Sprite mario_hb = new Sprite("mario_hb", "mario_hb.png");
-        Sprite mario2 = new Sprite("Mario2", "Mario.png");
-        Sprite mario2_hb = new Sprite("mario2_hb", "mario_hb.png");
-    /* Create the Sprites*/
+        Sprite sun = new Sprite("Sun", "sun.png");
+        Sprite planet = new Sprite("Planet", "planet.png");
+        Sprite planet2 = new Sprite("Planet2", "planet.png");
+        Sprite planet3 = new Sprite("Planet3", "planet.png");
+        Sprite planet4 = new Sprite("Planet4", "planet.png");
 
-//        Sprite planet = new Sprite("Planet", "planet.png");
-//        Sprite planet2 = new Sprite("Planet2", "planet2.png");
-//        Sprite moon2 = new Sprite("Moon2", "moon2.png");
-//        Sprite moon = new Sprite("Moon1", "moon1.png"); //child of planet
+        /* Score */
+
+        int score = 100;
 
 
         /**
@@ -39,11 +39,31 @@ import java.awt.Shape;
 
 
         public void addObjects() {
+
             mario.addChild(mario_hb);
-            mario2.addChild(mario2_hb);
-            mario2.setPosition(new  Point(250,250));
-            mario.printArray(mario.getHitbox());
-            mario2.printArray(mario2.getHitbox());
+            //mario2.setPosition(new  Point(250,250));
+            //mario.printArray(mario.getHitbox());
+
+            sun.addChild(planet);
+            sun.addChild(planet2);
+            sun.addChild(planet3);
+            sun.addChild(planet4);
+
+            sun.setPosition(new Point (250, 250));
+            planet.setPosition(new Point (30, 15));
+            planet2.setPosition(new Point (100, 140));
+            planet3.setPosition(new Point (-200, -200));
+            planet4.setPosition(new Point (-100, -100));
+
+            planet.setPivotPoint(new Point (sun.getUnscaledWidth()/2 - planet.getPosition().x,
+                    sun.getUnscaledWidth()/2 - planet.getPosition().y));
+            planet2.setPivotPoint(new Point (sun.getUnscaledWidth()/2 - planet2.getPosition().x,
+                    sun.getUnscaledWidth()/2 - planet2.getPosition().y));
+            planet3.setPivotPoint(new Point (sun.getUnscaledWidth()/2 - planet3.getPosition().x,
+                    sun.getUnscaledWidth()/2 - planet3.getPosition().y));
+            planet4.setPivotPoint(new Point (sun.getUnscaledWidth()/2 - planet4.getPosition().x,
+                    sun.getUnscaledWidth()/2 - planet4.getPosition().y));
+
         }
 
         /**
@@ -54,10 +74,9 @@ import java.awt.Shape;
         public void update(ArrayList<Integer> pressedKeys) {
             super.update(pressedKeys);
 
-            if (mario != null && mario2 != null) {
+            if (mario != null && sun != null) {
 		/* Make sure sun is not null. Sometimes Swing can auto cause an extra frame to go before everything is initialized */
                 if (mario != null) mario.update(pressedKeys);
-
 
                 if (mario.getCount() < 30) {
                     mario.setCount(mario.getCount() + 1);
@@ -65,6 +84,12 @@ import java.awt.Shape;
 
 
                 mario.setFrameCount(mario.getFrameCount() + 1);
+
+                //set planet rotations
+                planet.setRotation(planet.getRotation() - 2);
+                planet2.setRotation(planet2.getRotation() + 1);
+                planet3.setRotation(planet3.getRotation() + 2);
+                planet4.setRotation(planet4.getRotation() - 3);
 
 
 		/* arrow key presses */
@@ -142,11 +167,18 @@ import java.awt.Shape;
                 System.out.println("Mario 1: ");
                 mario.printArray(mario.getHitbox());
                 System.out.println("\nMario 2: ");
-                mario2.printArray(mario2.getHitbox());
+                sun.printArray(sun.getHitbox());
                 System.out.println("\n");
-        /* Checking for collisions */
-                if (mario.collidesWith(mario2) || mario2.collidesWith(mario)) {
+
+                /* Checking for collisions */
+                int i;
+                for (i = 0; i < sun.getChildren().size(); i++)
+                    if (mario.collidesWith(sun.getChild(i)) || sun.getChild(i).collidesWith(mario)) {
+                    score -= 10;
                     System.out.println("COLLISION");
+                }
+                if (mario.collidesWith(sun) || sun.collidesWith(mario)) {
+                    //end game
                 }
 
 
@@ -164,7 +196,9 @@ import java.awt.Shape;
 
 		/* Same, just check for null in case a frame gets thrown in before sun is initialized */
             if (mario != null) mario.draw(g);
-            if (mario2 != null) mario2.draw(g);
+            if (sun != null) sun.draw(g);
+            String scorestr = Integer.toString(score);
+            g.drawString(scorestr, 450, 50);
         }
 
         /**
