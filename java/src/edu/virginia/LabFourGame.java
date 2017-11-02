@@ -27,8 +27,11 @@ import java.awt.Shape;
 
         /* Score */
 
-        int score = 100;
+        private int score = 100;
 
+        /* Game State - True: Playing False: Over */
+
+        private boolean gameState = true;
 
         /**
          * Constructor. See constructor in Game.java for details on the parameters given
@@ -64,6 +67,9 @@ import java.awt.Shape;
             planet4.setPivotPoint(new Point (sun.getUnscaledWidth()/2 - planet4.getPosition().x,
                     sun.getUnscaledWidth()/2 - planet4.getPosition().y));
 
+            sun.setScaleX(.5);
+            sun.setScaleY(.5);
+
         }
 
         /**
@@ -76,6 +82,7 @@ import java.awt.Shape;
 
             if (mario != null && sun != null) {
 		/* Make sure sun is not null. Sometimes Swing can auto cause an extra frame to go before everything is initialized */
+            if (gameState) {
                 if (mario != null) mario.update(pressedKeys);
 
                 if (mario.getCount() < 30) {
@@ -174,14 +181,13 @@ import java.awt.Shape;
                 int i;
                 for (i = 0; i < sun.getChildren().size(); i++)
                     if (mario.collidesWith(sun.getChild(i)) || sun.getChild(i).collidesWith(mario)) {
-                    score -= 10;
-                    System.out.println("COLLISION");
-                }
+                        score -= 10;
+                        System.out.println("COLLISION");
+                    }
                 if (mario.collidesWith(sun) || sun.collidesWith(mario)) {
-                    //end game
+                    gameState = false;
                 }
-
-
+            }
             }
         }
 
@@ -192,13 +198,22 @@ import java.awt.Shape;
          */
         @Override
         public void draw(Graphics g) {
-            super.draw(g);
+            if (gameState) {
+                super.draw(g);
 
 		/* Same, just check for null in case a frame gets thrown in before sun is initialized */
-            if (mario != null) mario.draw(g);
-            if (sun != null) sun.draw(g);
-            String scorestr = Integer.toString(score);
-            g.drawString(scorestr, 450, 50);
+                if (mario != null) mario.draw(g);
+                if (sun != null) sun.draw(g);
+                String scorestr = Integer.toString(score);
+                g.drawString(scorestr, 450, 50);
+            } else {
+                if (score <= 0){
+                    g.drawString("GAME OVER :(", 215, 250);
+                } else {
+                    g.drawString("YOU WIN! :)", 215, 250);
+                }
+            }
+
         }
 
         /**
@@ -209,6 +224,7 @@ import java.awt.Shape;
             edu.virginia.LabFourGame game = new edu.virginia.LabFourGame();
             game.addObjects();;
             game.start();
+
 
         }
     }
