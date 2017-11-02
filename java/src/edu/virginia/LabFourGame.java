@@ -17,8 +17,8 @@ import java.awt.Shape;
     public class LabFourGame extends Game {
 
         /* Create the Sprites*/
-        Sprite mario = new Sprite("Mario", "Mario.png");
-        Sprite mario_hb = new Sprite("mario_hb", "mario_hb.png");
+        Sprite mario = new Sprite("Mario", "MarioSS.png");
+        Sprite mario_hb = new Sprite("mario_hb", "MarioSS_hb.png");
         Sprite sun = new Sprite("Sun", "sun.png");
         Sprite planet = new Sprite("Planet", "planet.png");
         Sprite planet2 = new Sprite("Planet2", "planet.png");
