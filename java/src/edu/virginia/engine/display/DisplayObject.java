@@ -49,6 +49,8 @@ public class DisplayObject {
 
 	private DisplayObject parent;
 
+	private Boolean hasPhysics;
+
 	/**
 	 * Constructors: can pass in the id OR the id and image's file path and
 	 * position OR the id and a buffered image and position
@@ -193,7 +195,9 @@ public class DisplayObject {
 
 	public void setParent(DisplayObject obj) {this.parent = obj;}
 
+	public Boolean getHasPhysics() {return this.hasPhysics;}
 
+	public void setHasPhysics(Boolean b){this.hasPhysics = b;}
 
 	/**
 	 * Helper function that simply reads an image from the given image name

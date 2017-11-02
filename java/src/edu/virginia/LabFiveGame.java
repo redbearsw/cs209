@@ -4,137 +4,137 @@ import edu.virginia.engine.display.Game;
 import edu.virginia.engine.display.Sprite;
 import edu.virginia.engine.util.SoundManager;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
-import java.awt.Graphics;
-import java.awt.Point;
+public class LabFiveGame extends Game{
+    /* Create the Sprites*/
+    Sprite mario = new Sprite("Mario", "MarioSS.png");
+    Sprite mario_hb = new Sprite("mario_hb", "MarioSS_hb.png");
+    Sprite sun = new Sprite("Sun", "sun.png");
+    Sprite sun_hb = new Sprite("sun_hb", "sun_hb.png");
+    Sprite planet = new Sprite("Planet", "planet.png");
+    Sprite planet2 = new Sprite("Planet2", "planet.png");
+    Sprite planet3 = new Sprite("Planet3", "planet.png");
+    Sprite planet4 = new Sprite("Planet4", "planet.png");
+    Sprite planet5 = new Sprite("Planet5", "planet.png");
+    Sprite planet_hb = new Sprite("planet_hb", "planet_hb.png");
+    Sprite planet2_hb = new Sprite("planet2_hb", "planet_hb.png");
+    Sprite planet3_hb = new Sprite("planet3_hb", "planet_hb.png");
+    Sprite planet4_hb = new Sprite("planet4_hb", "planet_hb.png");
+    Sprite planet5_hb = new Sprite("planet4_hb", "planet_hb.png");
+
+    /* Score */
+
+    private int score = 100;
+
+    /* Gravity */
+    int grav = -1;
+
+
+    /* Game State - True: Playing False: Over */
+
+    private boolean gameState = false;
+    private boolean beginning = true;
+    private boolean end = false;
+
+    /* Music and Sound Effects */
+
+    private SoundManager sounds = new SoundManager();
+
+
     /**
-     * Example game that utilizes our engine. We can create a simple prototype game with just a couple lines of code
-     * although, for now, it won't be a very fun game :)
+     * Constructor. See constructor in Game.java for details on the parameters given
      */
-
-    public class LabFourGame extends Game {
-
-        /* Create the Sprites*/
-        Sprite mario = new Sprite("Mario", "MarioSS.png");
-        Sprite mario_hb = new Sprite("mario_hb", "MarioSS_hb.png");
-        Sprite sun = new Sprite("Sun", "sun.png");
-        Sprite sun_hb = new Sprite("sun_hb", "sun_hb.png");
-        Sprite planet = new Sprite("Planet", "planet.png");
-        Sprite planet2 = new Sprite("Planet2", "planet.png");
-        Sprite planet3 = new Sprite("Planet3", "planet.png");
-        Sprite planet4 = new Sprite("Planet4", "planet.png");
-        Sprite planet5 = new Sprite("Planet5", "planet.png");
-        Sprite planet_hb = new Sprite("planet_hb", "planet_hb.png");
-        Sprite planet2_hb = new Sprite("planet2_hb", "planet_hb.png");
-        Sprite planet3_hb = new Sprite("planet3_hb", "planet_hb.png");
-        Sprite planet4_hb = new Sprite("planet4_hb", "planet_hb.png");
-        Sprite planet5_hb = new Sprite("planet4_hb", "planet_hb.png");
-
-        /* Score */
-
-        private int score = 100;
+    public LabFiveGame() {
+        super("Lab Five Game", 500, 500);
+    }
 
 
-
-        /* Game State - True: Playing False: Over */
-
-        private boolean gameState = false;
-        private boolean beginning = true;
-        private boolean end = false;
-
-        /* Music and Sound Effects */
-
-        public SoundManager sounds = new SoundManager();
-
-
-        /**
-         * Constructor. See constructor in Game.java for details on the parameters given
-         */
-        public LabFourGame() {
-            super("Lab Four Game", 500, 500);
-        }
-
-
-        public void addObjects() {
+    public void addObjects() {
 
 
             /* add hitboxes */
-            mario.addAtIndex(0, mario_hb);
-            sun.addAtIndex(0, sun_hb);
-            planet.addAtIndex(0, planet_hb);
-            planet2.addAtIndex(0, planet2_hb);
-            planet3.addAtIndex(0, planet3_hb);
-            planet4.addAtIndex(0, planet4_hb);
-            planet5.addAtIndex(0, planet5_hb);
+        mario.addAtIndex(0, mario_hb);
+        sun.addAtIndex(0, sun_hb);
+        planet.addAtIndex(0, planet_hb);
+        planet2.addAtIndex(0, planet2_hb);
+        planet3.addAtIndex(0, planet3_hb);
+        planet4.addAtIndex(0, planet4_hb);
+        planet5.addAtIndex(0, planet5_hb);
 
             /* set positions of sun and planets */
-            sun.setPosition(new Point (450, 250));
-            planet.setPosition(new Point (75, 50));
-            planet2.setPosition(new Point (260, 140));
-            planet3.setPosition(new Point (120, 150));
-            planet4.setPosition(new Point (400, 400));
-            planet5.setPosition(new Point (200, 200));
+        sun.setPosition(new Point(450, 250));
+        planet.setPosition(new Point (75, 50));
+        planet2.setPosition(new Point (260, 140));
+        planet3.setPosition(new Point (120, 150));
+        planet4.setPosition(new Point (400, 400));
+        planet5.setPosition(new Point (200, 200));
 
 
             /* scale images */
-            sun.setScaleX(.5);
-            sun.setScaleY(.5);
-            mario.setScaleX(.4);
-            mario.setScaleY(.4);
-            planet.setScaleY(.5);
-            planet.setScaleX(.5);
-            planet5.setScaleX(.6);
-            planet5.setScaleY(.6);
+        sun.setScaleX(.5);
+        sun.setScaleY(.5);
+        mario.setScaleX(.4);
+        mario.setScaleY(.4);
+        planet.setScaleY(.5);
+        planet.setScaleX(.5);
+        planet5.setScaleX(.6);
+        planet5.setScaleY(.6);
 
             /* Load in sounds */
-            sounds.LoadMusic("Theme", "theme.wav");
-            sounds.LoadSoundEffect("Game Over", "gameover.wav");
-            sounds.LoadSoundEffect("Crash", "crash.wav");
+        sounds.LoadMusic("Theme", "theme.wav");
+        sounds.LoadSoundEffect("Game Over", "gameover.wav");
+        sounds.LoadSoundEffect("Crash", "crash.wav");
 
 
+    }
+    /* Checks for collisions */
+    private boolean collides() {
+        if (planet.collidesWith(mario) || mario.collidesWith(planet)){
+            return true;
         }
-        /* Checks for collisions */
-        private boolean collides() {
-            if (planet.collidesWith(mario) || mario.collidesWith(planet)){
-                return true;
-            }
-            if (planet2.collidesWith(mario) || mario.collidesWith(planet2)){
-                return true;
-            }
-            if (planet3.collidesWith(mario) || mario.collidesWith(planet3)){
-                return true;
-            }
-            if (planet4.collidesWith(mario) || mario.collidesWith(planet4)){
-                return true;
-            }
-            if (planet5.collidesWith(mario) || mario.collidesWith(planet5)){
-                return true;
-            }
-            return false;
-
+        if (planet2.collidesWith(mario) || mario.collidesWith(planet2)){
+            return true;
         }
+        if (planet3.collidesWith(mario) || mario.collidesWith(planet3)){
+            return true;
+        }
+        if (planet4.collidesWith(mario) || mario.collidesWith(planet4)){
+            return true;
+        }
+        if (planet5.collidesWith(mario) || mario.collidesWith(planet5)){
+            return true;
+        }
+        return false;
 
-        /**
-         * Engine will automatically call this update method once per frame and pass to us
-         * the set of keys (as strings) that are currently being pressed down
-         */
-        @Override
-        public void update(ArrayList<Integer> pressedKeys) {
-            super.update(pressedKeys);
-            if (mario != null && sun != null) {
+    }
 
-		        if (pressedKeys.contains(KeyEvent.VK_ENTER)) {
-                    beginning = false;
-                    gameState = true;
-                    if(end) {
-                        end = false;
-                        mario.setPosition(new Point (0, 0));
-                        score = 100;
-                    }
+    /**
+     * Engine will automatically call this update method once per frame and pass to us
+     * the set of keys (as strings) that are currently being pressed down
+     */
+    @Override
+    public void update(ArrayList<Integer> pressedKeys) {
+        super.update(pressedKeys);
+        if (mario != null && sun != null) {
+
+            /* dealing with gravity */
+            if(mario.getHasPhysics() == true) {
+                mario.setPosition(new Point (mario.getPosition().x + grav, mario.getPosition().y));
+            }
+
+            if (pressedKeys.contains(KeyEvent.VK_ENTER)) {
+                beginning = false;
+                gameState = true;
+                if(end) {
+                    end = false;
+                    mario.setPosition(new Point (0, 0));
+                    score = 100;
                 }
-                if (gameState) {
+            }
+            if (gameState) {
                 if (mario != null) mario.update(pressedKeys);
 
                 if (mario.getCount() < 30) {
@@ -260,7 +260,7 @@ import java.awt.Point;
                 }
 
                 if (mario.collidesWith(sun) || sun.collidesWith(mario)) {
-                     gameState = false;
+                    gameState = false;
                 }
 
                 if(score<=0){
@@ -269,61 +269,59 @@ import java.awt.Point;
                     sounds.PlaySoundEffect("Game Over");
                 }
             }
-            }
-        }
-
-
-        /**
-         * Engine automatically invokes draw() every frame as well. If we want to make sure sun gets drawn to
-         * the screen, we need to make sure to override this method and call sun's draw method.
-         */
-        @Override
-        public void draw(Graphics g) {
-            if (gameState) {
-                super.draw(g);
-
-		        /* Checking for null */
-                if (mario != null) mario.draw(g);
-                if (sun != null) sun.draw(g);
-                if (planet != null) planet.draw(g);
-                if (planet2 != null) planet2.draw(g);
-                if (planet3 != null) planet3.draw(g);
-                if (planet4 != null) planet4.draw(g);
-                if (planet5 != null) planet5.draw(g);
-
-                /* Drawing score */
-                String scorestr = Integer.toString(score);
-                g.drawString(scorestr, 450, 30);
-            } else {
-                /* Various game states */
-                if (beginning) {
-                    g.drawString("GET MARIO TO THE SUN WHILE AVOIDING ASTEROIDS", 30, 230);
-                    g.drawString("PRESS ENTER TO START", 150, 250);
-
-                } else if (score <= 0){
-                    g.drawString("GAME OVER :(", 200, 230);
-                    g.drawString("PRESS ENTER TO PLAY AGAIN", 130, 250);
-                    end = true;
-                } else {
-                    g.drawString("YOU WIN! :)", 200, 230);
-                    g.drawString("PRESS ENTER TO PLAY AGAIN", 130, 250);
-                    end = true;
-                }
-            }
-
-        }
-
-        /**
-         * Quick main class that simply creates an instance of our game and starts the timer
-         * that calls update() and draw() every frame
-         */
-        public static void main(String[] args) {
-            edu.virginia.LabFourGame game = new edu.virginia.LabFourGame();
-            game.addObjects();;
-            game.start();
-            game.sounds.PlayMusic();
-
         }
     }
 
 
+    /**
+     * Engine automatically invokes draw() every frame as well. If we want to make sure sun gets drawn to
+     * the screen, we need to make sure to override this method and call sun's draw method.
+     */
+    @Override
+    public void draw(Graphics g) {
+        if (gameState) {
+            super.draw(g);
+
+		        /* Checking for null */
+            if (mario != null) mario.draw(g);
+            if (sun != null) sun.draw(g);
+            if (planet != null) planet.draw(g);
+            if (planet2 != null) planet2.draw(g);
+            if (planet3 != null) planet3.draw(g);
+            if (planet4 != null) planet4.draw(g);
+            if (planet5 != null) planet5.draw(g);
+
+                /* Drawing score */
+            String scorestr = Integer.toString(score);
+            g.drawString(scorestr, 450, 30);
+        } else {
+                /* Various game states */
+            if (beginning) {
+                g.drawString("GET MARIO TO THE SUN WHILE AVOIDING ASTEROIDS", 30, 230);
+                g.drawString("PRESS ENTER TO START", 150, 250);
+
+            } else if (score <= 0){
+                g.drawString("GAME OVER :(", 200, 230);
+                g.drawString("PRESS ENTER TO PLAY AGAIN", 130, 250);
+                end = true;
+            } else {
+                g.drawString("YOU WIN! :)", 200, 230);
+                g.drawString("PRESS ENTER TO PLAY AGAIN", 130, 250);
+                end = true;
+            }
+        }
+
+    }
+
+    /**
+     * Quick main class that simply creates an instance of our game and starts the timer
+     * that calls update() and draw() every frame
+     */
+    public static void main(String[] args) {
+        edu.virginia.LabFourGame game = new edu.virginia.LabFourGame();
+        game.addObjects();;
+        game.start();
+        game.sounds.PlayMusic();
+
+    }
+}
