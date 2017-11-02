@@ -1,3 +1,5 @@
 java/.idea/
 *.class
 *.class
+.DS_Store
+.DS_Store
