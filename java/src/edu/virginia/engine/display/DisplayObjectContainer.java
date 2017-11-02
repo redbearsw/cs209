@@ -140,7 +140,7 @@ public class DisplayObjectContainer extends DisplayObject{
     public DisplayObjectContainer getChildId(String id) {
         int size = this.children.size();
         int i;
-        for (i = 0; i<size; i++) {
+        for (i = 0; i < size; i++) {
             if(this.children.get(i).getId().equals(id)) {
                 return this.children.get(i);
             }
