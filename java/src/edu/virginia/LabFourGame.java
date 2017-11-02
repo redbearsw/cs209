@@ -24,6 +24,11 @@ import java.awt.Shape;
         Sprite planet2 = new Sprite("Planet2", "planet.png");
         Sprite planet3 = new Sprite("Planet3", "planet.png");
         Sprite planet4 = new Sprite("Planet4", "planet.png");
+        Sprite sun_hb = new Sprite("SunHitbox", "sun_hb.png");
+        Sprite planet_hb = new Sprite("PlanetHitbox", "planet_hb.png");
+        Sprite planet2_hb = new Sprite("Planet2Hitbox", "planet_hb.png");
+        Sprite planet3_hb = new Sprite("Planet3Hitbox", "planet_hb.png");
+        Sprite planet4_hb = new Sprite("Planet4Hitbox", "planet_hb.png");
 
         /* Score */
 
@@ -43,21 +48,20 @@ import java.awt.Shape;
 
         public void addObjects() {
 
-            mario.addChild(mario_hb);
-            //mario2.setPosition(new  Point(250,250));
-            //mario.printArray(mario.getHitbox());
-
+            //add planets as sun's children
             sun.addChild(planet);
             sun.addChild(planet2);
             sun.addChild(planet3);
             sun.addChild(planet4);
 
+            //set positions of sun and planets
             sun.setPosition(new Point (250, 250));
-            planet.setPosition(new Point (30, 15));
-            planet2.setPosition(new Point (100, 140));
+            planet.setPosition(new Point (50, 75));
+            planet2.setPosition(new Point (250, 140));
             planet3.setPosition(new Point (-200, -200));
             planet4.setPosition(new Point (-100, -100));
 
+            //set pivot point of each planet to the sun's center
             planet.setPivotPoint(new Point (sun.getUnscaledWidth()/2 - planet.getPosition().x,
                     sun.getUnscaledWidth()/2 - planet.getPosition().y));
             planet2.setPivotPoint(new Point (sun.getUnscaledWidth()/2 - planet2.getPosition().x,
@@ -67,8 +71,24 @@ import java.awt.Shape;
             planet4.setPivotPoint(new Point (sun.getUnscaledWidth()/2 - planet4.getPosition().x,
                     sun.getUnscaledWidth()/2 - planet4.getPosition().y));
 
+            //scale sun image
             sun.setScaleX(.5);
             sun.setScaleY(.5);
+
+            //add hitboxes as children and set their positions
+            mario.addAtIndex(0, mario_hb);
+            sun.addAtIndex(0, sun_hb);
+            sun_hb.setPosition(sun.getPosition());
+            planet.addAtIndex(0, planet_hb);
+            planet_hb.setPosition(planet.getPosition());
+            planet2.addAtIndex(0, planet2_hb);
+            planet2_hb.setPosition(planet2.getPosition());
+            planet3.addAtIndex(0, planet3_hb);
+            planet3_hb.setPosition(planet3.getPosition());
+            planet4.addAtIndex(0, planet4_hb);
+            planet4_hb.setPosition(planet4.getPosition());
+
+
 
         }
 
@@ -93,10 +113,10 @@ import java.awt.Shape;
                 mario.setFrameCount(mario.getFrameCount() + 1);
 
                 //set planet rotations
-                planet.setRotation(planet.getRotation() - 2);
-                planet2.setRotation(planet2.getRotation() + 1);
-                planet3.setRotation(planet3.getRotation() + 2);
-                planet4.setRotation(planet4.getRotation() - 3);
+//                planet.setRotation(planet.getRotation() - 2);
+//                planet2.setRotation(planet2.getRotation() + 1);
+//                planet3.setRotation(planet3.getRotation() + 2);
+//                planet4.setRotation(planet4.getRotation() - 3);
 
 
 		/* arrow key presses */
