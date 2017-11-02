@@ -20,7 +20,6 @@ import java.awt.Shape;
         Sprite mario = new Sprite("Mario", "MarioSS.png");
         Sprite mario_hb = new Sprite("mario_hb", "MarioSS_hb.png");
         Sprite sun = new Sprite("Sun", "sun.png");
-        Sprite sun_hb = new Sprite ("sun_hb", "sun_hb.png");
         Sprite planet = new Sprite("Planet", "planet.png");
         Sprite planet2 = new Sprite("Planet2", "planet.png");
         Sprite planet3 = new Sprite("Planet3", "planet.png");
@@ -50,15 +49,13 @@ import java.awt.Shape;
 
         public void addObjects() {
 
-<<<<<<< HEAD
+
             //add planets as sun's children
-=======
             mario.addChild(mario_hb);
             //mario2.setPosition(new  Point(250,250));
             //mario.printArray(mario.getHitbox());
 
             sun.addChild(sun_hb);
->>>>>>> 1753eebf5aa6840a11aab86ebcde13648d8ec0a5
             sun.addChild(planet);
             sun.addChild(planet2);
             sun.addChild(planet3);
@@ -90,15 +87,15 @@ import java.awt.Shape;
             //add hitboxes as children and set their positions
             mario.addAtIndex(0, mario_hb);
             sun.addAtIndex(0, sun_hb);
-            sun_hb.setPosition(sun.getPosition());
+            // sun_hb.setPosition(sun.getPosition());
             planet.addAtIndex(0, planet_hb);
-            planet_hb.setPosition(planet.getPosition());
+            // planet_hb.setPosition(planet.getPosition());
             planet2.addAtIndex(0, planet2_hb);
-            planet2_hb.setPosition(planet2.getPosition());
+            // planet2_hb.setPosition(planet2.getPosition());
             planet3.addAtIndex(0, planet3_hb);
-            planet3_hb.setPosition(planet3.getPosition());
+           //  planet3_hb.setPosition(planet3.getPosition());
             planet4.addAtIndex(0, planet4_hb);
-            planet4_hb.setPosition(planet4.getPosition());
+            // planet4_hb.setPosition(planet4.getPosition());
 
 
 
@@ -220,11 +217,13 @@ import java.awt.Shape;
                 int i;
                 for (i = 0; i < sun.getChildren().size(); i++)
                     if (mario.collidesWith(sun.getChild(i)) || sun.getChild(i).collidesWith(mario)) {
-                        score -= 10;
-
+                        score -= 1;
                         System.out.println("COLLISION");
                     }
                 if (mario.collidesWith(sun) || sun.collidesWith(mario)) {
+                    gameState = false;
+                }
+                if(score<=0){
                     gameState = false;
                 }
             }
