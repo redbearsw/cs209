@@ -37,7 +37,7 @@ public class SoundManager {
 
     public void PlaySoundEffect(String id) {
         if(this.soundeffects.get(id)!= null) {
-            this.soundeffects.get(id).start();
+            this.soundeffects.get(id).loop(1);
         } else {
             System.out.println("NULL SOUND EFFECT");
         }

@@ -57,53 +57,74 @@ import java.awt.Point;
 
 
             //add planets as sun's children
-            sun.addChild(planet);
-            sun.addChild(planet2);
-            sun.addChild(planet3);
-            sun.addChild(planet4);
+            sun.addChild(sun_hb);
+//            sun.addChild(planet);
+//            sun.addChild(planet2);
+//            sun.addChild(planet3);
+//            sun.addChild(planet4);
 
             //set positions of sun and planets
-            sun.setPosition(new Point (250, 250));
-            planet.setPosition(new Point (50, 75));
+            sun.setPosition(new Point (450, 250));
+            planet.setPosition(new Point (75, 50));
             planet2.setPosition(new Point (250, 140));
             planet3.setPosition(new Point (150, 150));
-            planet4.setPosition(new Point (-100, -100));
+            planet4.setPosition(new Point (400, 400));
 
-            //set pivot point of each planet to the sun's center
-            planet.setPivotPoint(new Point (sun.getUnscaledWidth()/2 - planet.getPosition().x,
-                    sun.getUnscaledWidth()/2 - planet.getPosition().y));
-            planet2.setPivotPoint(new Point (sun.getUnscaledWidth()/2 - planet2.getPosition().x,
-                    sun.getUnscaledWidth()/2 - planet2.getPosition().y));
-            planet3.setPivotPoint(new Point (sun.getUnscaledWidth()/2 - planet3.getPosition().x,
-                    sun.getUnscaledWidth()/2 - planet3.getPosition().y));
-            planet4.setPivotPoint(new Point (sun.getUnscaledWidth()/2 - planet4.getPosition().x,
-                    sun.getUnscaledWidth()/2 - planet4.getPosition().y));
 
             //scale images
             sun.setScaleX(.5);
             sun.setScaleY(.5);
-            mario.setScaleX(.6);
-            mario.setScaleY(.6);
+            mario.setScaleX(.4);
+            mario.setScaleY(.4);
+            // mario.setRotation(90);
+            planet.setScaleY(.5);
+            planet.setScaleX(.5);
+            // mario.setPivotPoint(new Point(mario.getScaledWidth(mario.getScaleX())/2, mario.getScaledHeight(mario.getScaleY())/2));
 
             //add hitboxes as children and set their positions
             mario.addAtIndex(0, mario_hb);
-            sun.addAtIndex(0, sun_hb);
+            // sun.addAtIndex(0, sun_hb);
 
             planet.addAtIndex(0, planet_hb);
             planet2.addAtIndex(0, planet2_hb);
             planet3.addAtIndex(0, planet3_hb);
             planet4.addAtIndex(0, planet4_hb);
 
-            planet.addAtIndex(0, planet_hb);
-//            planet2.addAtIndex(0, planet2_hb);
-//            planet3.addAtIndex(0, planet3_hb);
-//            planet4.addAtIndex(0, planet4_hb);
 
             /* Load in sounds */
             sounds.LoadMusic("Theme", "theme.wav");
             sounds.LoadSoundEffect("Game Over", "gameover.wav");
             sounds.LoadSoundEffect("Crash", "crash.wav");
 
+
+        }
+        /* Checks for collisions */
+        private boolean collides() {
+            if (planet.collidesWith(mario) || mario.collidesWith(planet)){
+
+                System.out.println("COLLISION");
+                return true;
+                //sounds.PlaySoundEffect("Crash");
+            }
+            if (planet2.collidesWith(mario) || mario.collidesWith(planet2)){
+
+                System.out.println("COLLISION");
+                return true;
+                //sounds.PlaySoundEffect("Crash");
+            }
+            if (planet3.collidesWith(mario) || mario.collidesWith(planet3)){
+
+                System.out.println("COLLISION");
+                return true;
+                //sounds.PlaySoundEffect("Crash");
+            }
+            if (planet4.collidesWith(mario) || mario.collidesWith(planet4)){
+
+                System.out.println("COLLISION");
+                return true;
+                //sounds.PlaySoundEffect("Crash");
+            }
+            return false;
 
         }
 
@@ -129,16 +150,41 @@ import java.awt.Point;
                     mario.setCount(mario.getCount() + 1);
                 }
 
-
-                mario.setFrameCount(mario.getFrameCount() + 1);
+                if (mario.getFrameCount() < 24) {
+                    mario.setFrameCount(mario.getFrameCount() + 1);
+                }
 
                 //set planet rotations
-//                planet.setRotation(planet.getRotation() - 2);
+                // planet.setRotation(planet.getRotation() - 1);
 //                planet2.setRotation(planet2.getRotation() + 1);
 //                planet3.setRotation(planet3.getRotation() + 2);
 //                planet4.setRotation(planet4.getRotation() - 3);
 
                 // start the game
+        // planets moving
+            if (planet.getPosition().y > -20) {
+                planet.setPosition(new Point (planet.getPosition().x, planet.getPosition().y - 3));
+            } else if (planet.getPosition().y <= -20) {
+                planet.setPosition(new Point(planet.getPosition().x, 500));
+            }
+
+            if (planet2.getPosition().y < 520) {
+                planet2.setPosition(new Point (planet2.getPosition().x, planet2.getPosition().y + 6));
+            } else if (planet2.getPosition().y >= 520) {
+                planet2.setPosition(new Point(planet2.getPosition().x, 0));
+            }
+
+            if (planet3.getPosition().y > -20) {
+                planet3.setPosition(new Point (planet3.getPosition().x, planet3.getPosition().y - 5));
+            } else if (planet3.getPosition().y <= -20) {
+                planet3.setPosition(new Point(planet3.getPosition().x, 500));
+            }
+
+            if (planet4.getPosition().y > -20) {
+                planet4.setPosition(new Point (planet4.getPosition().x, planet4.getPosition().y - 3));
+            } else if (planet4.getPosition().y <= -20) {
+                planet4.setPosition(new Point(planet4.getPosition().x, 500));
+            }
 
 
 		/* arrow key presses */
@@ -213,30 +259,15 @@ import java.awt.Point;
                     mario.setScaleY(mario.getScaleY() * .9);
                 }
 
-                System.out.println("Mario: ");
-                mario.printArray(mario.getHitbox());
-                System.out.println("\nSun: ");
-                sun.printArray(sun.getHitbox());
-                System.out.println("\nPlanet: ");
-                planet.printArray(planet.getHitbox());
-                System.out.println("\nPlanet2: ");
-                planet2.printArray(planet2.getHitbox());
-                System.out.println("\nPlanet3: ");
-                planet3.printArray(planet3.getHitbox());
-                System.out.println("\nPlanet4: ");
-                planet4.printArray(planet4.getHitbox());
-                System.out.println("\n");
-
                 /* Checking for collisions */
-                int i; int sz = sun.getChildren().size();
-                for (i = 1; i < sz; i++) {
-                    if (mario.collidesWith(sun.getChild(i)) || sun.getChild(i).collidesWith(mario)) {
-                        score -= 1;
-                        System.out.println("COLLISION");
+                if (mario.getFrameCount() == 24){
+                    if (collides()){
+                        score -= 10;
                         sounds.PlaySoundEffect("Crash");
-                        System.out.println("Collided with: " + sun.getChild(i).getId() + "\n");
+                        mario.setFrameCount(0);
                     }
                 }
+
                 if (mario.collidesWith(sun) || sun.collidesWith(mario)) {
                      gameState = false;
                 }
@@ -263,12 +294,17 @@ import java.awt.Point;
 		/* Same, just check for null in case a frame gets thrown in before sun is initialized */
                 if (mario != null) mario.draw(g);
                 if (sun != null) sun.draw(g);
+                if (planet != null) planet.draw(g);
+                if (planet2 != null) planet2.draw(g);
+                if (planet3 != null) planet3.draw(g);
+                if (planet4 != null) planet4.draw(g);
+
                 String scorestr = Integer.toString(score);
                 g.drawString(scorestr, 450, 50);
             } else {
                 if (beginning) {
-                    g.drawString("GET MARIO TO THE SUN WHILE AVOIDING ASTEROIDS", 50, 230);
-                    g.drawString("PRESS ENTER TO START", 215, 250);
+                    g.drawString("GET MARIO TO THE SUN WHILE AVOIDING ASTEROIDS", 70, 230);
+                    g.drawString("PRESS ENTER TO START", 170, 250);
 
                 } else if (score <= 0){
                     g.drawString("GAME OVER :(", 215, 250);

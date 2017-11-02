@@ -263,7 +263,8 @@ public class DisplayObject {
 	protected void applyTransformations(Graphics2D g2d) {
 
 		g2d.translate(this.position.x, this.position.y);
-		g2d.rotate(Math.toRadians(this.getRotation()), this.globalToLocal(this.getPivotPoint()).x, this.globalToLocal(this.getPivotPoint()).y);
+		g2d.rotate(Math.toRadians(this.getRotation()), this.globalToLocal(this.getPivotPoint()).x,
+				this.globalToLocal(this.getPivotPoint()).y);
 		g2d.scale(this.scaleX, this.scaleY);
 		float curAlpha;
 		this.oldAlpha = curAlpha = ((AlphaComposite)
@@ -280,7 +281,8 @@ public class DisplayObject {
 
 		g2d.setComposite(AlphaComposite.getInstance(3, this.oldAlpha));
 		g2d.scale(1/this.scaleX, 1/this.scaleY);
-		g2d.rotate(Math.toRadians(-this.getRotation()), this.globalToLocal(this.getPivotPoint()).x, this.globalToLocal(this.getPivotPoint()).y);
+		g2d.rotate(Math.toRadians(-this.getRotation()), this.globalToLocal(this.getPivotPoint()).x,
+				this.globalToLocal(this.getPivotPoint()).y);
 		g2d.translate(-this.position.x, -this.position.y);
 
 
@@ -294,7 +296,8 @@ public class DisplayObject {
 			return p;
 		}
 		else {
-			return new Point(this.getParent().getPosition().x + this.getParent().localToGlobal(p).x, this.getParent().getPosition().y + this.getParent().localToGlobal(p).y);
+			return new Point(this.getParent().getPosition().x + this.getParent().localToGlobal(p).x,
+					this.getParent().getPosition().y + this.getParent().localToGlobal(p).y);
 		}
 	}
 
@@ -302,7 +305,8 @@ public class DisplayObject {
 		if (parent == null)
 			return p;
 		else
-			return new Point(this.getParent().getPosition().x - this.getParent().globalToLocal(p).x, this.getParent().getPosition().y - this.getParent().globalToLocal(p).y);
+			return new Point(this.getParent().getPosition().x - this.getParent().globalToLocal(p).x,
+					this.getParent().getPosition().y - this.getParent().globalToLocal(p).y);
 
 	}
 
