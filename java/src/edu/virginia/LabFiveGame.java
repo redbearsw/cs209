@@ -173,7 +173,6 @@ public class LabFiveGame extends Game{
                     } else {
                         mario.setPosition(new Point(mario.getPosition().x + 2 * grav, mario.getPosition().y - 2 * grav));
                     }
-
                 }
 
                 /* planet movement */
@@ -184,19 +183,19 @@ public class LabFiveGame extends Game{
                 }
 
                 if (planet2.getPosition().y < 520) {
-                    planet2.setPosition(new Point (planet2.getPosition().x, planet2.getPosition().y + 6));
+                    planet2.setPosition(new Point (planet2.getPosition().x, planet2.getPosition().y + 4));
                 } else if (planet2.getPosition().y >= 520) {
                     planet2.setPosition(new Point(planet2.getPosition().x, 0));
                 }
 
                 if (planet3.getPosition().y > -20) {
-                    planet3.setPosition(new Point (planet3.getPosition().x, planet3.getPosition().y - 3));
+                    planet3.setPosition(new Point (planet3.getPosition().x, planet3.getPosition().y - 2));
                 } else if (planet3.getPosition().y <= -20) {
                     planet3.setPosition(new Point(planet3.getPosition().x, 500));
                 }
 
                 if (planet4.getPosition().y > -20) {
-                    planet4.setPosition(new Point (planet4.getPosition().x, planet4.getPosition().y - 5));
+                    planet4.setPosition(new Point (planet4.getPosition().x, planet4.getPosition().y - 4));
                 } else if (planet4.getPosition().y <= -20) {
                     planet4.setPosition(new Point(planet4.getPosition().x, 500));
                 }
