@@ -41,6 +41,7 @@ import java.awt.Point;
 
         private boolean gameState = false;
         private boolean beginning = true;
+        private boolean end = false;
 
         /* Music and Sound Effects */
 
@@ -125,6 +126,11 @@ import java.awt.Point;
 		        if (pressedKeys.contains(KeyEvent.VK_ENTER)) {
                     beginning = false;
                     gameState = true;
+                    if(end) {
+                        end = false;
+                        mario.setPosition(new Point (0, 0));
+                        score = 100;
+                    }
                 }
                 if (gameState) {
                 if (mario != null) mario.update(pressedKeys);
@@ -200,7 +206,6 @@ import java.awt.Point;
 
 		        /* rotation counterclockwise and clockwise */
                 if (pressedKeys.contains(KeyEvent.VK_Q)) {
-                    System.out.println("ROTATING");
                     mario.setRotation(mario.getRotation() - 10);
                 }
                 if (pressedKeys.contains(KeyEvent.VK_W)) {
@@ -294,9 +299,14 @@ import java.awt.Point;
                     g.drawString("PRESS ENTER TO START", 150, 250);
 
                 } else if (score <= 0){
-                    g.drawString("GAME OVER :(", 200, 250);
+                    g.drawString("GAME OVER :(", 200, 230);
+                    g.drawString("PRESS ENTER TO PLAY AGAIN", 130, 250);
+                    end = true;
                 } else {
-                    g.drawString("YOU WIN! :)", 200, 250);
+                    g.drawString("YOU WIN! :)", 200, 230);
+                    g.drawString("PRESS ENTER TO PLAY AGAIN", 130, 250);
+
+                    end = true;
                 }
             }
 
