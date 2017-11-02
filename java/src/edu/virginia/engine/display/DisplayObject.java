@@ -294,7 +294,7 @@ public class DisplayObject {
 			return p;
 		}
 		else {
-			return new Point(this.getPosition().x + this.getParent().localToGlobal(p).x, this.getPosition().y + this.getParent().localToGlobal(p).y);
+			return new Point(this.getParent().getPosition().x + this.getParent().localToGlobal(p).x, this.getParent().getPosition().y + this.getParent().localToGlobal(p).y);
 		}
 	}
 

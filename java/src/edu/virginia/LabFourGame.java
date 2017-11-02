@@ -20,6 +20,7 @@ import java.awt.Point;
         Sprite mario = new Sprite("Mario", "MarioSS.png");
         Sprite mario_hb = new Sprite("mario_hb", "MarioSS_hb.png");
         Sprite sun = new Sprite("Sun", "sun.png");
+        Sprite sun_hb = new Sprite("SunHitbox", "sun_hb2.png");
         Sprite planet = new Sprite("Planet", "planet.png");
         Sprite planet2 = new Sprite("Planet2", "planet.png");
         Sprite planet3 = new Sprite("Planet3", "planet.png");
@@ -56,7 +57,6 @@ import java.awt.Point;
 
 
             //add planets as sun's children
-
             mario.addChild(mario_hb);
 
             sun.addChild(sun_hb);
@@ -91,12 +91,20 @@ import java.awt.Point;
             //add hitboxes as children and set their positions
             mario.addAtIndex(0, mario_hb);
             sun.addAtIndex(0, sun_hb);
+
             planet.addAtIndex(0, planet_hb);
 //            planet2.addAtIndex(0, planet2_hb);
 //            planet3.addAtIndex(0, planet3_hb);
 //            planet4.addAtIndex(0, planet4_hb);
+
+            planet.addAtIndex(0, planet_hb);
+            planet2.addAtIndex(0, planet2_hb);
+            planet3.addAtIndex(0, planet3_hb);
+            planet4.addAtIndex(0, planet4_hb);
+
             /* Load in sounds */
             // sounds.LoadMusic("Theme", "theme.wav");
+
 
         }
 
@@ -227,6 +235,7 @@ import java.awt.Point;
                 if(score<=0){
                     gameState = false;
                 }
+                System.out.println("Score: " + score + "\n");
             }
             }
         }
