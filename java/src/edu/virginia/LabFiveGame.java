@@ -30,8 +30,7 @@ public class LabFiveGame extends Game{
     private int score = 100;
 
     /* Gravity */
-    int grav = -1;
-
+    int grav = 1;
 
     /* Game State - True: Playing False: Over */
 
@@ -55,7 +54,7 @@ public class LabFiveGame extends Game{
     public void addObjects() {
 
 
-            /* add hitboxes */
+        /* add hitboxes */
         mario.addAtIndex(0, mario_hb);
         sun.addAtIndex(0, sun_hb);
         planet.addAtIndex(0, planet_hb);
@@ -64,7 +63,7 @@ public class LabFiveGame extends Game{
         planet4.addAtIndex(0, planet4_hb);
         planet5.addAtIndex(0, planet5_hb);
 
-            /* set positions of sun and planets */
+        /* set positions of sun and planets */
         sun.setPosition(new Point(450, 250));
         planet.setPosition(new Point (75, 50));
         planet2.setPosition(new Point (260, 140));
@@ -73,7 +72,7 @@ public class LabFiveGame extends Game{
         planet5.setPosition(new Point (200, 200));
 
 
-            /* scale images */
+        /* scale images */
         sun.setScaleX(.5);
         sun.setScaleY(.5);
         mario.setScaleX(.4);
@@ -83,11 +82,13 @@ public class LabFiveGame extends Game{
         planet5.setScaleX(.6);
         planet5.setScaleY(.6);
 
-            /* Load in sounds */
+        /* Load in sounds */
         sounds.LoadMusic("Theme", "theme.wav");
         sounds.LoadSoundEffect("Game Over", "gameover.wav");
         sounds.LoadSoundEffect("Crash", "crash.wav");
 
+        /* Physics */
+        mario.setHasPhysics(true);
 
     }
     /* Checks for collisions */
@@ -121,7 +122,7 @@ public class LabFiveGame extends Game{
         if (mario != null && sun != null) {
 
             /* dealing with gravity */
-            if(mario.getHasPhysics() == true) {
+            if(mario.getHasPhysics()) {
                 mario.setPosition(new Point (mario.getPosition().x + grav, mario.getPosition().y));
             }
 
@@ -310,7 +311,6 @@ public class LabFiveGame extends Game{
                 end = true;
             }
         }
-
     }
 
     /**
@@ -318,8 +318,8 @@ public class LabFiveGame extends Game{
      * that calls update() and draw() every frame
      */
     public static void main(String[] args) {
-        edu.virginia.LabFourGame game = new edu.virginia.LabFourGame();
-        game.addObjects();;
+        edu.virginia.LabFiveGame game = new edu.virginia.LabFiveGame();
+        game.addObjects();
         game.start();
         game.sounds.PlayMusic();
 

@@ -69,6 +69,7 @@ public class DisplayObject {
 		this.setScaleX(1.0);
 		this.setScaleY(1.0);
 		this.setCount(30);
+		this.setHasPhysics(false);
 	}
 
 	public DisplayObject(String id, String fileName) {
@@ -83,6 +84,7 @@ public class DisplayObject {
 		this.setScaleX(1.0);
 		this.setScaleY(1.0);
 		this.setCount(30);
+		this.setHasPhysics(false);
 	}
 
 	public void setId(String id) {
