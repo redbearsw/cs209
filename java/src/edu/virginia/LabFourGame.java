@@ -2,13 +2,13 @@ package edu.virginia;
 
 import edu.virginia.engine.display.Game;
 import edu.virginia.engine.display.Sprite;
+import edu.virginia.engine.util.SoundManager;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.Shape;
     /**
      * Example game that utilizes our engine. We can create a simple prototype game with just a couple lines of code
      * although, for now, it won't be a very fun game :)
@@ -34,10 +34,16 @@ import java.awt.Shape;
 
         private int score = 100;
 
+
         /* Game State - True: Playing False: Over */
 
         private boolean gameState = false;
         private boolean beginning = true;
+
+        /* Music and Sound Effects */
+
+        private SoundManager sounds = new SoundManager();
+
 
         /**
          * Constructor. See constructor in Game.java for details on the parameters given
@@ -97,7 +103,8 @@ import java.awt.Shape;
             planet4.addAtIndex(0, planet4_hb);
             // planet4_hb.setPosition(planet4.getPosition());
 
-
+            /* Load in sounds */
+            // sounds.LoadMusic("Theme", "theme.wav");
 
         }
 
@@ -267,7 +274,7 @@ import java.awt.Shape;
             edu.virginia.LabFourGame game = new edu.virginia.LabFourGame();
             game.addObjects();;
             game.start();
-
+            // game.sounds.PlayMusic();
 
         }
     }
