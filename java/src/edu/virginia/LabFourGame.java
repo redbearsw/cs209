@@ -66,7 +66,7 @@ import java.awt.Point;
             sun.setPosition(new Point (250, 250));
             planet.setPosition(new Point (50, 75));
             planet2.setPosition(new Point (250, 140));
-            planet3.setPosition(new Point (-200, -200));
+            planet3.setPosition(new Point (150, 150));
             planet4.setPosition(new Point (-100, -100));
 
             //set pivot point of each planet to the sun's center
@@ -213,8 +213,19 @@ import java.awt.Point;
                     mario.setScaleY(mario.getScaleY() * .9);
                 }
 
-               // System.out.println("Mario 1: ");
-                //mario.printArray(mario.getHitbox());
+                System.out.println("Mario: ");
+                mario.printArray(mario.getHitbox());
+                System.out.println("\nSun: ");
+                sun.printArray(sun.getHitbox());
+                System.out.println("\nPlanet: ");
+                planet.printArray(planet.getHitbox());
+                System.out.println("\nPlanet2: ");
+                planet2.printArray(planet2.getHitbox());
+                System.out.println("\nPlanet3: ");
+                planet3.printArray(planet3.getHitbox());
+                System.out.println("\nPlanet4: ");
+                planet4.printArray(planet4.getHitbox());
+                System.out.println("\n");
 
                 /* Checking for collisions */
                 int i; int sz = sun.getChildren().size();
@@ -223,6 +234,7 @@ import java.awt.Point;
                         score -= 1;
                         System.out.println("COLLISION");
                         sounds.PlaySoundEffect("Crash");
+                        System.out.println("Collided with: " + sun.getChild(i).getId() + "\n");
                     }
                 }
                 if (mario.collidesWith(sun) || sun.collidesWith(mario)) {
@@ -234,7 +246,6 @@ import java.awt.Point;
                     sounds.StopMusic();
                     sounds.PlaySoundEffect("Game Over");
                 }
-                System.out.println("Score: " + score + "\n");
             }
             }
         }
