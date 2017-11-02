@@ -1,5 +1,6 @@
 package edu.virginia;
 
+import edu.virginia.engine.display.DisplayObjectContainer;
 import edu.virginia.engine.display.Game;
 import edu.virginia.engine.display.Sprite;
 import edu.virginia.engine.util.SoundManager;
@@ -42,6 +43,12 @@ public class LabFiveGame extends Game{
 
     private SoundManager sounds = new SoundManager();
 
+    /* Collision Stuff */
+
+    private Sprite lastCollided;
+
+    public void setLastCollided(Sprite s){ this.lastCollided = s; }
+    public Sprite getLastCollided(){ return this.lastCollided; }
 
     /**
      * Constructor. See constructor in Game.java for details on the parameters given
@@ -94,18 +101,23 @@ public class LabFiveGame extends Game{
     /* Checks for collisions */
     private boolean collides() {
         if (planet.collidesWith(mario) || mario.collidesWith(planet)){
+            this.setLastCollided(planet_hb);
             return true;
         }
         if (planet2.collidesWith(mario) || mario.collidesWith(planet2)){
+            this.setLastCollided(planet2_hb);
             return true;
         }
         if (planet3.collidesWith(mario) || mario.collidesWith(planet3)){
+            this.setLastCollided(planet3_hb);
             return true;
         }
         if (planet4.collidesWith(mario) || mario.collidesWith(planet4)){
+            this.setLastCollided(planet4_hb);
             return true;
         }
         if (planet5.collidesWith(mario) || mario.collidesWith(planet5)){
+            this.setLastCollided(planet5_hb);
             return true;
         }
         return false;
@@ -142,7 +154,7 @@ public class LabFiveGame extends Game{
                     mario.setCount(mario.getCount() + 1);
                 }
 
-                if (mario.getFrameCount() < 24) {
+                if (mario.getFrameCount() < 12) {
                     mario.setFrameCount(mario.getFrameCount() + 1);
                 }
 
@@ -252,11 +264,35 @@ public class LabFiveGame extends Game{
                 }
 
                 /* Checking for collisions */
-                if (mario.getFrameCount() == 24){
+                if (mario.getFrameCount() == 12){
                     if (collides()){
                         score -= 10;
                         sounds.PlaySoundEffect("Crash");
                         mario.setFrameCount(0);
+                        if (pressedKeys.contains(KeyEvent.VK_LEFT)) {
+                            mario.setPosition(new Point(mario.getPosition().x + 40, mario.getPosition().y));
+                        }
+                        if (pressedKeys.contains(KeyEvent.VK_RIGHT)) {
+                            mario.setPosition(new Point(mario.getPosition().x - 40, mario.getPosition().y));
+                        }
+                        if (pressedKeys.contains(KeyEvent.VK_UP)) {
+                            mario.setPosition(new Point(mario.getPosition().x, mario.getPosition().y  + 40));
+                        }
+                        if (pressedKeys.contains(KeyEvent.VK_DOWN)) {
+                            mario.setPosition(new Point(mario.getPosition().x, mario.getPosition().y - 40));
+                        }
+                        if (!(pressedKeys.contains(KeyEvent.VK_RIGHT) || pressedKeys.contains(KeyEvent.VK_LEFT)
+                                || pressedKeys.contains(KeyEvent.VK_UP)
+                                || pressedKeys.contains(KeyEvent.VK_DOWN))) {
+                            int Py = this.getLastCollided().getHitbox()[2];
+                            if (marioy1 < Py) {
+                                mario.setPosition(new Point(mario.getPosition().x, mario.getPosition().y + 40));
+                            } else if (marioy1 > Py) {
+                                mario.setPosition(new Point(mario.getPosition().x, mario.getPosition().y - 40));
+                            }
+                        }
+                        // if yes, move him back slightly in that direction
+                        // if no keys pressed, check y coords of planet and mario, and make mario move in op direction
                     }
                 }
 
