@@ -210,18 +210,18 @@ public class DisplayObjectContainer extends DisplayObject{
         int y1 = hb.getPosition().y;
         int y2 = y1 + hb.getUnscaledHeight();
 
-        System.out.println("LOCAL COORDS - X1: " + x1 + " X2: " + x2 + " Y1: " + y1 + " Y2: " + y2 + "\n");
+       // System.out.println("LOCAL COORDS - X1: " + x1 + " X2: " + x2 + " Y1: " + y1 + " Y2: " + y2 + "\n");
 
         //convert boundaries to global coordinates
-        Point xy1 = this.localToGlobal(new Point (x1, y1));
-        Point xy2 = this.localToGlobal(new Point (x2, y2));
+        Point xy1 = hb.localToGlobal(new Point (x1, y1));
+        Point xy2 = hb.localToGlobal(new Point (x2, y2));
 
         x1 = xy1.x;
         x2 = xy2.x;
         y1 = xy1.y;
         y2 = xy2.y;
 
-        System.out.println("GLOBAL COORDS - X1: " + x1 + " X2: " + x2 + " Y1: " + y1 + " Y2: " + y2 +"\n");
+     //   System.out.println("GLOBAL COORDS - X1: " + x1 + " X2: " + x2 + " Y1: " + y1 + " Y2: " + y2 +"\n");
         //store in array
         coords[0] = x1;
         coords[1] = x2;
@@ -249,7 +249,6 @@ public class DisplayObjectContainer extends DisplayObject{
             coords[3] = coords[2];
             coords[2] = y1;
         }
-
         return coords;
     }
 

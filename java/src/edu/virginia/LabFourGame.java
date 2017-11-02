@@ -57,30 +57,27 @@ import java.awt.Point;
 
 
             //add planets as sun's children
-            mario.addChild(mario_hb);
-
-            sun.addChild(sun_hb);
             sun.addChild(planet);
-//            sun.addChild(planet2);
-//            sun.addChild(planet3);
-//            sun.addChild(planet4);
+            sun.addChild(planet2);
+            sun.addChild(planet3);
+            sun.addChild(planet4);
 
             //set positions of sun and planets
             sun.setPosition(new Point (250, 250));
             planet.setPosition(new Point (50, 75));
-//            planet2.setPosition(new Point (250, 140));
-//            planet3.setPosition(new Point (-200, -200));
-//            planet4.setPosition(new Point (-100, -100));
+            planet2.setPosition(new Point (250, 140));
+            planet3.setPosition(new Point (-200, -200));
+            planet4.setPosition(new Point (-100, -100));
 
             //set pivot point of each planet to the sun's center
             planet.setPivotPoint(new Point (sun.getUnscaledWidth()/2 - planet.getPosition().x,
                     sun.getUnscaledWidth()/2 - planet.getPosition().y));
-//            planet2.setPivotPoint(new Point (sun.getUnscaledWidth()/2 - planet2.getPosition().x,
-//                    sun.getUnscaledWidth()/2 - planet2.getPosition().y));
-//            planet3.setPivotPoint(new Point (sun.getUnscaledWidth()/2 - planet3.getPosition().x,
-//                    sun.getUnscaledWidth()/2 - planet3.getPosition().y));
-//            planet4.setPivotPoint(new Point (sun.getUnscaledWidth()/2 - planet4.getPosition().x,
-//                    sun.getUnscaledWidth()/2 - planet4.getPosition().y));
+            planet2.setPivotPoint(new Point (sun.getUnscaledWidth()/2 - planet2.getPosition().x,
+                    sun.getUnscaledWidth()/2 - planet2.getPosition().y));
+            planet3.setPivotPoint(new Point (sun.getUnscaledWidth()/2 - planet3.getPosition().x,
+                    sun.getUnscaledWidth()/2 - planet3.getPosition().y));
+            planet4.setPivotPoint(new Point (sun.getUnscaledWidth()/2 - planet4.getPosition().x,
+                    sun.getUnscaledWidth()/2 - planet4.getPosition().y));
 
             //scale sun image
             sun.setScaleX(.5);
@@ -93,14 +90,14 @@ import java.awt.Point;
             sun.addAtIndex(0, sun_hb);
 
             planet.addAtIndex(0, planet_hb);
-//            planet2.addAtIndex(0, planet2_hb);
-//            planet3.addAtIndex(0, planet3_hb);
-//            planet4.addAtIndex(0, planet4_hb);
-
-            planet.addAtIndex(0, planet_hb);
             planet2.addAtIndex(0, planet2_hb);
             planet3.addAtIndex(0, planet3_hb);
             planet4.addAtIndex(0, planet4_hb);
+
+            planet.addAtIndex(0, planet_hb);
+//            planet2.addAtIndex(0, planet2_hb);
+//            planet3.addAtIndex(0, planet3_hb);
+//            planet4.addAtIndex(0, planet4_hb);
 
             /* Load in sounds */
             // sounds.LoadMusic("Theme", "theme.wav");
@@ -214,12 +211,8 @@ import java.awt.Point;
                     mario.setScaleY(mario.getScaleY() * .9);
                 }
 
-                System.out.println("Mario 1: ");
-                mario.printArray(mario.getHitbox());
-                System.out.println("\nplanet: ");
-                planet.printArray(planet.getHitbox());
-                System.out.println("\nsun: ");
-                sun.printArray(sun.getHitbox());
+               // System.out.println("Mario 1: ");
+                //mario.printArray(mario.getHitbox());
 
                 /* Checking for collisions */
                 int i; int sz = sun.getChildren().size();
