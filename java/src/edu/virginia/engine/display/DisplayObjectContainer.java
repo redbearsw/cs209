@@ -275,7 +275,8 @@ public class DisplayObjectContainer extends DisplayObject{
         double theta = Math.toRadians(this.getRotation());
 
         //pivot point in same coordinate system as c
-        Point globPiv = new Point(this.getPivotPoint().x + this.getPosition().x, this.getPivotPoint().y + this.getPosition().y);
+        Point globPiv = new Point(this.getPivotPoint().x + this.getPosition().x,
+                this.getPivotPoint().y + this.getPosition().y);
 
         //distance from point to pivot point
         double d = Math.sqrt(Math.pow(c.x - globPiv.x, 2) + Math.pow(c.y - globPiv.y, 2));
