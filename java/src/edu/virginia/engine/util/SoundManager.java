@@ -59,14 +59,11 @@ public class SoundManager {
 
     public void LoadMusic(String id, String filename){
         try {
-            File soundFile = new File(filename);
-            if(soundFile.exists()) {
-                AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
-                this.music = AudioSystem.getClip();
-                this.music.open(audioIn);
-            } else {
-                System.out.println("ERROR: FILE DOES NOT EXIST");
-            }
+            URL url = this.getClass().getClassLoader().getResource(filename);
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
+            this.music = AudioSystem.getClip();
+            this.music.open(audioIn);
+
         }catch (UnsupportedAudioFileException ex) {
         ex.printStackTrace();
     } catch (IOException ex) {
@@ -76,7 +73,7 @@ public class SoundManager {
     }
 
     }
-    public void PlayMusic(String id){
+    public void PlayMusic(){
         this.music.loop(Clip.LOOP_CONTINUOUSLY);
     }
 

@@ -2,13 +2,13 @@ package edu.virginia;
 
 import edu.virginia.engine.display.Game;
 import edu.virginia.engine.display.Sprite;
+import edu.virginia.engine.util.SoundManager;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.Shape;
     /**
      * Example game that utilizes our engine. We can create a simple prototype game with just a couple lines of code
      * although, for now, it won't be a very fun game :)
@@ -20,7 +20,6 @@ import java.awt.Shape;
         Sprite mario = new Sprite("Mario", "MarioSS.png");
         Sprite mario_hb = new Sprite("mario_hb", "MarioSS_hb.png");
         Sprite sun = new Sprite("Sun", "sun.png");
-        Sprite sun_hb = new Sprite ("sun_hb", "sun_hb.png");
         Sprite planet = new Sprite("Planet", "planet.png");
         Sprite planet2 = new Sprite("Planet2", "planet.png");
         Sprite planet3 = new Sprite("Planet3", "planet.png");
@@ -34,10 +33,16 @@ import java.awt.Shape;
 
         private int score = 100;
 
+
         /* Game State - True: Playing False: Over */
 
         private boolean gameState = false;
         private boolean beginning = true;
+
+        /* Music and Sound Effects */
+
+        private SoundManager sounds = new SoundManager();
+
 
         /**
          * Constructor. See constructor in Game.java for details on the parameters given
@@ -90,6 +95,8 @@ import java.awt.Shape;
 //            planet2.addAtIndex(0, planet2_hb);
 //            planet3.addAtIndex(0, planet3_hb);
 //            planet4.addAtIndex(0, planet4_hb);
+            /* Load in sounds */
+            // sounds.LoadMusic("Theme", "theme.wav");
 
         }
 
@@ -210,12 +217,14 @@ import java.awt.Shape;
                 int i; int sz = sun.getChildren().size();
                 for (i = 1; i < sz; i++) {
                     if (mario.collidesWith(sun.getChild(i)) || sun.getChild(i).collidesWith(mario)) {
-                        score -= 10;
-
+                        score -= 1;
                         System.out.println("COLLISION");
                     }
                 }
                 if (mario.collidesWith(sun) || sun.collidesWith(mario)) {
+                    gameState = false;
+                }
+                if(score<=0){
                     gameState = false;
                 }
             }
@@ -259,7 +268,7 @@ import java.awt.Shape;
             edu.virginia.LabFourGame game = new edu.virginia.LabFourGame();
             game.addObjects();;
             game.start();
-
+            // game.sounds.PlayMusic();
 
         }
     }
