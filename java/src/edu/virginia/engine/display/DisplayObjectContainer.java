@@ -16,7 +16,7 @@ public class DisplayObjectContainer extends DisplayObject{
 
     private ArrayList<DisplayObjectContainer> children;
 
-    // constructors (same as DisplayObject)
+    /* constructors (same as DisplayObject) */
     public DisplayObjectContainer(String id) {
         this.setId(id);
         this.setPosition(new Point (0, 0));
@@ -46,77 +46,9 @@ public class DisplayObjectContainer extends DisplayObject{
         this.children = new ArrayList<DisplayObjectContainer>();
     }
 
+    /* methods for dealing with children */
 
-
-    // Returns true iff given display object is already a child of this container
-    public Boolean contains(DisplayObject DO) {
-        return this.children.contains(DO);
-    }
-
-    // Returns child given the index of it in children
-    public DisplayObjectContainer getChild(int index) {
-        return this.children.get(index);
-    }
-
-    // Returns child given its id
-    public DisplayObjectContainer getChildId(String id) {
-        int size = this.children.size();
-        int i;
-        for (i = 0; i<size; i++) {
-            if(this.children.get(i).getId().equals(id)) {
-                return this.children.get(i);
-            }
-        }
-        System.out.println("CHILD DOES NOT EXIST");
-        return null;
-
-    }
-
-    //getter for children
-    public ArrayList<DisplayObjectContainer> getChildren() {
-        return this.children;
-    }
-    
-    // update
-
-    public void update(ArrayList<Integer> pressedKeys) {
-
-
-        super.update(pressedKeys);
-
-        if (children!=null) {
-            for (int i = 0; i < children.size(); i++) {
-
-                children.get(i).update(pressedKeys);
-            }
-        }
-
-    }
-
-    // draw
-    public void draw(Graphics g) {
-
-        if (super.getDisplayImage() != null) {
-
-			/*
-			 * Get the graphics and apply this objects transformations
-			 * (rotation, etc.)
-			 */
-            super.draw(g);
-
-            Graphics2D g2d = (Graphics2D) g;
-            applyTransformations(g2d);
-            if(children!=null) {
-                for (int i = 0; i < children.size(); i++) {
-                    children.get(i).draw(g);
-                }
-            }
-
-            reverseTransformations(g2d);
-        }
-    }
-
-    //add methods
+    /* adding children */
 
     //addChild adds Child to the end of the ArrayList
     public void addChild(DisplayObjectContainer obj) {
@@ -130,7 +62,7 @@ public class DisplayObjectContainer extends DisplayObject{
         obj.setParent(this);
     }
 
-    //remove methods
+    /* removing children */
 
     //rmvChild
     public DisplayObject rmvChild(String id) {
@@ -161,6 +93,8 @@ public class DisplayObjectContainer extends DisplayObject{
         }
     }
 
+    /* finding children */
+
     public DisplayObject findChild(String id) {
         int i;
         int sz = this.children.size();
@@ -171,26 +105,88 @@ public class DisplayObjectContainer extends DisplayObject{
         }
         return null;
     }
+
+    /* printing children */
     public void printArray(int[] anArray) {
         for (int i = 0; i < anArray.length; i++) {
             if (i > 0) {
                 System.out.print(", ");
             }
             System.out.print(anArray[i]);
-            }
+        }
     }
 
 
-    //find methods
+    /* finding children */
 
     //findChild at given index
     public DisplayObject findChild(int index) {
         if(this.children == null || this.children.isEmpty())
             return null;
         return this.children.get(index);
+    }
+
+    // Returns true iff given display object is already a child of this container
+    public Boolean contains(DisplayObject DO) {
+        return this.children.contains(DO);
+    }
+
+    // Returns child given the index of it in children
+    public DisplayObjectContainer getChild(int index) {
+        return this.children.get(index);
+    }
+
+    // Returns child given its id
+    public DisplayObjectContainer getChildId(String id) {
+        int size = this.children.size();
+        int i;
+        for (i = 0; i<size; i++) {
+            if(this.children.get(i).getId().equals(id)) {
+                return this.children.get(i);
+            }
+        }
+        System.out.println("CHILD DOES NOT EXIST");
+        return null;
+
+    }
+
+    /* getter for children */
+    public ArrayList<DisplayObjectContainer> getChildren() {
+        return this.children;
+    }
+    
+
+    /* update */
+    public void update(ArrayList<Integer> pressedKeys) {
+
+        super.update(pressedKeys);
+
+        if (children!=null) {
+            for (int i = 0; i < children.size(); i++) {
+
+                children.get(i).update(pressedKeys);
+            }
         }
 
+    }
 
+    /* draw */
+    public void draw(Graphics g) {
+
+        if (super.getDisplayImage() != null) {
+
+            super.draw(g);
+
+            Graphics2D g2d = (Graphics2D) g;
+            applyTransformations(g2d);
+            if(children!=null) {
+                for (int i = 0; i < children.size(); i++) {
+                    children.get(i).draw(g);
+                }
+            }
+            reverseTransformations(g2d);
+        }
+    }
 
 
     public int[] getHitbox() {
@@ -212,7 +208,6 @@ public class DisplayObjectContainer extends DisplayObject{
         int y1 = hb.getPosition().y;
         int y2 = y1 + hb.getUnscaledHeight();
 
-    //   System.out.println("LOCAL COORDS - X1: " + x1 + " X2: " + x2 + " Y1: " + y1 + " Y2: " + y2 + "\n");
 
         //convert boundaries to global coordinates
         xy1 = hb.localToGlobal(new Point (x1, y1));
@@ -223,7 +218,6 @@ public class DisplayObjectContainer extends DisplayObject{
         y1 = xy1.y;
         y2 = xy2.y;
 
-     //  System.out.println("GLOBAL COORDS - X1: " + x1 + " X2: " + x2 + " Y1: " + y1 + " Y2: " + y2 +"\n");
         //store in array
         coords[0] = x1;
         coords[1] = x2;
@@ -254,6 +248,7 @@ public class DisplayObjectContainer extends DisplayObject{
         return coords;
     }
 
+    //helper that applies scaling to the coordinates
     public int[] applyScale(int[] coords){
 
         if (coords.length != 4){
@@ -266,8 +261,6 @@ public class DisplayObjectContainer extends DisplayObject{
 
         xdiff = (this.getScaledWidth(this.getScaleX()));
         ydiff = (this.getScaledHeight(this.getScaleY()));
-        // System.out.println("SCALED:" + this.getScaledHeight(this.getScaleY()));
-        // System.out.println("SCALED:" + this.getScaledWidth(this.getScaleX()));
         scaledCoords[0] = coords[0];
         scaledCoords[1] = coords[0] + xdiff;
         scaledCoords[2] = coords[2];
@@ -276,7 +269,7 @@ public class DisplayObjectContainer extends DisplayObject{
         return scaledCoords;
     }
 
-
+    //helper that rotates a point
     private Point rotatePoint(Point c) {
         //angle of rotation
         double theta = Math.toRadians(this.getRotation());
@@ -299,6 +292,7 @@ public class DisplayObjectContainer extends DisplayObject{
 
     }
 
+    //helper that applies rotation to the coordinates
     public int[] applyRotate(int[] coords) {
         Point xy1 = this.rotatePoint(new Point (coords[0], coords[2]));
         Point xy2 = this.rotatePoint(new Point (coords[1], coords[3]));
@@ -311,6 +305,7 @@ public class DisplayObjectContainer extends DisplayObject{
 
     }
 
+    /* method to check for collisions */
     public boolean collidesWith(DisplayObjectContainer other){
         int [] myHitbox;
         int [] otherHitbox;

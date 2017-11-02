@@ -25,10 +25,12 @@ import java.awt.Point;
         Sprite planet2 = new Sprite("Planet2", "planet.png");
         Sprite planet3 = new Sprite("Planet3", "planet.png");
         Sprite planet4 = new Sprite("Planet4", "planet.png");
+        Sprite planet5 = new Sprite("Planet5", "planet.png");
         Sprite planet_hb = new Sprite("planet_hb", "planet_hb.png");
         Sprite planet2_hb = new Sprite("planet2_hb", "planet_hb.png");
         Sprite planet3_hb = new Sprite("planet3_hb", "planet_hb.png");
         Sprite planet4_hb = new Sprite("planet4_hb", "planet_hb.png");
+        Sprite planet5_hb = new Sprite("planet4_hb", "planet_hb.png");
 
         /* Score */
 
@@ -56,40 +58,33 @@ import java.awt.Point;
         public void addObjects() {
 
 
-            //add planets as sun's children
-            sun.addChild(sun_hb);
-//            sun.addChild(planet);
-//            sun.addChild(planet2);
-//            sun.addChild(planet3);
-//            sun.addChild(planet4);
-
-            //set positions of sun and planets
-            sun.setPosition(new Point (450, 250));
-            planet.setPosition(new Point (75, 50));
-            planet2.setPosition(new Point (250, 140));
-            planet3.setPosition(new Point (150, 150));
-            planet4.setPosition(new Point (400, 400));
-
-
-            //scale images
-            sun.setScaleX(.5);
-            sun.setScaleY(.5);
-            mario.setScaleX(.4);
-            mario.setScaleY(.4);
-            // mario.setRotation(90);
-            planet.setScaleY(.5);
-            planet.setScaleX(.5);
-            // mario.setPivotPoint(new Point(mario.getScaledWidth(mario.getScaleX())/2, mario.getScaledHeight(mario.getScaleY())/2));
-
-            //add hitboxes as children and set their positions
+            /* add hitboxes */
             mario.addAtIndex(0, mario_hb);
-            // sun.addAtIndex(0, sun_hb);
-
+            sun.addAtIndex(0, sun_hb);
             planet.addAtIndex(0, planet_hb);
             planet2.addAtIndex(0, planet2_hb);
             planet3.addAtIndex(0, planet3_hb);
             planet4.addAtIndex(0, planet4_hb);
+            planet5.addAtIndex(0, planet5_hb);
 
+            /* set positions of sun and planets */
+            sun.setPosition(new Point (450, 250));
+            planet.setPosition(new Point (75, 50));
+            planet2.setPosition(new Point (260, 140));
+            planet3.setPosition(new Point (120, 150));
+            planet4.setPosition(new Point (400, 400));
+            planet5.setPosition(new Point (200, 200));
+
+
+            /* scale images */
+            sun.setScaleX(.5);
+            sun.setScaleY(.5);
+            mario.setScaleX(.4);
+            mario.setScaleY(.4);
+            planet.setScaleY(.5);
+            planet.setScaleX(.5);
+            planet5.setScaleX(.6);
+            planet5.setScaleY(.6);
 
             /* Load in sounds */
             sounds.LoadMusic("Theme", "theme.wav");
@@ -101,28 +96,19 @@ import java.awt.Point;
         /* Checks for collisions */
         private boolean collides() {
             if (planet.collidesWith(mario) || mario.collidesWith(planet)){
-
-                System.out.println("COLLISION");
                 return true;
-                //sounds.PlaySoundEffect("Crash");
             }
             if (planet2.collidesWith(mario) || mario.collidesWith(planet2)){
-
-                System.out.println("COLLISION");
                 return true;
-                //sounds.PlaySoundEffect("Crash");
             }
             if (planet3.collidesWith(mario) || mario.collidesWith(planet3)){
-
-                System.out.println("COLLISION");
                 return true;
-                //sounds.PlaySoundEffect("Crash");
             }
             if (planet4.collidesWith(mario) || mario.collidesWith(planet4)){
-
-                System.out.println("COLLISION");
                 return true;
-                //sounds.PlaySoundEffect("Crash");
+            }
+            if (planet5.collidesWith(mario) || mario.collidesWith(planet5)){
+                return true;
             }
             return false;
 
@@ -135,15 +121,12 @@ import java.awt.Point;
         @Override
         public void update(ArrayList<Integer> pressedKeys) {
             super.update(pressedKeys);
-
             if (mario != null && sun != null) {
-		/* Make sure sun is not null. Sometimes Swing can auto cause an extra frame to go before everything is initialized */
-		if (pressedKeys.contains(KeyEvent.VK_ENTER)) {
-            System.out.println(gameState);
-            beginning = false;
-            gameState = true;
-        }
-		if (gameState) {
+		        if (pressedKeys.contains(KeyEvent.VK_ENTER)) {
+                    beginning = false;
+                    gameState = true;
+                }
+                if (gameState) {
                 if (mario != null) mario.update(pressedKeys);
 
                 if (mario.getCount() < 30) {
@@ -154,40 +137,39 @@ import java.awt.Point;
                     mario.setFrameCount(mario.getFrameCount() + 1);
                 }
 
-                //set planet rotations
-                // planet.setRotation(planet.getRotation() - 1);
-//                planet2.setRotation(planet2.getRotation() + 1);
-//                planet3.setRotation(planet3.getRotation() + 2);
-//                planet4.setRotation(planet4.getRotation() - 3);
+                /* planet movement */
+                if (planet.getPosition().y > -20) {
+                    planet.setPosition(new Point (planet.getPosition().x, planet.getPosition().y - 3));
+                } else if (planet.getPosition().y <= -20) {
+                    planet.setPosition(new Point(planet.getPosition().x, 500));
+                }
 
-                // start the game
-        // planets moving
-            if (planet.getPosition().y > -20) {
-                planet.setPosition(new Point (planet.getPosition().x, planet.getPosition().y - 3));
-            } else if (planet.getPosition().y <= -20) {
-                planet.setPosition(new Point(planet.getPosition().x, 500));
-            }
+                if (planet2.getPosition().y < 520) {
+                    planet2.setPosition(new Point (planet2.getPosition().x, planet2.getPosition().y + 6));
+                } else if (planet2.getPosition().y >= 520) {
+                    planet2.setPosition(new Point(planet2.getPosition().x, 0));
+                }
 
-            if (planet2.getPosition().y < 520) {
-                planet2.setPosition(new Point (planet2.getPosition().x, planet2.getPosition().y + 6));
-            } else if (planet2.getPosition().y >= 520) {
-                planet2.setPosition(new Point(planet2.getPosition().x, 0));
-            }
+                if (planet3.getPosition().y > -20) {
+                    planet3.setPosition(new Point (planet3.getPosition().x, planet3.getPosition().y - 3));
+                } else if (planet3.getPosition().y <= -20) {
+                    planet3.setPosition(new Point(planet3.getPosition().x, 500));
+                }
 
-            if (planet3.getPosition().y > -20) {
-                planet3.setPosition(new Point (planet3.getPosition().x, planet3.getPosition().y - 5));
-            } else if (planet3.getPosition().y <= -20) {
-                planet3.setPosition(new Point(planet3.getPosition().x, 500));
-            }
+                if (planet4.getPosition().y > -20) {
+                    planet4.setPosition(new Point (planet4.getPosition().x, planet4.getPosition().y - 5));
+                } else if (planet4.getPosition().y <= -20) {
+                    planet4.setPosition(new Point(planet4.getPosition().x, 500));
+                }
 
-            if (planet4.getPosition().y > -20) {
-                planet4.setPosition(new Point (planet4.getPosition().x, planet4.getPosition().y - 3));
-            } else if (planet4.getPosition().y <= -20) {
-                planet4.setPosition(new Point(planet4.getPosition().x, 500));
-            }
+                if (planet5.getPosition().y < 520) {
+                    planet5.setPosition(new Point (planet5.getPosition().x, planet5.getPosition().y + 9));
+                } else if (planet5.getPosition().y >= 520) {
+                    planet5.setPosition(new Point(planet5.getPosition().x, 0));
+                }
 
 
-		/* arrow key presses */
+		        /* arrow key presses */
                 if (pressedKeys.contains(KeyEvent.VK_UP)) {
                     mario.setPosition(new Point(mario.getPosition().x, mario.getPosition().y - 5));
                 }
@@ -202,7 +184,7 @@ import java.awt.Point;
                 }
 
 
-		/* IJKL presses */
+		        /* IJKL presses */
                 if (pressedKeys.contains(KeyEvent.VK_I)) {
                     mario.setPivotPoint(new Point(mario.getPivotPoint().x, mario.getPivotPoint().y - 5));
                 }
@@ -216,7 +198,7 @@ import java.awt.Point;
                     mario.setPivotPoint(new Point(mario.getPivotPoint().x + 5, mario.getPivotPoint().y));
                 }
 
-		/* rotation counterclockwise and clockwise */
+		        /* rotation counterclockwise and clockwise */
                 if (pressedKeys.contains(KeyEvent.VK_Q)) {
                     System.out.println("ROTATING");
                     mario.setRotation(mario.getRotation() - 10);
@@ -224,7 +206,8 @@ import java.awt.Point;
                 if (pressedKeys.contains(KeyEvent.VK_W)) {
                     mario.setRotation(mario.getRotation() + 10);
                 }
-		/* set visibility */
+
+                /* set visibility */
                 if (pressedKeys.contains(KeyEvent.VK_V)) {
                     if (mario.getCount() == 30) {
                         mario.setVisible(!mario.getVisible());
@@ -232,7 +215,8 @@ import java.awt.Point;
                     }
 
                 }
-		/* set alpha */
+
+                /* set alpha */
                 if (pressedKeys.contains(KeyEvent.VK_Z)) {
                     if (mario.getAlpha() >= 1.0f) {
                         mario.setAlpha(1.0f);
@@ -249,7 +233,7 @@ import java.awt.Point;
                     mario.setAlpha(mario.getAlpha() * .9f);
                 }
 
-		/* scale mario */
+		        /* scale mario */
                 if (pressedKeys.contains(KeyEvent.VK_A)) {
                     mario.setScaleX(mario.getScaleX() * 1.1);
                     mario.setScaleY(mario.getScaleY() * 1.1);
@@ -291,25 +275,28 @@ import java.awt.Point;
             if (gameState) {
                 super.draw(g);
 
-		/* Same, just check for null in case a frame gets thrown in before sun is initialized */
+		        /* Checking for null */
                 if (mario != null) mario.draw(g);
                 if (sun != null) sun.draw(g);
                 if (planet != null) planet.draw(g);
                 if (planet2 != null) planet2.draw(g);
                 if (planet3 != null) planet3.draw(g);
                 if (planet4 != null) planet4.draw(g);
+                if (planet5 != null) planet5.draw(g);
 
+                /* Drawing score */
                 String scorestr = Integer.toString(score);
-                g.drawString(scorestr, 450, 50);
+                g.drawString(scorestr, 450, 30);
             } else {
+                /* Various game states */
                 if (beginning) {
-                    g.drawString("GET MARIO TO THE SUN WHILE AVOIDING ASTEROIDS", 70, 230);
-                    g.drawString("PRESS ENTER TO START", 170, 250);
+                    g.drawString("GET MARIO TO THE SUN WHILE AVOIDING ASTEROIDS", 30, 230);
+                    g.drawString("PRESS ENTER TO START", 150, 250);
 
                 } else if (score <= 0){
-                    g.drawString("GAME OVER :(", 215, 250);
+                    g.drawString("GAME OVER :(", 200, 250);
                 } else {
-                    g.drawString("YOU WIN! :)", 215, 250);
+                    g.drawString("YOU WIN! :)", 200, 250);
                 }
             }
 

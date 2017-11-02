@@ -22,7 +22,6 @@ public class SoundManager {
                 Clip clip = AudioSystem.getClip();
                 clip.open(audioIn);
                 this.soundeffects.put(id, clip);
-                System.out.println("SUCCESS");
             } else {
                 System.out.println("ERROR: FILE DOES NOT EXIST");
             }
@@ -51,8 +50,6 @@ public class SoundManager {
                 AudioInputStream audioIn = AudioSystem.getAudioInputStream(file);
                 this.music = AudioSystem.getClip();
                 this.music.open(audioIn);
-
-                System.out.println("SUCCESS");
             } else {
                 System.out.println("ERROR: FILE DOES NOT EXIST");
             }

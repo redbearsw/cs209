@@ -2,6 +2,7 @@ package edu.virginia.engine.display;
 
 import java.awt.Graphics;
 import java.awt.Color;
+import java.awt.Font;
 
 import javax.swing.JPanel;
 
@@ -38,6 +39,7 @@ public class GameScenePanel extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.setColor(Color.white);
+		g.setFont(new Font (g.getFont().getFontName(), Font.PLAIN, 16));
 		gameRef.nextFrame(g);
 	}
 
