@@ -307,11 +307,11 @@ public class LabFiveGame extends Game{
                     if (!(pressedKeys.contains(KeyEvent.VK_RIGHT) || pressedKeys.contains(KeyEvent.VK_LEFT)
                             || pressedKeys.contains(KeyEvent.VK_UP)
                             || pressedKeys.contains(KeyEvent.VK_DOWN))) {
-                        System.out.println("HELLO");
+                       
                         if (this.lastCollided != null) {
-                            System.out.println("HELLO1");
+
                             int[] array = this.getLastCollided().getHitbox();
-                            System.out.println(this.getLastCollided().getHitbox());
+
                             int Py = array[2];
                             if (marioy1 < Py) {
                                 mario.setPosition(new Point(mario.getPosition().x, mario.getPosition().y - 12));
