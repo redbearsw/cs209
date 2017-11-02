@@ -127,11 +127,6 @@ public class LabFiveGame extends Game{
             int marioy1 = mario.getHitbox()[2];
             int marioy2 = mario.getHitbox()[3];
 
-            /* dealing with gravity */
-            if(mario.getHasPhysics() &&  mariox2 < 500) {
-                mario.setPosition(new Point (mario.getPosition().x + grav, mario.getPosition().y));
-            }
-
             if (pressedKeys.contains(KeyEvent.VK_ENTER)) {
                 beginning = false;
                 gameState = true;
@@ -144,12 +139,29 @@ public class LabFiveGame extends Game{
             if (gameState) {
                 if (mario != null) mario.update(pressedKeys);
 
+
                 if (mario.getCount() < 30) {
                     mario.setCount(mario.getCount() + 1);
                 }
 
                 if (mario.getFrameCount() < 24) {
                     mario.setFrameCount(mario.getFrameCount() + 1);
+                }
+
+                /* dealing with gravity */
+                if(mario.getHasPhysics() &&  mariox2 < 500) {
+                    if (marioy1 < sun.getHitbox()[2] / 2) {
+                        mario.setPosition(new Point(mario.getPosition().x + 2 * grav, mario.getPosition().y + 2 * grav));
+                    } else if (marioy1 >= sun.getHitbox()[2] / 2 && marioy1 < sun.getHitbox()[2]) {
+                        mario.setPosition(new Point(mario.getPosition().x + 2 * grav, mario.getPosition().y + grav));
+                    } else if (marioy1 <= sun.getHitbox()[3] / 2 && marioy1 > sun.getHitbox()[2]) {
+                        mario.setPosition(new Point(mario.getPosition().x + 2 * grav, mario.getPosition().y));
+                    } else if (marioy1 > sun.getHitbox()[3] / 2 && marioy1 <= sun.getHitbox()[3]) {
+                        mario.setPosition(new Point(mario.getPosition().x + 2 * grav, mario.getPosition().y - grav));
+                    } else {
+                        mario.setPosition(new Point(mario.getPosition().x + 2 * grav, mario.getPosition().y - 2 * grav));
+                    }
+
                 }
 
                 /* planet movement */
