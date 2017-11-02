@@ -121,11 +121,13 @@ public class DisplayObjectContainer extends DisplayObject{
     //addChild adds Child to the end of the ArrayList
     public void addChild(DisplayObjectContainer obj) {
         this.children.add(obj);
+        obj.setParent(this);
     }
 
     //addAtIndex
     public void addAtIndex(int i, DisplayObjectContainer obj) {
         this.children.add(i, obj);
+        obj.setParent(this);
     }
 
     //remove methods
@@ -208,15 +210,18 @@ public class DisplayObjectContainer extends DisplayObject{
         int y1 = hb.getPosition().y;
         int y2 = y1 + hb.getUnscaledHeight();
 
-        // System.out.println("LOCAL COORDS - X1: " + x1 + "X2: " + x2 + "Y1: " + y1 + "Y2: " + y2);
+        System.out.println("LOCAL COORDS - X1: " + x1 + " X2: " + x2 + " Y1: " + y1 + " Y2: " + y2 + "\n");
 
         //convert boundaries to global coordinates
-        x1 += this.getPosition().x;
-        x2 += this.getPosition().x;
-        y1 += this.getPosition().y;
-        y2 += this.getPosition().y;
+        Point xy1 = this.localToGlobal(new Point (x1, y1));
+        Point xy2 = this.localToGlobal(new Point (x2, y2));
 
-        // System.out.println("GLOBAL COORDS - X1: " + x1 + "X2: " + x2 + "Y1: " + y1 + "Y2: " + y2);
+        x1 = xy1.x;
+        x2 = xy2.x;
+        y1 = xy1.y;
+        y2 = xy2.y;
+
+        System.out.println("GLOBAL COORDS - X1: " + x1 + " X2: " + x2 + " Y1: " + y1 + " Y2: " + y2 +"\n");
         //store in array
         coords[0] = x1;
         coords[1] = x2;
@@ -284,7 +289,6 @@ public class DisplayObjectContainer extends DisplayObject{
         //calculating x and y
         double delx = d * Math.sin(theta);
         double dely = d - (d * Math.cos(theta));
-        //System.out.println("theta: " +theta+"\npivpt: "+globPiv+"\nx change: "+x+"\ny change: "+y+"\n");
 
         //adding offset to points
         c.x -= (int) delx;
@@ -302,10 +306,6 @@ public class DisplayObjectContainer extends DisplayObject{
         coords[2] = xy1.y;
         coords[3] = xy2.y;
 
-        //System.out.println("Rotated array: ");
-        //this.printArray(coords);
-        //System.out.println("\n");
-
         return coords;
 
     }
@@ -321,13 +321,6 @@ public class DisplayObjectContainer extends DisplayObject{
 
         if(myHitbox == null || otherHitbox == null)
             return false;
-
-
-//        System.out.println("Mario 1: ");
-//        this.printArray(myHitbox);
-//        System.out.println("\nMario 2: ");
-//        this.printArray(otherHitbox);
-//        System.out.println("\n");
 
         if(otherHitbox[0] >= myHitbox[0] && (otherHitbox[0] <= myHitbox[1])){
             if(otherHitbox[2] >= myHitbox[2] && (otherHitbox[2] <= myHitbox[3])) {

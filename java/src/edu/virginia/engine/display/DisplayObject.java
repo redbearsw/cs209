@@ -49,8 +49,6 @@ public class DisplayObject {
 
 	private DisplayObject parent;
 
-	private DisplayObject hitbox;
-
 	/**
 	 * Constructors: can pass in the id OR the id and image's file path and
 	 * position OR the id and a buffered image and position
@@ -293,18 +291,18 @@ public class DisplayObject {
 	/* Convert given point from global to Display Object's coordinates or vice versa */
 	public Point localToGlobal(Point p){
 		if (parent == null) {
-			// System.out.println("PARENT IS NULL");
 			return p;
 		}
-		else
+		else {
 			return new Point(this.getPosition().x + this.getParent().localToGlobal(p).x, this.getPosition().y + this.getParent().localToGlobal(p).y);
+		}
 	}
 
 	public Point globalToLocal(Point p){
 		if (parent == null)
 			return p;
 		else
-			return new Point(this.getPosition().x - this.getParent().globalToLocal(p).x, this.getPosition().y - this.getParent().globalToLocal(p).y);
+			return new Point(this.getParent().getPosition().x - this.getParent().globalToLocal(p).x, this.getParent().getPosition().y - this.getParent().globalToLocal(p).y);
 
 	}
 
