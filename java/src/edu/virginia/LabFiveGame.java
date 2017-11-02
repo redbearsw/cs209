@@ -1,5 +1,6 @@
 package edu.virginia;
 
+import edu.virginia.engine.display.DisplayObjectContainer;
 import edu.virginia.engine.display.Game;
 import edu.virginia.engine.display.Sprite;
 import edu.virginia.engine.util.SoundManager;
@@ -42,6 +43,12 @@ public class LabFiveGame extends Game{
 
     private SoundManager sounds = new SoundManager();
 
+    /* Collision Stuff */
+
+    private Sprite lastCollided = null;
+
+    public void setLastCollided(Sprite s){ this.lastCollided = s; }
+    public Sprite getLastCollided(){ return this.lastCollided; }
 
     /**
      * Constructor. See constructor in Game.java for details on the parameters given
@@ -57,11 +64,11 @@ public class LabFiveGame extends Game{
         /* add hitboxes */
         mario.addAtIndex(0, mario_hb);
         sun.addAtIndex(0, sun_hb);
-        planet.addAtIndex(0, planet_hb);
         planet2.addAtIndex(0, planet2_hb);
         planet3.addAtIndex(0, planet3_hb);
         planet4.addAtIndex(0, planet4_hb);
-        planet5.addAtIndex(0, planet5_hb);
+        planet5.addAtIndex(0, planet5_hb);planet.addAtIndex(0, planet_hb);
+
 
         /* set positions of sun and planets */
         sun.setPosition(new Point(450, 250));
@@ -94,18 +101,23 @@ public class LabFiveGame extends Game{
     /* Checks for collisions */
     private boolean collides() {
         if (planet.collidesWith(mario) || mario.collidesWith(planet)){
+            this.setLastCollided(planet);
             return true;
         }
         if (planet2.collidesWith(mario) || mario.collidesWith(planet2)){
+            this.setLastCollided(planet2);
             return true;
         }
         if (planet3.collidesWith(mario) || mario.collidesWith(planet3)){
+            this.setLastCollided(planet3);
             return true;
         }
         if (planet4.collidesWith(mario) || mario.collidesWith(planet4)){
+            this.setLastCollided(planet4);
             return true;
         }
         if (planet5.collidesWith(mario) || mario.collidesWith(planet5)){
+            this.setLastCollided(planet5);
             return true;
         }
         return false;
@@ -275,6 +287,37 @@ public class LabFiveGame extends Game{
                         score -= 10;
                         sounds.PlaySoundEffect("Crash");
                         mario.setFrameCount(0);
+                        if (pressedKeys.contains(KeyEvent.VK_LEFT)) {
+                            mario.setPosition(new Point(mario.getPosition().x + 60, mario.getPosition().y));
+                        }
+                        if (pressedKeys.contains(KeyEvent.VK_RIGHT)) {
+                            mario.setPosition(new Point(mario.getPosition().x - 60, mario.getPosition().y));
+                        }
+                        if (pressedKeys.contains(KeyEvent.VK_UP)) {
+                            mario.setPosition(new Point(mario.getPosition().x, mario.getPosition().y  + 60));
+                        }
+                        if (pressedKeys.contains(KeyEvent.VK_DOWN)) {
+                            mario.setPosition(new Point(mario.getPosition().x, mario.getPosition().y - 60));
+                        }
+                        if (!(pressedKeys.contains(KeyEvent.VK_RIGHT) || pressedKeys.contains(KeyEvent.VK_LEFT)
+                                || pressedKeys.contains(KeyEvent.VK_UP)
+                                || pressedKeys.contains(KeyEvent.VK_DOWN))) {
+                            System.out.println("HELLO");
+                            if (this.lastCollided != null) {
+                                System.out.println("HELLO1");
+                                int[] array = this.getLastCollided().getHitbox();
+                                System.out.println(this.getLastCollided().getHitbox());
+                                int Py = array[2];
+                                if (marioy1 < Py) {
+                                    mario.setPosition(new Point(mario.getPosition().x, mario.getPosition().y - 60));
+                                } else if (marioy1 > Py) {
+                                    mario.setPosition(new Point(mario.getPosition().x, mario.getPosition().y + 60));
+                                }
+                            }
+                            System.out.println("HELLO2");
+                        }
+                        // if yes, move him back slightly in that direction
+                        // if no keys pressed, check y coords of planet and mario, and make mario move in op direction
                     }
                 }
 
