@@ -121,8 +121,14 @@ public class LabFiveGame extends Game{
         super.update(pressedKeys);
         if (mario != null && sun != null) {
 
+            // mario's Hitbox boundaries
+            int mariox1 = mario.getHitbox()[0];
+            int mariox2 = mario.getHitbox()[1];
+            int marioy1 = mario.getHitbox()[2];
+            int marioy2 = mario.getHitbox()[3];
+
             /* dealing with gravity */
-            if(mario.getHasPhysics()) {
+            if(mario.getHasPhysics() &&  mariox2 < 500) {
                 mario.setPosition(new Point (mario.getPosition().x + grav, mario.getPosition().y));
             }
 
@@ -179,16 +185,16 @@ public class LabFiveGame extends Game{
 
 
 		        /* arrow key presses */
-                if (pressedKeys.contains(KeyEvent.VK_UP)) {
+                if (pressedKeys.contains(KeyEvent.VK_UP) && marioy1 > 0) {
                     mario.setPosition(new Point(mario.getPosition().x, mario.getPosition().y - 5));
                 }
-                if (pressedKeys.contains(KeyEvent.VK_DOWN)) {
+                if (pressedKeys.contains(KeyEvent.VK_DOWN) && marioy2 < 496) {
                     mario.setPosition(new Point(mario.getPosition().x, mario.getPosition().y + 5));
                 }
-                if (pressedKeys.contains(KeyEvent.VK_LEFT)) {
+                if (pressedKeys.contains(KeyEvent.VK_LEFT) && mariox1 > 0) {
                     mario.setPosition(new Point(mario.getPosition().x - 5, mario.getPosition().y));
                 }
-                if (pressedKeys.contains(KeyEvent.VK_RIGHT)) {
+                if (pressedKeys.contains(KeyEvent.VK_RIGHT) && mariox2 < 495) {
                     mario.setPosition(new Point(mario.getPosition().x + 5, mario.getPosition().y));
                 }
 
