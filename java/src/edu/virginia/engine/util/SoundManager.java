@@ -14,17 +14,13 @@ public class SoundManager {
 
     public void LoadSoundEffect(String id, String filename) {
         try {
-            File file = new File(filename);
-            if(file.exists()){
-                URL url = this.getClass().getClassLoader().getResource(filename);
-                AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
+            // File file = new File(filename);
+                AudioInputStream audioIn = AudioSystem.getAudioInputStream(this.getClass().getResource(filename));
                 Clip clip = AudioSystem.getClip();
                 clip.open(audioIn);
                 this.soundeffects.put(id, clip);
-                System.out.println("SUCCESS");
-            } else {
-                System.out.println("ERROR: FILE DOES NOT EXIST");
-            }
+                //System.out.println("SUCCESS");
+                // System.out.println("ERROR: FILE DOES NOT EXIST");
 
 //        if (file.exists()) {
 //            AudioInputStream audioIn = AudioSystem.getAudioInputStream(file);

@@ -20,6 +20,7 @@ import java.awt.Shape;
         Sprite mario = new Sprite("Mario", "MarioSS.png");
         Sprite mario_hb = new Sprite("mario_hb", "MarioSS_hb.png");
         Sprite sun = new Sprite("Sun", "sun.png");
+        Sprite sun_hb = new Sprite ("sun_hb", "sun_hb.png");
         Sprite planet = new Sprite("Planet", "planet.png");
         Sprite planet2 = new Sprite("Planet2", "planet.png");
         Sprite planet3 = new Sprite("Planet3", "planet.png");
@@ -31,7 +32,8 @@ import java.awt.Shape;
 
         /* Game State - True: Playing False: Over */
 
-        private boolean gameState = true;
+        private boolean gameState = false;
+        private boolean beginning = true;
 
         /**
          * Constructor. See constructor in Game.java for details on the parameters given
@@ -47,6 +49,7 @@ import java.awt.Shape;
             //mario2.setPosition(new  Point(250,250));
             //mario.printArray(mario.getHitbox());
 
+            sun.addChild(sun_hb);
             sun.addChild(planet);
             sun.addChild(planet2);
             sun.addChild(planet3);
@@ -69,6 +72,8 @@ import java.awt.Shape;
 
             sun.setScaleX(.5);
             sun.setScaleY(.5);
+            mario.setScaleX(.6);
+            mario.setScaleY(.6);
 
         }
 
@@ -82,7 +87,12 @@ import java.awt.Shape;
 
             if (mario != null && sun != null) {
 		/* Make sure sun is not null. Sometimes Swing can auto cause an extra frame to go before everything is initialized */
-            if (gameState) {
+		if (pressedKeys.contains(KeyEvent.VK_ENTER)) {
+            System.out.println(gameState);
+            beginning = false;
+            gameState = true;
+        }
+		if (gameState) {
                 if (mario != null) mario.update(pressedKeys);
 
                 if (mario.getCount() < 30) {
@@ -97,6 +107,8 @@ import java.awt.Shape;
                 planet2.setRotation(planet2.getRotation() + 1);
                 planet3.setRotation(planet3.getRotation() + 2);
                 planet4.setRotation(planet4.getRotation() - 3);
+
+                // start the game
 
 
 		/* arrow key presses */
@@ -182,6 +194,7 @@ import java.awt.Shape;
                 for (i = 0; i < sun.getChildren().size(); i++)
                     if (mario.collidesWith(sun.getChild(i)) || sun.getChild(i).collidesWith(mario)) {
                         score -= 10;
+
                         System.out.println("COLLISION");
                     }
                 if (mario.collidesWith(sun) || sun.collidesWith(mario)) {
@@ -207,7 +220,11 @@ import java.awt.Shape;
                 String scorestr = Integer.toString(score);
                 g.drawString(scorestr, 450, 50);
             } else {
-                if (score <= 0){
+                if (beginning) {
+                    g.drawString("GET MARIO TO THE SUN WHILE AVOIDING ASTEROIDS", 50, 230);
+                    g.drawString("PRESS ENTER TO START", 215, 250);
+
+                } else if (score <= 0){
                     g.drawString("GAME OVER :(", 215, 250);
                 } else {
                     g.drawString("YOU WIN! :)", 215, 250);
