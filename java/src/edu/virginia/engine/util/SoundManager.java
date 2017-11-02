@@ -9,37 +9,23 @@ public class SoundManager {
     private HashMap <String, Clip> soundeffects;
     private Clip music;
 
-    //constructor
-
+    public SoundManager() {
+        this.soundeffects = new HashMap<>();
+    }
 
     public void LoadSoundEffect(String id, String filename) {
         try {
-            // File file = new File(filename);
-                AudioInputStream audioIn = AudioSystem.getAudioInputStream(this.getClass().getResource(filename));
+                File file = new File("resources" + File.separator + "sounds" + File.separator + filename);
+
+            if (file.exists()) {
+                AudioInputStream audioIn = AudioSystem.getAudioInputStream(file);
                 Clip clip = AudioSystem.getClip();
                 clip.open(audioIn);
                 this.soundeffects.put(id, clip);
-                //System.out.println("SUCCESS");
-                // System.out.println("ERROR: FILE DOES NOT EXIST");
-
-//        if (file.exists()) {
-//            AudioInputStream audioIn = AudioSystem.getAudioInputStream(file);
-//            Clip clip = AudioSystem.getClip();
-//            clip.open(audioIn);
-//            this.soundeffects.put(id, clip);
-//            System.out.println("SUCCESS");
-//        } else {
-//            System.out.println("ERROR: FILE DOES NOT EXIST");
-//        }
-         /*
-         URL url = this.getClass().getClassLoader().getResource("gameover.wav");
-
-         // Get a sound clip resource.
-         Clip clip = AudioSystem.getClip();
-         // Open audio clip and load samples from the audio input stream.
-         clip.open(audioIn);
-         clip.start();
-          */
+                System.out.println("SUCCESS");
+            } else {
+                System.out.println("ERROR: FILE DOES NOT EXIST");
+            }
         } catch (UnsupportedAudioFileException ex) {
             System.out.println("\nUnsupported Audio");
         } catch (IOException ex) {
@@ -59,12 +45,18 @@ public class SoundManager {
 
     public void LoadMusic(String id, String filename){
         try {
-            URL url = this.getClass().getClassLoader().getResource(filename);
-            AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
-            this.music = AudioSystem.getClip();
-            this.music.open(audioIn);
 
-        }catch (UnsupportedAudioFileException ex) {
+            File file = new File("resources" + File.separator + "sounds" + File.separator + filename);
+            if (file.exists()) {
+                AudioInputStream audioIn = AudioSystem.getAudioInputStream(file);
+                this.music = AudioSystem.getClip();
+                this.music.open(audioIn);
+
+                System.out.println("SUCCESS");
+            } else {
+                System.out.println("ERROR: FILE DOES NOT EXIST");
+            }
+        } catch (UnsupportedAudioFileException ex) {
         ex.printStackTrace();
     } catch (IOException ex) {
         ex.printStackTrace();
@@ -77,5 +69,8 @@ public class SoundManager {
         this.music.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
+    public void StopMusic(){
+        this.music.stop();
+    }
 
 }
