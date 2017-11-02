@@ -20,15 +20,15 @@ import java.awt.Point;
         Sprite mario = new Sprite("Mario", "MarioSS.png");
         Sprite mario_hb = new Sprite("mario_hb", "MarioSS_hb.png");
         Sprite sun = new Sprite("Sun", "sun.png");
-        Sprite sun_hb = new Sprite("SunHitbox", "sun_hb2.png");
+        Sprite sun_hb = new Sprite("sun_hb", "sun_hb.png");
         Sprite planet = new Sprite("Planet", "planet.png");
         Sprite planet2 = new Sprite("Planet2", "planet.png");
         Sprite planet3 = new Sprite("Planet3", "planet.png");
         Sprite planet4 = new Sprite("Planet4", "planet.png");
-        Sprite planet_hb = new Sprite("PlanetHitbox", "planet_hb.png");
-        Sprite planet2_hb = new Sprite("Planet2Hitbox", "planet_hb.png");
-        Sprite planet3_hb = new Sprite("Planet3Hitbox", "planet_hb.png");
-        Sprite planet4_hb = new Sprite("Planet4Hitbox", "planet_hb.png");
+        Sprite planet_hb = new Sprite("planet_hb", "planet_hb.png");
+        Sprite planet2_hb = new Sprite("planet2_hb", "planet_hb.png");
+        Sprite planet3_hb = new Sprite("planet3_hb", "planet_hb.png");
+        Sprite planet4_hb = new Sprite("planet4_hb", "planet_hb.png");
 
         /* Score */
 
@@ -79,7 +79,7 @@ import java.awt.Point;
             planet4.setPivotPoint(new Point (sun.getUnscaledWidth()/2 - planet4.getPosition().x,
                     sun.getUnscaledWidth()/2 - planet4.getPosition().y));
 
-            //scale sun image
+            //scale images
             sun.setScaleX(.5);
             sun.setScaleY(.5);
             mario.setScaleX(.6);
@@ -100,7 +100,9 @@ import java.awt.Point;
 //            planet4.addAtIndex(0, planet4_hb);
 
             /* Load in sounds */
-            // sounds.LoadMusic("Theme", "theme.wav");
+            sounds.LoadMusic("Theme", "theme.wav");
+            sounds.LoadSoundEffect("Game Over", "gameover.wav");
+            sounds.LoadSoundEffect("Crash", "crash.wav");
 
 
         }
@@ -220,13 +222,17 @@ import java.awt.Point;
                     if (mario.collidesWith(sun.getChild(i)) || sun.getChild(i).collidesWith(mario)) {
                         score -= 1;
                         System.out.println("COLLISION");
+                        sounds.PlaySoundEffect("Crash");
                     }
                 }
                 if (mario.collidesWith(sun) || sun.collidesWith(mario)) {
-                    gameState = false;
+                     gameState = false;
                 }
+
                 if(score<=0){
                     gameState = false;
+                    sounds.StopMusic();
+                    sounds.PlaySoundEffect("Game Over");
                 }
                 System.out.println("Score: " + score + "\n");
             }
@@ -270,7 +276,7 @@ import java.awt.Point;
             edu.virginia.LabFourGame game = new edu.virginia.LabFourGame();
             game.addObjects();;
             game.start();
-            // game.sounds.PlayMusic();
+            game.sounds.PlayMusic();
 
         }
     }
