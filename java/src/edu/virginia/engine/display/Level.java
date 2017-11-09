@@ -1,6 +1,7 @@
 package edu.virginia.engine.display;
 import edu.virginia.engine.util.Tuple;
 import java.awt.Point;
+import java.util.ArrayList;
 
 public class Level {
     /* Level Class fields:
@@ -22,28 +23,34 @@ public class Level {
      *
      * id indicates which number level this is
      */
-    private Tuple <Boolean, Integer> [] initGrid;
-    private Tuple <Boolean, Integer> [] currGrid;
-    private MyButton[] movesAvail;
-    private int[] movesTaken;
+    private ArrayList <Tuple <Boolean, Integer>> initGrid;
+    private ArrayList <Tuple <Boolean, Integer>> currGrid;
+    private ArrayList <Integer> movesAvail;
+    private ArrayList <Integer> movesTaken;
     private Point position;
     private int id;
 
     /* getters and setters */
-    public Tuple <Boolean, Integer> [] getInitGrid() {return this.initGrid;}
-    public  void setInitGrid(Tuple <Boolean, Integer> [] grid) {this.initGrid = grid;}
+    public ArrayList <Tuple <Boolean, Integer>> getInitGrid() {return this.initGrid;}
+    public  void setInitGrid(ArrayList <Tuple <Boolean, Integer>> grid) {this.initGrid = grid;}
 
-    public Tuple <Boolean, Integer> [] getCurrGrid() {return this.currGrid;}
-    public  void setCurrGrid(Tuple <Boolean, Integer> [] grid) {this.currGrid = grid;}
+    public ArrayList <Tuple <Boolean, Integer>> getCurrGrid() {return this.currGrid;}
+    public  void setCurrGrid(ArrrayList <Tuple <Boolean, Integer>> grid) {this.currGrid = grid;}
 
-    public MyButton[] getMovesAvail() {return this.movesAvail;}
-    public void setMovesAvail(MyButton[] moves) {this.movesAvail = moves;}
+    public ArrayList <Integer> getMovesAvail() {return this.movesAvail;}
+    public void setMovesAvail(ArrayList <Integer> moves) {this.movesAvail = moves;}
 
     public Point getPosition() {return this.position;}
     public void setPosition(Point pos) {this.position = pos;}
 
     public int getId() {return this.id;}
-    public void setId(n) {this.id = n;}
+    public void setId(int n) {this.id = n;}
+
+
+    /* updateCurrGrid updates the state of a given grid square */
+    void updateCurrGrid(int square, Boolean enter, int state) {
+        this.getCurrGrid().add(square, new Tuple <> (enter, state));
+    }
 
 
 
