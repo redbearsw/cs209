@@ -307,7 +307,7 @@ public class LabFiveGame extends Game{
                     if (!(pressedKeys.contains(KeyEvent.VK_RIGHT) || pressedKeys.contains(KeyEvent.VK_LEFT)
                             || pressedKeys.contains(KeyEvent.VK_UP)
                             || pressedKeys.contains(KeyEvent.VK_DOWN))) {
-                       
+
                         if (this.lastCollided != null) {
 
                             int[] array = this.getLastCollided().getHitbox();
