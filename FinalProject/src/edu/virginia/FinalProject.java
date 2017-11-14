@@ -1,6 +1,15 @@
 package edu.virginia;
 
-public class FinalProject {
+import edu.virginia.engine.display.DisplayObjectContainer;
+import edu.virginia.engine.display.Game;
+import edu.virginia.engine.display.Sprite;
+import edu.virginia.engine.util.SoundManager;
+
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+
+public class FinalProject extends Game{
 
     /* Variables to keep track of where things are on the screen */
     private int gameWidth;
@@ -38,5 +47,15 @@ public class FinalProject {
 
     public int getMazeHeight() {return this.mazeHeight;}
     public void setMazeHeight(int w) {this.mazeHeight = w;}
+
+    /* Constructor */
+    public FinalProject() {
+        super("Final Project", 500, 500);
+    }
+
+    public static void main(String[] args) {
+        edu.virginia.FinalProject game = new edu.virginia.FinalProject();
+        game.start();
+    }
 
 }
