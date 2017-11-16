@@ -2,6 +2,8 @@ package edu.virginia;
 
 import edu.virginia.engine.display.DisplayObjectContainer;
 import edu.virginia.engine.display.Game;
+import edu.virginia.engine.display.Level;
+import edu.virginia.engine.util.Tuple;
 import edu.virginia.engine.display.Sprite;
 import edu.virginia.engine.util.SoundManager;
 
@@ -53,8 +55,37 @@ public class FinalProject extends Game{
         super("Final Project", 500, 500);
     }
 
+    @Override
+    public void update(ArrayList<Integer> pressedKeys){
+        super.update(pressedKeys);
+
+		/* Make sure mario is not null. Sometimes Swing can auto cause an extra frame to go before everything is initialized */
+
+
+    }
+
+    /**
+     * Engine automatically invokes draw() every frame as well. If we want to make sure mario gets drawn to
+     * the screen, we need to make sure to override this method and call mario's draw method.
+     * */
+    @Override
+    public void draw(Graphics g) {
+        //check characters for null
+            super.draw(g);
+    }
+
+    public void createLevels() {
+        //Level 1
+        ArrayList <Tuple <Boolean, Integer>> initGrid = new ArrayList();
+        ArrayList <Integer> movesAvail = new ArrayList();
+        Point position = new Point (0, 0);
+        String id = "level1";
+        Level lev1 = Level(initGrid, movesAvail, position, id);
+    }
+
     public static void main(String[] args) {
         edu.virginia.FinalProject game = new edu.virginia.FinalProject();
+        game.createLevels();
         game.start();
     }
 
