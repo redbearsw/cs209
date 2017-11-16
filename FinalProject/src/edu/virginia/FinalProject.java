@@ -23,7 +23,11 @@ public class FinalProject extends Game{
     private int mazeWidth;
     private int mazeHeight;
 
+    Sprite allLevels = new Sprite("All Levels", "levels.png");
 
+    Sprite moves = new Sprite("Move Board", "moves.png");
+
+    Sprite hero = new Sprite("Hero", "character.png");
 
     /* getters and setters */
     public int getGameWidth() {return this.gameWidth;}
@@ -52,7 +56,7 @@ public class FinalProject extends Game{
 
     /* Constructor */
     public FinalProject() {
-        super("Final Project", 500, 500);
+        super("Final Project", 1280, 991);
     }
 
     @Override
@@ -70,17 +74,21 @@ public class FinalProject extends Game{
      * */
     @Override
     public void draw(Graphics g) {
-        //check characters for null
-            super.draw(g);
+
+        super.draw(g);
+        if (allLevels != null) allLevels.draw(g);
+        if (moves != null) moves.draw(g);
+
     }
 
     public void createLevels() {
         //Level 1
+        moves.setPosition(new Point(640,0));
         ArrayList <Tuple <Boolean, Integer>> initGrid = new ArrayList();
         ArrayList <Integer> movesAvail = new ArrayList();
         Point position = new Point (0, 0);
         String id = "level1";
-        Level lev1 = Level(initGrid, movesAvail, position, id);
+        // Level lev1 = new Level(initGrid, movesAvail, position, id);
     }
 
     public static void main(String[] args) {
