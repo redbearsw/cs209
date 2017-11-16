@@ -21,24 +21,24 @@ public class FinalProject extends Game{
 
     Sprite hero = new Sprite("Hero", "character.png");
     //side bar
-    private int sideBarWidth = 640;
-    private int sideBarHeight = 992;
+    private int sideBarWidth = 470;
+    private int sideBarHeight = 728;
 
     //maze
-    private int mazeWidth = 576;
-    private int mazeHeight = 864;
+    private int mazeWidth = 470;
+    private int mazeHeight = 728;
 
     //whole game
-    private int gameWidth = 1280;
-    private int gameHeight = 992;
+    private int gameWidth = 940;
+    private int gameHeight = 728;
 
     //character
     private int charWidth = 96;
     private int charHeight = 103;
 
     //grid squares
-    private int sqWidth = 144;
-    private int sqHeight = 144;
+    private int sqWidth = 117;
+    private int sqHeight = 117;
 
     //gray border
     private int borderWidth = 32;
@@ -46,7 +46,7 @@ public class FinalProject extends Game{
 
     /* Constructor */
     public FinalProject() {
-        super("Final Project", 1280, 991);
+        super("Final Project", 940, 728);
     }
 
     @Override
@@ -80,13 +80,9 @@ public class FinalProject extends Game{
     }
 
     public void createLevels() {
-        //Level 1
-        moves.setPosition(new Point(640,0));
-        ArrayList <Tuple <Boolean, Integer>> initGrid = new ArrayList();
-        ArrayList <Integer> movesAvail = new ArrayList();
-        Point position = new Point (0, 0);
-        String id = "level1";
-        // Level lev1 = new Level(initGrid, movesAvail, position, id);
+
+        moves.setPosition(new Point(470,0));
+
         /* Level 1 */
 
         //initial grid
