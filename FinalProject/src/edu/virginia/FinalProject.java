@@ -14,45 +14,35 @@ import java.util.ArrayList;
 public class FinalProject extends Game{
 
     /* Variables to keep track of where things are on the screen */
-    private int gameWidth;
-    private int gameHeight;
-    private int screenWidth;
-    private int movesWidth;
-    private int borderWidth;
-    private int borderHeight;
-    private int mazeWidth;
-    private int mazeHeight;
 
     Sprite allLevels = new Sprite("All Levels", "levels.png");
 
     Sprite moves = new Sprite("Move Board", "moves.png");
 
     Sprite hero = new Sprite("Hero", "character.png");
+    //side bar
+    private int sideBarWidth = 640;
+    private int sideBarHeight = 992;
 
-    /* getters and setters */
-    public int getGameWidth() {return this.gameWidth;}
-    public void setGameWidth(int w) {this.gameWidth = w;}
+    //maze
+    private int mazeWidth = 576;
+    private int mazeHeight = 864;
 
-    public int getGameHeight() {return this.gameHeight;}
-    public void setGameHeight(int h) {this.gameHeight = h;}
+    //whole game
+    private int gameWidth = 1280;
+    private int gameHeight = 992;
 
-    public int getScreenWidth() {return this.screenWidth;}
-    public void setScreenWidth(int w) {this.screenWidth = w;}
+    //character
+    private int charWidth = 96;
+    private int charHeight = 103;
 
-    public int getMovesWidth() {return this.movesWidth;}
-    public void setMovesWidth(int w) {this.movesWidth = w;}
+    //grid squares
+    private int sqWidth = 144;
+    private int sqHeight = 144;
 
-    public int getBorderWidth() {return this.borderWidth;}
-    public void setBorderWidth(int w) {this.borderWidth = w;}
+    //gray border
+    private int borderWidth = 32;
 
-    public int getBorderHeight() {return this.borderHeight;}
-    public void setBorderHeight(int h) {this.borderHeight = h;}
-
-    public int getMazeWidth() {return this.mazeWidth;}
-    public void setMazeWidth(int w) {this.mazeWidth = w;}
-
-    public int getMazeHeight() {return this.mazeHeight;}
-    public void setMazeHeight(int w) {this.mazeHeight = w;}
 
     /* Constructor */
     public FinalProject() {
@@ -81,6 +71,14 @@ public class FinalProject extends Game{
 
     }
 
+    public ArrayList<Tuple <Boolean, Integer>> createInitGrid() {
+        ArrayList <Tuple <Boolean, Integer>> grid = new ArrayList <Tuple <Boolean, Integer>>(24);
+        int i;
+        for (i = 0; i < 24; i++)
+            grid.add(i, new Tuple<Boolean, Integer>(true, 0));
+        return grid;
+    }
+
     public void createLevels() {
         //Level 1
         moves.setPosition(new Point(640,0));
@@ -89,6 +87,32 @@ public class FinalProject extends Game{
         Point position = new Point (0, 0);
         String id = "level1";
         // Level lev1 = new Level(initGrid, movesAvail, position, id);
+        /* Level 1 */
+
+        //initial grid
+        ArrayList <Tuple <Boolean, Integer>> initGrid = createInitGrid();
+        initGrid.set(2, new Tuple<Boolean, Integer>(false, 1));
+        initGrid.set(3, new Tuple<Boolean, Integer>(false, 1));
+        initGrid.set(6, new Tuple<Boolean, Integer>(false, 1));
+        initGrid.set(7, new Tuple<Boolean, Integer>(false, 1));
+        initGrid.set(12, new Tuple<Boolean, Integer>(false, 1));
+        initGrid.set(16, new Tuple<Boolean, Integer>(false, 1));
+        initGrid.set(18, new Tuple<Boolean, Integer>(false, 1));
+        initGrid.set(23, new Tuple<Boolean, Integer>(true, 5));
+
+        //available moves
+        ArrayList <Integer> movesAvail = new ArrayList <Integer> ();
+        movesAvail.add(0);
+        movesAvail.add(1);
+
+        //position
+        Point position = new Point (0, 0);
+
+        //id
+        int id = 1;
+        
+        //creating level 1
+        Level lev1 = new Level(initGrid, movesAvail, position, id);
     }
 
     public static void main(String[] args) {

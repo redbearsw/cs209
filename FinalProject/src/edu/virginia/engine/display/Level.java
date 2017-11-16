@@ -17,7 +17,7 @@ public class Level {
      * movesAvail is an array of the buttons that are allowed to be used in that level
      *
      * movesTaken is an array of integers that correspond to actions the character can take (buttons pressed)
-     * * Key: 0 = no move, 1 = move forward, 2 = rotate right, 3 = stab, 4 = conditional block, 5 = loop (3x)
+     * * Key: 0 = move forward, 1 = rotate right, 2 = stab, 3 = conditional block, 4 = loop (3x)
      *
      * position indicates where the top left of the grid is in the whole image
      *

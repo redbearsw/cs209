@@ -11,6 +11,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
+<<<<<<< HEAD
     <leaf>
       <file leaf-file-name="FinalProject.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/edu/virginia/FinalProject.java">
@@ -21,11 +22,24 @@
                 <element signature="imports" expanded="true" />
                 <element signature="e#1919#1920#0" expanded="true" />
                 <element signature="e#1968#1969#0" expanded="true" />
+=======
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="FinalProject.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/edu/virginia/FinalProject.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="97" column="8" lean-forward="true" selection-start-line="97" selection-start-column="8" selection-end-line="97" selection-end-column="8" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1765#1791#0" expanded="true" />
+                <element signature="e#2686#2695#0" expanded="true" />
+>>>>>>> 348aa1cf7193cf62737795f78b8ec225fdf125a2
               </folding>
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="DisplayObject.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/edu/virginia/engine/display/DisplayObject.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -43,14 +57,25 @@
               <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
               <folding />
             </state>
+=======
+      <file leaf-file-name="levels.png" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/levels.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
+>>>>>>> 348aa1cf7193cf62737795f78b8ec225fdf125a2
           </provider>
         </entry>
       </file>
       <file leaf-file-name="Level.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/edu/virginia/engine/display/Level.java">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="236">
               <caret line="38" column="29" lean-forward="true" selection-start-line="38" selection-start-column="29" selection-end-line="38" selection-end-column="29" />
+=======
+            <state relative-caret-position="238">
+              <caret line="19" column="84" lean-forward="false" selection-start-line="19" selection-start-column="84" selection-end-line="19" selection-end-column="84" />
+>>>>>>> 348aa1cf7193cf62737795f78b8ec225fdf125a2
               <folding />
             </state>
           </provider>
@@ -75,8 +100,8 @@
       <list>
         <option value="$PROJECT_DIR$/src/edu/virginia/src/edu/virginia/engine/util/Tuple.java" />
         <option value="$PROJECT_DIR$/src/edu/virginia/src/edu/virginia/engine/display/Level.java" />
-        <option value="$PROJECT_DIR$/src/edu/virginia/engine/display/Level.java" />
         <option value="$PROJECT_DIR$/src/edu/virginia/engine/util/Tuple.java" />
+        <option value="$PROJECT_DIR$/src/edu/virginia/engine/display/Level.java" />
         <option value="$PROJECT_DIR$/src/edu/virginia/FinalProject.java" />
       </list>
     </option>
@@ -279,6 +304,9 @@
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
   </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="c40e1640-b271-46a7-b336-6c634cf173cc" name="Default" comment="" />
@@ -322,6 +350,10 @@
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+<<<<<<< HEAD
+=======
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.0" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+>>>>>>> 348aa1cf7193cf62737795f78b8ec225fdf125a2
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -398,8 +430,13 @@
           <caret line="21" column="27" lean-forward="true" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="27" />
           <folding>
             <element signature="imports" expanded="true" />
+<<<<<<< HEAD
             <element signature="e#1919#1920#0" expanded="true" />
             <element signature="e#1968#1969#0" expanded="true" />
+=======
+            <element signature="e#1765#1791#0" expanded="true" />
+            <element signature="e#2686#2695#0" expanded="true" />
+>>>>>>> 348aa1cf7193cf62737795f78b8ec225fdf125a2
           </folding>
         </state>
       </provider>
@@ -440,8 +477,13 @@
           <caret line="47" column="28" lean-forward="true" selection-start-line="47" selection-start-column="28" selection-end-line="47" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
+<<<<<<< HEAD
             <element signature="e#1919#1920#0" expanded="true" />
             <element signature="e#1968#1969#0" expanded="true" />
+=======
+            <element signature="e#1765#1791#0" expanded="true" />
+            <element signature="e#2686#2695#0" expanded="true" />
+>>>>>>> 348aa1cf7193cf62737795f78b8ec225fdf125a2
           </folding>
         </state>
       </provider>
@@ -471,6 +513,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/resources/turn.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/moves.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/forward.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/character.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/edu/virginia/engine/util/Tuple.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -481,6 +543,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/edu/virginia/engine/display/Level.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="236">
           <caret line="38" column="29" lean-forward="true" selection-start-line="38" selection-start-column="29" selection-end-line="38" selection-end-column="29" />
           <folding />
@@ -499,18 +562,36 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-4">
           <caret line="7" column="13" lean-forward="false" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+=======
+        <state relative-caret-position="238">
+          <caret line="19" column="84" lean-forward="false" selection-start-line="19" selection-start-column="84" selection-end-line="19" selection-end-column="84" />
+>>>>>>> 348aa1cf7193cf62737795f78b8ec225fdf125a2
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/resources/levels.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/edu/virginia/FinalProject.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="99">
           <caret line="85" column="44" lean-forward="false" selection-start-line="85" selection-start-column="44" selection-end-line="85" selection-end-column="44" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1919#1920#0" expanded="true" />
             <element signature="e#1968#1969#0" expanded="true" />
+=======
+        <state relative-caret-position="221">
+          <caret line="97" column="8" lean-forward="true" selection-start-line="97" selection-start-column="8" selection-end-line="97" selection-end-column="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1765#1791#0" expanded="true" />
+            <element signature="e#2686#2695#0" expanded="true" />
+>>>>>>> 348aa1cf7193cf62737795f78b8ec225fdf125a2
           </folding>
         </state>
       </provider>
