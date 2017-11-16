@@ -10,6 +10,8 @@ import edu.virginia.engine.util.SoundManager;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
 
 public class FinalProject extends Game{
 
@@ -38,6 +40,9 @@ public class FinalProject extends Game{
     //gray border
     private int borderWidth = 32;
 
+    ImageIcon btnImage = new ImageIcon("resources/turn.png");
+    JButton btn = new JButton(btnImage);
+
 
     /* Constructor */
     public FinalProject() {
@@ -61,6 +66,12 @@ public class FinalProject extends Game{
     public void draw(Graphics g) {
         //check characters for null
             super.draw(g);
+            btn.setBounds(0,0,100,100);
+            super.getScenePanel().add(btn);
+
+
+
+
     }
 
     public ArrayList<Tuple <Boolean, Integer>> createInitGrid() {
@@ -95,7 +106,7 @@ public class FinalProject extends Game{
 
         //id
         int id = 1;
-        
+
         //creating level 1
         Level lev1 = new Level(initGrid, movesAvail, position, id);
     }
@@ -104,6 +115,7 @@ public class FinalProject extends Game{
         edu.virginia.FinalProject game = new edu.virginia.FinalProject();
         game.createLevels();
         game.start();
+
     }
 
 }
