@@ -30,6 +30,17 @@ public class Level {
     private Point position;
     private int id;
 
+    /* Constructor */
+    public Level(ArrayList <Tuple <Boolean, Integer>> iG, ArrayList <Integer> movesAvail, Point position, int id) {
+        this.setId(id);
+        this.setPosition(position);
+        this.setMovesAvail(movesAvail);
+        this.setMovesTaken(new ArrayList<Integer>());
+        this.setInitGrid(iG);
+        this.setCurrGrid(iG);
+
+    }
+
     /* getters and setters */
     public ArrayList <Tuple <Boolean, Integer>> getInitGrid() {return this.initGrid;}
     public  void setInitGrid(ArrayList <Tuple <Boolean, Integer>> grid) {this.initGrid = grid;}
@@ -45,6 +56,10 @@ public class Level {
 
     public int getId() {return this.id;}
     public void setId(int n) {this.id = n;}
+
+    public ArrayList<Integer> getMovesTaken() {return this.movesTaken;}
+    public void setMovesTaken(ArrayList<Integer> moves) {this.movesTaken = moves;}
+
 
 
     /* updateCurrGrid updates the state of a given grid square */
