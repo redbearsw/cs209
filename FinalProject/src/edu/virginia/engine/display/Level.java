@@ -3,6 +3,8 @@ import edu.virginia.engine.util.Tuple;
 import java.awt.Point;
 import java.util.ArrayList;
 import javax.swing.JButton;
+import edu.virginia.engine.util.Obstacles;
+import edu.virginia.engine.util.Moves;
 
 public class Level {
     /* Level Class fields:
@@ -33,22 +35,8 @@ public class Level {
 
     /* enum Moves and enum GridSquares */
     //possibilities for move buttons
-    public enum Moves {
-        FORWARD,
-        ROTATE,
-        STAB,
-        COND,
-        LOOP3
-    }
+
     //things that can occupy grid squares
-    public enum Obstacles {
-        NOTHING,
-        WALL,
-        ENEMY,
-        BARRICADE,
-        START,
-        GOAL
-    }
 
 
     /* Constructor */
