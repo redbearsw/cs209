@@ -72,8 +72,10 @@ public class FinalProject extends Game{
         //check characters for null
 
         super.draw(g);
-        btn.setBounds(0,0,100,100);
-        super.getScenePanel().add(btn);
+        if (btn != null) {
+            btn.setBounds(0, 0, 100, 100);
+            super.getScenePanel().add(btn);
+        }
 
         if (allLevels != null) allLevels.draw(g);
         if (moves != null) moves.draw(g);
