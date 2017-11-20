@@ -20,20 +20,22 @@ import edu.virginia.engine.util.Moves;
 public class FinalProject extends Game{
 
     /* Sprites */
-    Sprite allLevels;
-    Sprite moves;
-    Sprite hero;
+    private Sprite allLevels;
+    private Sprite moves;
+    private Sprite hero;
 
     /* Various game states and trackers */
-    int mvsCount;
-    int currLev;
+    private int mvsCount;
+    private int currLev;
+    private Boolean moving;
 
     /* Move Buttons */
-    JButton turn;
-    JButton fwd;
+    private JButton turn;
+    private JButton fwd;
 
     /* List of Levels */
-    ArrayList<Level> Levels;
+    //slot 0 for opening menu?, slot 1 for level 1, etc.
+    private ArrayList<Level> Levels;
 
     /* Variables to keep track of where things are on the screen */
     private int sideBarWidth;
@@ -68,6 +70,7 @@ public class FinalProject extends Game{
         /* Game States*/
             this.mvsCount = 0;
             this.currLev = 1;
+            this.moving = false;
 
         /* Move Buttons */
             this.turn = new JButton(new ImageIcon("resources/turn.png"));
@@ -113,7 +116,7 @@ public class FinalProject extends Game{
             //creating level 1
             Level lev1 = new Level(initGrid, mvsAvail, position, 1);
 
-            this.Levels.add(lev1);
+            this.Levels.add(1, lev1);
 
         /* Level 2 */
 
@@ -123,7 +126,7 @@ public class FinalProject extends Game{
     }
 
     /* Create and zero out initial grid */
-    public ArrayList<Tuple <Boolean, Obstacles>> createInitGrid() {
+    private ArrayList<Tuple <Boolean, Obstacles>> createInitGrid() {
         ArrayList <Tuple <Boolean, Obstacles>> grid = new ArrayList <Tuple <Boolean, Obstacles>>(24);
         int i;
         for (i = 0; i < 24; i++)
@@ -131,13 +134,99 @@ public class FinalProject extends Game{
         return grid;
     }
 
+    /* Convert position to grid square */
+    private int xToCol(int x) {
+        if (x < (sideBarWidth + (sqWidth * 2)) && x > (sideBarWidth + sqWidth))
+            return 0;
+        if (x < (sideBarWidth + (sqWidth * 3)) && x > (sideBarWidth + (sqWidth * 2)))
+            return 1;
+        if (x < (sideBarWidth + (sqWidth * 4)) && x > (sideBarWidth + (sqWidth * 3)))
+            return 2;
+        if (x < (sideBarWidth + (sqWidth * 5)) && x > (sideBarWidth + (sqWidth * 4)))
+            return 3;
+        else return -1;
+    }
+    private int posToGridSquare(Point pos) {
+        //0-3
+        if (pos.y < sqHeight * 5 && pos.y > sqHeight * 6)
+             return xToCol(pos.x);
+        //4-7
+        if (pos.y < sqHeight * 4 && pos.y > sqHeight * 5)
+            return xToCol(pos.x) + 4;
+        //8-11
+        if (pos.y < sqHeight * 3 && pos.y > sqHeight * 4)
+            return xToCol(pos.x) + 8;
+        //12-15
+        if (pos.y < sqHeight * 2 && pos.y > sqHeight * 3)
+            return xToCol(pos.x) + 12;
+        //16-19
+        if (pos.y < sqHeight && pos.y > sqHeight * 2)
+            return xToCol(pos.x) + 16;
+        //20-23
+        if (pos.y > sqHeight)
+            return xToCol(pos.x) + 20;
+    }
+
+    /* Helpers that determine if a move can legally be performed */
+    private Boolean legalFwd() {
+        int heroSq = posToGridSquare(this.hero.getPosition());
+        if (heroSq >= 0 || heroSq <= 23) {
+            if (this.Levels.get(currLev).getCurrGrid().get(heroSq + 4).getX())
+                return true;
+            else
+                return false;
+        }
+        else
+            return false;
+    }
+
+    private Boolean legalStab() {
+        //TODO: implement this
+    }
+
+    private Boolean legalCond() {
+        //TODO: implement this
+        return false;
+    }
+
+    private Boolean legalLoop() {
+        //TODO: implement this
+        return false;
+    }
+
     /* Run through list of moves, performing one move per frame */
-    public void runMoves() {
-        
+    private void runMoves() {
+        ArrayList<Moves> mvs = this.Levels.get(currLev).getMovesTaken();
+        if (mvsCount > mvs.size()) {
+            mvsCount = 0;
+            this.moving = false;
+        }
+        switch(mvs.get(mvsCount)) {
+            case FORWARD:
+                //legalFwd()
+                //move up
+                break;
+            case ROTATE:
+                //animate
+                break;
+            case STAB:
+                //legalStab()
+                //animate
+                //update enemy state and
+                break;
+            case COND:
+                //legalCond()
+                break;
+            case LOOP3:
+                //legalLoop()
+                break;
+            default:
+                break;
+        }
         //iterate through movesTaken (one update at a time, use mvsCount)
         //update character's pos based on mvsCount and Levels[currLev].getMovesTaken()
 
-
+        this.mvsCount++;
     }
 
     @Override
@@ -146,7 +235,10 @@ public class FinalProject extends Game{
 
 		/* Make sure mario is not null. Sometimes Swing can auto cause an extra frame to go before everything is initialized */
 
-        //if(clicked on run button) {runMoves();}
+//        if(clicked on run button) {
+//            runningMovesState = true;
+//            runMoves();
+//        }
     }
 
 
