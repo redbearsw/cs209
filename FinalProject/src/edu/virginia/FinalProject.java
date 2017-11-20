@@ -22,6 +22,7 @@ public class FinalProject extends Game{
     Sprite moves = new Sprite("Move Board", "moves.png");
 
     Sprite hero = new Sprite("Hero", "character.png");
+
     //side bar
     private int sideBarWidth = 470;
     private int sideBarHeight = 728;
@@ -47,7 +48,6 @@ public class FinalProject extends Game{
 
     ImageIcon btnImage = new ImageIcon("resources/turn.png");
     JButton btn = new JButton(btnImage);
-
 
     /* Constructor */
     public FinalProject() {
