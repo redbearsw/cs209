@@ -9,6 +9,8 @@ import edu.virginia.engine.display.Sprite;
 import edu.virginia.engine.util.SoundManager;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import javax.swing.JButton;
@@ -23,6 +25,8 @@ public class FinalProject extends Game{
     private Sprite allLevels;
     private Sprite moves;
     private Sprite hero;
+    private Sprite forward;
+    private Sprite rotate;
 
     /* Various game states and trackers */
     private int mvsCount;
@@ -33,6 +37,11 @@ public class FinalProject extends Game{
     /* Move Buttons */
     private JButton turn;
     private JButton fwd;
+
+    /* Run, Backspace, Clear Buttons */
+    private JButton run;
+    private JButton back;
+    private JButton clear;
 
     /* List of Levels */
     //slot 0 for opening menu?, slot 1 for level 1, etc.
@@ -60,7 +69,7 @@ public class FinalProject extends Game{
 
     /* Constructor */
     public FinalProject() {
-        super("Final Project", 940, 728);
+        super("Final Project", 940, 748);
 
         /* Sprites */
             this.allLevels = new Sprite("All Levels", "levels.png");
@@ -74,9 +83,36 @@ public class FinalProject extends Game{
             this.numLevs = 3;
             this.moving = false;
 
-        /* Move Buttons */
-            this.turn = new JButton(new ImageIcon("resources/turn.png"));
-            this.fwd = new JButton(new ImageIcon("resources/forward.png"));
+
+        /* Run, Backspace, Clear Buttons (TO BE REPLACED WITH IMAGES) */
+            this.run = new JButton("r");
+            run.setBounds(500,250, 100,25);
+            run.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    runMoves();
+                }
+            });
+
+            this.back = new JButton("Back");
+            back.setBounds(610,250, 100,25);
+            back.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    if (Levels.get(currLev).getMovesTaken()!=null) {
+                        Levels.get(currLev).getMovesTaken().remove(Levels.get(currLev).getMovesTaken().size() - 1);
+                    }
+                }
+            });
+            this.clear = new JButton("Clear");
+            clear.setBounds(720,250, 100,25);
+            clear.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    Levels.get(currLev).getMovesTaken().clear();
+                }
+            });
+        // adds run, clear, back buttons to screen
+        super.getScenePanel().add(run);
+        super.getScenePanel().add(clear);
+        super.getScenePanel().add(back);
 
         /* ArrayList of levels */
             this.Levels = new ArrayList<Level> ();
@@ -112,9 +148,9 @@ public class FinalProject extends Game{
             initGrid.set(23, new Tuple<Boolean, Obstacles>(true, Obstacles.GOAL));
 
             //available moves
-            ArrayList<JButton> mvsAvail = new ArrayList<JButton>();
-            mvsAvail.add(turn);
-            mvsAvail.add(fwd);
+            ArrayList<Moves> mvsAvail = new ArrayList<>();
+            mvsAvail.add(Moves.FORWARD);
+            mvsAvail.add(Moves.ROTATE);
 
             //position
             Point position = new Point(0, 0);
@@ -122,7 +158,7 @@ public class FinalProject extends Game{
             //creating level 1
             Level lev1 = new Level(initGrid, mvsAvail, position, 1);
 
-            this.Levels.add(0, lev1);
+            this.Levels.add(1, lev1);
 
         /* Level 2 */
 
@@ -239,6 +275,87 @@ public class FinalProject extends Game{
         this.mvsCount++;
     }
 
+    public void drawMovesAvail(Graphics g) {
+
+        /* Move Buttons */
+        JButton turn = new JButton(new ImageIcon("resources/turn.png"));
+        turn.setBounds(109,640, 75,75);
+        turn.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                Levels.get(currLev).getMovesTaken().add(Moves.ROTATE);
+            }
+        });
+
+        JButton fwd = new JButton(new ImageIcon("resources/forward.png"));
+        fwd.setBounds(22,640, 75,75);
+        fwd.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent e)
+            {
+                Levels.get(currLev).getMovesTaken().add(Moves.FORWARD);
+            }
+        });
+        if(this.Levels != null) {
+            for(int i=0; i<this.Levels.get(currLev).getMovesAvail().size(); i++){
+                switch(Levels.get(currLev).getMovesAvail().get(i)) {
+                    case FORWARD:
+                        super.getScenePanel().add(fwd);
+                        break;
+                    case ROTATE:
+                        super.getScenePanel().add(turn);
+                        break;
+                    case STAB:
+
+                        break;
+                    case COND:
+
+                        break;
+                    case LOOP3:
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+    }
+
+    public void drawMovesTaken(Graphics g) {
+        if(this.Levels!= null){
+            ArrayList<Moves> moves = this.Levels.get(currLev).getMovesTaken();
+            for(int i=0; i<moves.size(); i++) {
+                switch(moves.get(i)) {
+                    case FORWARD:
+                        Sprite fw = new Sprite("Foward" + i, "forward.png");
+                        fw.setPosition(new Point(490+(i%5)*86,48+89*(i/5)));
+                        fw.draw(g);
+                        break;
+                    case ROTATE:
+                        Sprite rt = new Sprite("Rotate" + i, "turn.png");
+                        rt.setPosition(new Point(490+(i%5)*86,48+89*(i/5)));
+                        rt.draw(g);
+                        break;
+                    case STAB:
+
+                        break;
+                    case COND:
+
+                        break;
+                    case LOOP3:
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+
+        }
+    }
+
     @Override
     public void update(ArrayList<Integer> pressedKeys){
         super.update(pressedKeys);
@@ -257,17 +374,11 @@ public class FinalProject extends Game{
         //check characters for null
 
         super.draw(g);
-        if (turn != null) {
-            turn.setBounds(0, 0, 100, 100);
-            super.getScenePanel().add(turn);
-        }
-        if (fwd != null) {
-            turn.setBounds(0, 0, 100, 100);
-            super.getScenePanel().add(turn);
-        }
 
         if (allLevels != null) allLevels.draw(g);
         if (moves != null) moves.draw(g);
+        drawMovesAvail(g);
+        drawMovesTaken(g);
 
     }
 

@@ -28,7 +28,7 @@ public class Level {
      */
     private ArrayList <Tuple <Boolean, Obstacles>> initGrid;
     private ArrayList <Tuple <Boolean, Obstacles>> currGrid;
-    private ArrayList <JButton> movesAvail;
+    private ArrayList <Moves> movesAvail;
     private ArrayList <Moves> movesTaken;
     private Point position;
     private int id;
@@ -40,7 +40,7 @@ public class Level {
 
 
     /* Constructor */
-    public Level(ArrayList <Tuple <Boolean, Obstacles>> iG, ArrayList <JButton> mvAv, Point position, int id) {
+    public Level(ArrayList <Tuple <Boolean, Obstacles>> iG, ArrayList <Moves> mvAv, Point position, int id) {
         this.setId(id);
         this.setPosition(position);
         this.setMovesAvail(mvAv);
@@ -57,8 +57,8 @@ public class Level {
     public ArrayList <Tuple <Boolean, Obstacles>> getCurrGrid() {return this.currGrid;}
     public  void setCurrGrid(ArrayList <Tuple <Boolean, Obstacles>> grid) {this.currGrid = grid;}
 
-    public ArrayList <JButton> getMovesAvail() {return this.movesAvail;}
-    public void setMovesAvail(ArrayList <JButton> moves) {this.movesAvail = moves;}
+    public ArrayList <Moves> getMovesAvail() {return this.movesAvail;}
+    public void setMovesAvail(ArrayList <Moves> moves) {this.movesAvail = moves;}
 
     public Point getPosition() {return this.position;}
     public void setPosition(Point pos) {this.position = pos;}
