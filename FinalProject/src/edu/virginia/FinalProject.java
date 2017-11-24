@@ -26,6 +26,7 @@ public class FinalProject extends Game{
 
     /* Various game states and trackers */
     private int mvsCount;
+    private int numLevs;
     private int currLev;
     private Boolean moving;
 
@@ -70,6 +71,7 @@ public class FinalProject extends Game{
         /* Game States*/
             this.mvsCount = 0;
             this.currLev = 1;
+            this.numLevs = 3;
             this.moving = false;
 
         /* Move Buttons */
@@ -78,6 +80,10 @@ public class FinalProject extends Game{
 
         /* ArrayList of levels */
             this.Levels = new ArrayList<Level> ();
+            int i;
+            for (i = 0; i < numLevs; i ++)
+                Levels.add(null);
+
 
         /* Positions on screen */
             this.sideBarWidth = 470;
@@ -116,7 +122,7 @@ public class FinalProject extends Game{
             //creating level 1
             Level lev1 = new Level(initGrid, mvsAvail, position, 1);
 
-            this.Levels.add(1, lev1);
+            this.Levels.add(0, lev1);
 
         /* Level 2 */
 
@@ -151,27 +157,30 @@ public class FinalProject extends Game{
         if (pos.y < sqHeight * 5 && pos.y > sqHeight * 6)
              return xToCol(pos.x);
         //4-7
-        if (pos.y < sqHeight * 4 && pos.y > sqHeight * 5)
+        else if (pos.y < sqHeight * 4 && pos.y > sqHeight * 5)
             return xToCol(pos.x) + 4;
         //8-11
-        if (pos.y < sqHeight * 3 && pos.y > sqHeight * 4)
+        else if (pos.y < sqHeight * 3 && pos.y > sqHeight * 4)
             return xToCol(pos.x) + 8;
         //12-15
-        if (pos.y < sqHeight * 2 && pos.y > sqHeight * 3)
+        else if (pos.y < sqHeight * 2 && pos.y > sqHeight * 3)
             return xToCol(pos.x) + 12;
         //16-19
-        if (pos.y < sqHeight && pos.y > sqHeight * 2)
+        else if (pos.y < sqHeight && pos.y > sqHeight * 2)
             return xToCol(pos.x) + 16;
         //20-23
-        if (pos.y > sqHeight)
+        else if (pos.y > sqHeight)
             return xToCol(pos.x) + 20;
+        else
+            return -1;
     }
 
     /* Helpers that determine if a move can legally be performed */
     private Boolean legalFwd() {
         int heroSq = posToGridSquare(this.hero.getPosition());
         if (heroSq >= 0 || heroSq <= 23) {
-            if (this.Levels.get(currLev).getCurrGrid().get(heroSq + 4).getX())
+            //TODO: determine which way he's facing and check in correct direction
+            if (this.Levels.get(currLev - 1).getCurrGrid().get(heroSq + 4).getX())
                 return true;
             else
                 return false;
@@ -182,6 +191,7 @@ public class FinalProject extends Game{
 
     private Boolean legalStab() {
         //TODO: implement this
+        return false;
     }
 
     private Boolean legalCond() {
@@ -196,7 +206,7 @@ public class FinalProject extends Game{
 
     /* Run through list of moves, performing one move per frame */
     private void runMoves() {
-        ArrayList<Moves> mvs = this.Levels.get(currLev).getMovesTaken();
+        ArrayList<Moves> mvs = this.Levels.get(currLev - 1).getMovesTaken();
         if (mvsCount > mvs.size()) {
             mvsCount = 0;
             this.moving = false;
@@ -224,7 +234,7 @@ public class FinalProject extends Game{
                 break;
         }
         //iterate through movesTaken (one update at a time, use mvsCount)
-        //update character's pos based on mvsCount and Levels[currLev].getMovesTaken()
+        //update character's pos based on mvsCount and Levels[currLev - 1].getMovesTaken()
 
         this.mvsCount++;
     }
