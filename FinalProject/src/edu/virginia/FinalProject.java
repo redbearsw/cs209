@@ -25,8 +25,8 @@ public class FinalProject extends Game{
     private Sprite allLevels;
     private Sprite moves;
     private Sprite hero;
-    private Sprite forward;
-    private Sprite rotate;
+    private Sprite select;
+
 
     /* Various game states and trackers */
     private int mvsCount;
@@ -74,8 +74,11 @@ public class FinalProject extends Game{
         /* Sprites */
             this.allLevels = new Sprite("All Levels", "levels.png");
             this.moves = new Sprite("Move Board", "moves.png");
-                this.moves.setPosition(new Point(470,0));
+                this.moves.setPosition(new Point(469,0));
             this.hero = new Sprite("Hero", "character.png");
+                this.hero.setPosition(new Point(32,106*5));
+            this.select = new Sprite ("Select", "nextPlace.png");
+                this.select.setPosition(new Point(499, 53));
 
         /* Game States*/
             this.mvsCount = 0;
@@ -85,7 +88,7 @@ public class FinalProject extends Game{
 
 
         /* Run, Backspace, Clear Buttons (TO BE REPLACED WITH IMAGES) */
-            this.run = new JButton("r");
+            this.run = new JButton("Run");
             run.setBounds(500,250, 100,25);
             run.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -97,7 +100,7 @@ public class FinalProject extends Game{
             back.setBounds(610,250, 100,25);
             back.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    if (Levels.get(currLev).getMovesTaken()!=null) {
+                    if (Levels.get(currLev).getMovesTaken().size()!=0) {
                         Levels.get(currLev).getMovesTaken().remove(Levels.get(currLev).getMovesTaken().size() - 1);
                     }
                 }
@@ -130,8 +133,8 @@ public class FinalProject extends Game{
             this.gameHeight = 728;
             this.charWidth = 96;
             this.charHeight = 103;
-            this.sqWidth = 117;
-            this.sqHeight = 117;
+            this.sqWidth = 106;
+            this.sqHeight = 106;
             this.borderWidth = 32;
 
         /* Levels */
@@ -326,17 +329,29 @@ public class FinalProject extends Game{
     public void drawMovesTaken(Graphics g) {
         if(this.Levels!= null){
             ArrayList<Moves> moves = this.Levels.get(currLev).getMovesTaken();
+            if(moves.size() == 0){
+                this.select.setPosition(new Point(499, 53));
+                select.draw(g);
+            }
             for(int i=0; i<moves.size(); i++) {
                 switch(moves.get(i)) {
                     case FORWARD:
                         Sprite fw = new Sprite("Foward" + i, "forward.png");
-                        fw.setPosition(new Point(490+(i%5)*86,48+89*(i/5)));
+                        fw.setPosition(new Point(497+(i%5)*85,51+94*(i/5)));
                         fw.draw(g);
+                        if(this.select!=null){
+                            this.select.setPosition(new Point(499+((i+1)%5)*85, 53+94*((i+1)/5)));
+                            this.select.draw(g);
+                        }
                         break;
                     case ROTATE:
                         Sprite rt = new Sprite("Rotate" + i, "turn.png");
-                        rt.setPosition(new Point(490+(i%5)*86,48+89*(i/5)));
+                        rt.setPosition(new Point(497+(i%5)*85,51+94*(i/5)));
                         rt.draw(g);
+                        if(this.select!=null){
+                            this.select.setPosition(new Point(499+((i+1)%5)*85, 53+94*((i+1)/5)));
+                            this.select.draw(g);
+                        }
                         break;
                     case STAB:
 
@@ -379,6 +394,8 @@ public class FinalProject extends Game{
         if (moves != null) moves.draw(g);
         drawMovesAvail(g);
         drawMovesTaken(g);
+
+        if(hero!=null){hero.draw(g);}
 
     }
 
