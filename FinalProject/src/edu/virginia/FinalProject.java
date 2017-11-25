@@ -71,10 +71,6 @@ public class FinalProject extends Game {
         super("Final Project", 940, 748);
 
         /* Sprites */
-        this.allLevels = new Sprite("All Levels", "levels.png");
-        this.moves = new Sprite("Move Board", "moves.png");
-        this.moves.setPosition(new Point(470, 0));
-        this.hero = new Sprite("Hero", "character.png");
             this.allLevels = new Sprite("All Levels", "levels.png");
             this.moves = new Sprite("Move Board", "moves.png");
                 this.moves.setPosition(new Point(469,0));
@@ -378,26 +374,26 @@ public class FinalProject extends Game {
             ArrayList<Moves> moves = this.Levels.get(currLev).getMovesTaken();
             if(moves.size() == 0){
                 this.select.setPosition(new Point(499, 53));
-                this.select.draw(g);
+                select.draw(g);
             }
-            for (int i = 0; i < moves.size(); i++) {
-                switch (moves.get(i)) {
+            for(int i=0; i<moves.size(); i++) {
+                switch(moves.get(i)) {
                     case FORWARD:
-                        Sprite fw = new Sprite("Foward" + i, "forward.png");
-                        fw.setPosition(new Point(497 + (i % 5) * 85, 51 + 94 * (i / 5)));
+                        Sprite fw = new Sprite("Forward" + i, "forward.png");
+                        fw.setPosition(new Point(497+(i%5)*85,51+94*(i/5)));
                         fw.draw(g);
-                        if (this.select != null) {
-                            this.select.setPosition(new Point(499 + ((i + 1) % 5) * 85, 53 + 94 * ((i + 1) / 5)));
+                        if(this.select!=null){
+                            this.select.setPosition(new Point(499+((i+1)%5)*85, 53+94*((i+1)/5)));
                             this.select.draw(g);
                         }
                         break;
                     case ROTATE:
                         Sprite rt = new Sprite("Rotate" + i, "turn.png");
                         rt.setPosition(new Point(490 + (i % 5) * 86, 48 + 89 * (i / 5)));
-                        rt.setPosition(new Point(497 + (i % 5) * 85, 51 + 94 * (i / 5)));
+                        rt.setPosition(new Point(497+(i%5)*85,51+94*(i/5)));
                         rt.draw(g);
-                        if (this.select != null) {
-                            this.select.setPosition(new Point(499 + ((i + 1) % 5) * 85, 53 + 94 * ((i + 1) / 5)));
+                        if(this.select!=null){
+                            this.select.setPosition(new Point(499+((i+1)%5)*85, 53+94*((i+1)/5)));
                             this.select.draw(g);
                         }
                         break;
@@ -414,8 +410,11 @@ public class FinalProject extends Game {
                         break;
                 }
             }
+
+
         }
     }
+
 
     @Override
     public void update(ArrayList<Integer> pressedKeys) {
