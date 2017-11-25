@@ -91,24 +91,11 @@ public class FinalProject extends Game {
 
 
         /* Run, Backspace, Clear Buttons (TO BE REPLACED WITH IMAGES) */
-        this.run = new JButton("r");
-        run.setBounds(500, 250, 100, 25);
-        run.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                moving = true;
-            }
-        });
-
-        this.back = new JButton("Back");
-        back.setBounds(610, 250, 100, 25);
-        back.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (Levels.get(currLev).getMovesTaken() != null) {
-                    Levels.get(currLev).getMovesTaken().remove(Levels.get(currLev).getMovesTaken().size() - 1);
-            this.run = new JButton("Run");
-            run.setBounds(500,250, 100,25);
+            this.run = new JButton("r");
+            run.setBounds(500, 250, 100, 25);
             run.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                    moving = true;
                     runMoves();
                 }
             });
@@ -128,13 +115,8 @@ public class FinalProject extends Game {
                 public void actionPerformed(ActionEvent e) {
                     Levels.get(currLev).getMovesTaken().clear();
                 }
-            }
-        });
-        this.clear = new JButton("Clear");
-        clear.setBounds(720, 250, 100, 25);
-        clear.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {Levels.get(currLev).getMovesTaken().clear();}
-        });
+            });
+
         // adds run, clear, back buttons to screen
         super.getScenePanel().add(run);
         super.getScenePanel().add(clear);
@@ -148,17 +130,6 @@ public class FinalProject extends Game {
 
 
         /* Positions on screen */
-        this.sideBarWidth = 470;
-        this.sideBarHeight = 728;
-        this.mazeWidth = 470;
-        this.mazeHeight = 728;
-        this.gameWidth = 940;
-        this.gameHeight = 728;
-        this.charWidth = 96;
-        this.charHeight = 103;
-        this.sqWidth = 117;
-        this.sqHeight = 117;
-        this.borderWidth = 32;
             this.sideBarWidth = 470;
             this.sideBarHeight = 728;
             this.mazeWidth = 470;
@@ -405,33 +376,28 @@ public class FinalProject extends Game {
     public void drawMovesTaken(Graphics g) {
         if (this.Levels != null) {
             ArrayList<Moves> moves = this.Levels.get(currLev).getMovesTaken();
+            if(moves.size() == 0){
+                this.select.setPosition(new Point(499, 53));
+                this.select.draw(g);
+            }
             for (int i = 0; i < moves.size(); i++) {
                 switch (moves.get(i)) {
                     case FORWARD:
                         Sprite fw = new Sprite("Foward" + i, "forward.png");
-                        fw.setPosition(new Point(490 + (i % 5) * 86, 48 + 89 * (i / 5)));
-            if(moves.size() == 0){
-                this.select.setPosition(new Point(499, 53));
-                select.draw(g);
-            }
-            for(int i=0; i<moves.size(); i++) {
-                switch(moves.get(i)) {
-                    case FORWARD:
-                        Sprite fw = new Sprite("Foward" + i, "forward.png");
-                        fw.setPosition(new Point(497+(i%5)*85,51+94*(i/5)));
+                        fw.setPosition(new Point(497 + (i % 5) * 85, 51 + 94 * (i / 5)));
                         fw.draw(g);
-                        if(this.select!=null){
-                            this.select.setPosition(new Point(499+((i+1)%5)*85, 53+94*((i+1)/5)));
+                        if (this.select != null) {
+                            this.select.setPosition(new Point(499 + ((i + 1) % 5) * 85, 53 + 94 * ((i + 1) / 5)));
                             this.select.draw(g);
                         }
                         break;
                     case ROTATE:
                         Sprite rt = new Sprite("Rotate" + i, "turn.png");
                         rt.setPosition(new Point(490 + (i % 5) * 86, 48 + 89 * (i / 5)));
-                        rt.setPosition(new Point(497+(i%5)*85,51+94*(i/5)));
+                        rt.setPosition(new Point(497 + (i % 5) * 85, 51 + 94 * (i / 5)));
                         rt.draw(g);
-                        if(this.select!=null){
-                            this.select.setPosition(new Point(499+((i+1)%5)*85, 53+94*((i+1)/5)));
+                        if (this.select != null) {
+                            this.select.setPosition(new Point(499 + ((i + 1) % 5) * 85, 53 + 94 * ((i + 1) / 5)));
                             this.select.draw(g);
                         }
                         break;
@@ -448,8 +414,6 @@ public class FinalProject extends Game {
                         break;
                 }
             }
-
-
         }
     }
 
