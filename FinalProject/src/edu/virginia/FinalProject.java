@@ -296,6 +296,8 @@ public class FinalProject extends Game {
                 case FORWARD:
                     if (legalFwd())
                         hero.setPosition(this.gridSquareToPos(this.fwdSq()));
+                    else
+                        moving = false;
                     break;
                 case ROTATE:
                     if (hero.getRotation() == 270) {
