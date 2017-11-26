@@ -34,15 +34,6 @@ public class FinalProject extends Game {
     private int currLev;
     private Boolean moving;
 
-    /* Move Buttons */
-    private JButton turn;
-    private JButton fwd;
-
-    /* Run, Backspace, Clear Buttons */
-    private JButton run;
-    private JButton back;
-    private JButton clear;
-
     /* List of Levels */
     //slot 0 for opening menu?, slot 1 for level 1, etc.
     private ArrayList<Level> Levels;
@@ -88,7 +79,7 @@ public class FinalProject extends Game {
 
 
         /* Run, Backspace, Clear Buttons (TO BE REPLACED WITH IMAGES) */
-            this.run = new JButton("r");
+            JButton run = new JButton("Run");
             run.setBounds(500, 250, 100, 25);
             run.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -97,7 +88,7 @@ public class FinalProject extends Game {
                 }
             });
 
-            this.back = new JButton("Back");
+            JButton back = new JButton("Back");
             back.setBounds(610,250, 100,25);
             back.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -106,7 +97,7 @@ public class FinalProject extends Game {
                     }
                 }
             });
-            this.clear = new JButton("Clear");
+            JButton clear = new JButton("Clear");
             clear.setBounds(720,250, 100,25);
             clear.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -114,10 +105,19 @@ public class FinalProject extends Game {
                 }
             });
 
+            JButton reset = new JButton("Reset");
+            reset.setBounds(830,250, 100,25);
+            reset.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    hero.setPosition(new Point(32,106*5));
+                }
+            });
+
         // adds run, clear, back buttons to screen
         super.getScenePanel().add(run);
         super.getScenePanel().add(clear);
         super.getScenePanel().add(back);
+        super.getScenePanel().add(reset);
 
         /* ArrayList of levels */
         this.Levels = new ArrayList<Level>();
