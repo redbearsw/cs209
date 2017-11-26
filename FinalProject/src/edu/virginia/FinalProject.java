@@ -291,10 +291,6 @@ public class FinalProject extends Game {
     /* Run through list of moves, performing one move per frame */
     private void runMoves() {
         ArrayList<Moves> mvs = this.Levels.get(currLev).getMovesTaken();
-        if ((mvsCount / 30) >= mvs.size()) {
-            mvsCount = 0;
-            this.moving = false;
-        }
         if (mvsCount % 30 == 0) {
             switch (mvs.get(mvsCount / 30)) {
                 case FORWARD:
@@ -302,10 +298,12 @@ public class FinalProject extends Game {
                         hero.setPosition(this.gridSquareToPos(this.fwdSq()));
                     break;
                 case ROTATE:
-                    if (hero.getRotation() == 270)
+                    if (hero.getRotation() == 270) {
                         hero.setRotation(0);
-                    else
+                    }
+                    else {
                         hero.setRotation(hero.getRotation() + 90);
+                    }
                     break;
                 case STAB:
                     //legalStab()
@@ -324,9 +322,14 @@ public class FinalProject extends Game {
         }
 
         this.mvsCount++;
+
+        if ((mvsCount / 30) >= mvs.size()) {
+            mvsCount = 0;
+            this.moving = false;
+        }
     }
 
-    public void drawMovesAvail(Graphics g) {
+    private void drawMovesAvail(Graphics g) {
 
         /* Move Buttons */
         JButton turn = new JButton(new ImageIcon("resources/turn.png"));
