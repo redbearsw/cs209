@@ -110,6 +110,7 @@ public class FinalProject extends Game {
             reset.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     hero.setPosition(new Point(32,106*5));
+                    hero.setRotation(0);
                 }
             });
 
