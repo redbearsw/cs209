@@ -308,7 +308,10 @@ public class FinalProject extends Game {
                         hero.setPosition(this.gridSquareToPos(this.fwdSq()));
                     break;
                 case ROTATE:
-                    hero.setRotation(hero.getRotation() + 90);
+                    if (hero.getRotation() == 270)
+                        hero.setRotation(0);
+                    else
+                        hero.setRotation(hero.getRotation() + 90);
                     break;
                 case STAB:
                     //legalStab()
