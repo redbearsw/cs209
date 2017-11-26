@@ -289,13 +289,6 @@ public class FinalProject extends Game {
 
     /* Run through list of moves, performing one move per frame */
     private void runMoves() {
-        System.out.println(this.posToGridSquare(new Point (0,0)));
-        System.out.println(this.posToGridSquare(new Point (100,100)));
-        System.out.println(this.posToGridSquare(new Point (200,200)));
-        System.out.println(this.posToGridSquare(new Point (300,300)));
-        System.out.println(this.posToGridSquare(hero.getPosition()));
-
-
         ArrayList<Moves> mvs = this.Levels.get(currLev).getMovesTaken();
         if ((mvsCount / 30) >= mvs.size()) {
             mvsCount = 0;
