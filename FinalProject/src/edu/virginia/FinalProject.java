@@ -72,10 +72,10 @@ public class FinalProject extends Game {
                 this.select.setPosition(new Point(499, 53));
 
         /* Game States*/
-        this.mvsCount = 0;
-        this.currLev = 1;
-        this.numLevs = 3;
-        this.moving = false;
+            this.mvsCount = 0;
+            this.currLev = 1;
+            this.numLevs = 3;
+            this.moving = false;
 
 
         /* Run, Backspace, Clear Buttons (TO BE REPLACED WITH IMAGES) */
