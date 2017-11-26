@@ -76,6 +76,7 @@ public class FinalProject extends Game {
                 this.moves.setPosition(new Point(469,0));
             this.hero = new Sprite("Hero", "character.png");
                 this.hero.setPosition(new Point(32,106*5));
+                this.hero.setPivotPoint(new Point (this.hero.getUnscaledWidth() / 2, this.hero.getUnscaledHeight() / 2));
             this.select = new Sprite ("Select", "nextPlace.png");
                 this.select.setPosition(new Point(499, 53));
 
@@ -126,8 +127,7 @@ public class FinalProject extends Game {
 
 
         /* Positions on screen */
-            this.sideBarWidth = 470;
-            this.sideBarHeight = 728;
+            this.sideBarWidth = 24;
             this.mazeWidth = 470;
             this.mazeHeight = 728;
             this.gameWidth = 940;
@@ -182,36 +182,38 @@ public class FinalProject extends Game {
 
     /* Convert position to grid square */
     private int xToCol(int x) {
-        if (x < (sideBarWidth + (sqWidth * 2)) && x > (sideBarWidth + sqWidth))
+        if (x < (sideBarWidth + sqWidth) && (x >= sideBarWidth))
             return 0;
-        if (x < (sideBarWidth + (sqWidth * 3)) && x > (sideBarWidth + (sqWidth * 2)))
+        else if (x < (sideBarWidth + (sqWidth * 2)) && x >= (sideBarWidth + sqWidth))
             return 1;
-        if (x < (sideBarWidth + (sqWidth * 4)) && x > (sideBarWidth + (sqWidth * 3)))
+        else if (x < (sideBarWidth + (sqWidth * 3)) && x >= (sideBarWidth + (sqWidth * 2)))
             return 2;
-        if (x < (sideBarWidth + (sqWidth * 5)) && x > (sideBarWidth + (sqWidth * 4)))
+        else if (x < (sideBarWidth + (sqWidth * 4)) && x >= (sideBarWidth + (sqWidth * 3)))
             return 3;
-        else return -1;
+        else
+            return -1;
     }
 
     private int posToGridSquare(Point pos) {
         //0-3
-        if (pos.y < sqHeight * 5 && pos.y > sqHeight * 6)
-            return xToCol(pos.x);
+        if (pos.y >= sqHeight * 5 && pos.y < sqHeight * 6) {
+            return this.xToCol(pos.x);
+        }
             //4-7
-        else if (pos.y < sqHeight * 4 && pos.y > sqHeight * 5)
-            return xToCol(pos.x) + 4;
+        else if (pos.y >= sqHeight * 4 && pos.y < sqHeight * 5)
+            return this.xToCol(pos.x) + 4;
             //8-11
-        else if (pos.y < sqHeight * 3 && pos.y > sqHeight * 4)
-            return xToCol(pos.x) + 8;
+        else if (pos.y >= sqHeight * 3 && pos.y < sqHeight * 4)
+            return this.xToCol(pos.x) + 8;
             //12-15
-        else if (pos.y < sqHeight * 2 && pos.y > sqHeight * 3)
-            return xToCol(pos.x) + 12;
+        else if (pos.y >= sqHeight * 2 && pos.y < sqHeight * 3)
+            return this.xToCol(pos.x) + 12;
             //16-19
-        else if (pos.y < sqHeight && pos.y > sqHeight * 2)
-            return xToCol(pos.x) + 16;
+        else if (pos.y >= sqHeight && pos.y < sqHeight * 2)
+            return this.xToCol(pos.x) + 16;
             //20-23
-        else if (pos.y > sqHeight)
-            return xToCol(pos.x) + 20;
+        else if (pos.y < sqHeight)
+            return this.xToCol(pos.x) + 20;
         else
             return -1;
     }
@@ -287,40 +289,42 @@ public class FinalProject extends Game {
 
     /* Run through list of moves, performing one move per frame */
     private void runMoves() {
-        System.out.println(currLev + "\n");
-        System.out.println(this.Levels + "\n");
-        System.out.println(this.Levels.get(currLev) + "\n");
-        System.out.println(this.Levels.get(currLev).getMovesTaken() + "\n");
+        System.out.println(this.posToGridSquare(new Point (0,0)));
+        System.out.println(this.posToGridSquare(new Point (100,100)));
+        System.out.println(this.posToGridSquare(new Point (200,200)));
+        System.out.println(this.posToGridSquare(new Point (300,300)));
+        System.out.println(this.posToGridSquare(hero.getPosition()));
+
 
         ArrayList<Moves> mvs = this.Levels.get(currLev).getMovesTaken();
-        if (mvsCount >= mvs.size()) {
+        if ((mvsCount / 30) >= mvs.size()) {
             mvsCount = 0;
             this.moving = false;
         }
-        switch (mvs.get(mvsCount)) {
-            case FORWARD:
-                if (legalFwd())
-                    hero.setPosition(this.gridSquareToPos(this.fwdSq()));
-                break;
-            case ROTATE:
-                hero.setRotation(90);
-                break;
-            case STAB:
-                //legalStab()
-                //animate
-                //update enemy state and
-                break;
-            case COND:
-                //legalCond()
-                break;
-            case LOOP3:
-                //legalLoop()
-                break;
-            default:
-                break;
+        if (mvsCount % 30 == 0) {
+            switch (mvs.get(mvsCount / 30)) {
+                case FORWARD:
+                    if (legalFwd())
+                        hero.setPosition(this.gridSquareToPos(this.fwdSq()));
+                    break;
+                case ROTATE:
+                    hero.setRotation(hero.getRotation() + 90);
+                    break;
+                case STAB:
+                    //legalStab()
+                    //animate
+                    //update enemy state and
+                    break;
+                case COND:
+                    //legalCond()
+                    break;
+                case LOOP3:
+                    //legalLoop()
+                    break;
+                default:
+                    break;
+            }
         }
-        //iterate through movesTaken (one update at a time, use mvsCount)
-        //update character's pos based on mvsCount and Levels[currLev].getMovesTaken()
 
         this.mvsCount++;
     }
@@ -376,7 +380,7 @@ public class FinalProject extends Game {
                 this.select.setPosition(new Point(499, 53));
                 select.draw(g);
             }
-            for(int i=0; i<moves.size(); i++) {
+            for(int i = 0; i < moves.size(); i++) {
                 switch(moves.get(i)) {
                     case FORWARD:
                         Sprite fw = new Sprite("Forward" + i, "forward.png");
@@ -446,6 +450,9 @@ public class FinalProject extends Game {
     public static void main(String[] args) {
         edu.virginia.FinalProject game = new edu.virginia.FinalProject();
         game.start();
+
     }
 
 }
+
+
