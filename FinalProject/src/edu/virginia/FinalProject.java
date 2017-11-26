@@ -22,17 +22,17 @@ import edu.virginia.engine.util.Moves;
 public class FinalProject extends Game {
 
     /* Sprites */
-    private Sprite allLevels;
-    private Sprite moves;
-    private Sprite hero;
-    private Sprite select;
+    private Sprite allLevels; //background image
+    private Sprite moves; //image that gets populated with moves
+    private Sprite hero; //character
+    private Sprite select; //highlighted next slot box
 
 
     /* Various game states and trackers */
-    private int mvsCount;
-    private int numLevs;
-    private int currLev;
-    private Boolean moving;
+    private int mvsCount; //tracks which move is currently running
+    private int numLevs; //total number of levels
+    private int currLev; //current level
+    private Boolean moving; //true if currently running through moves
 
     /* List of Levels */
     //slot 0 for opening menu?, slot 1 for level 1, etc.
@@ -111,6 +111,7 @@ public class FinalProject extends Game {
                 public void actionPerformed(ActionEvent e) {
                     hero.setPosition(new Point(32,106*5));
                     hero.setRotation(0);
+                    mvsCount = 0;
                 }
             });
 
