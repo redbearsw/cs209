@@ -25,6 +25,8 @@ public class Level {
      * position indicates where the top left of the grid is in the whole image
      *
      * id indicates which number level this is
+     *
+     * bestScore indicates the best score one could get on this level
      */
     private ArrayList <Tuple <Boolean, Obstacles>> initGrid;
     private ArrayList <Tuple <Boolean, Obstacles>> currGrid;
@@ -32,6 +34,7 @@ public class Level {
     private ArrayList <Moves> movesTaken;
     private Point position;
     private int id;
+    private int bestScore;
 
     /* enum Moves and enum GridSquares */
     //possibilities for move buttons
@@ -40,13 +43,14 @@ public class Level {
 
 
     /* Constructor */
-    public Level(ArrayList <Tuple <Boolean, Obstacles>> iG, ArrayList <Moves> mvAv, Point position, int id) {
+    public Level(ArrayList <Tuple <Boolean, Obstacles>> iG, ArrayList <Moves> mvAv, Point position, int id, int bestScore) {
         this.setId(id);
         this.setPosition(position);
         this.setMovesAvail(mvAv);
         this.setMovesTaken(new ArrayList<Moves>());
         this.setInitGrid(iG);
         this.setCurrGrid(iG);
+        this.setBestScore(bestScore);
 
     }
 
@@ -69,7 +73,13 @@ public class Level {
     public ArrayList<Moves> getMovesTaken() {return this.movesTaken;}
     public void setMovesTaken(ArrayList<Moves> moves) {this.movesTaken = moves;}
 
+    public int getBestScore() {
+        return bestScore;
+    }
 
+    public void setBestScore(int bestScore) {
+        this.bestScore = bestScore;
+    }
 
     /* updateCurrGrid updates the state of a given grid square */
     void updateCurrGrid(int square, Boolean enter, Obstacles state) {
