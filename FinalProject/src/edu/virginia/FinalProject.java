@@ -26,6 +26,9 @@ public class FinalProject extends Game {
     private Sprite moves; //image that gets populated with moves
     private Sprite hero; //character
     private Sprite select; //highlighted next slot box
+    private Sprite oneStar; // one star full
+    private Sprite twoStar; // two stars full
+    private Sprite threeStar; // three stars full
 
 
     /* Various game states and trackers */
@@ -33,6 +36,8 @@ public class FinalProject extends Game {
     private int numLevs; //total number of levels
     private int currLev; //current level
     private Boolean moving; //true if currently running through moves
+    private Boolean winState; // true if the level has been won
+    private int movesTaken; // number of moves taken to win (only set upon victory)
 
     /* List of Levels */
     //slot 0 for opening menu?, slot 1 for level 1, etc.
@@ -70,12 +75,17 @@ public class FinalProject extends Game {
                 this.hero.setPivotPoint(new Point (this.hero.getUnscaledWidth() / 2, this.hero.getUnscaledHeight() / 2));
             this.select = new Sprite ("Select", "nextPlace.png");
                 this.select.setPosition(new Point(499, 53));
+            this.threeStar = new Sprite("ThreeStar", "threeStar.png");
+            this.twoStar = new Sprite ("TwoStar", "twoStar.png");
+            this.oneStar = new Sprite("OneStar", "oneStar.png");
 
         /* Game States*/
             this.mvsCount = 0;
             this.currLev = 1;
             this.numLevs = 3;
             this.moving = false;
+            this.winState = false;
+
 
 
         /* Run, Backspace, Clear Buttons (TO BE REPLACED WITH IMAGES) */
@@ -162,7 +172,7 @@ public class FinalProject extends Game {
         Point position = new Point(0, 0);
 
         //creating level 1
-        Level lev1 = new Level(initGrid, mvsAvail, position, 1);
+        Level lev1 = new Level(initGrid, mvsAvail, position, 1, 12);
 
         this.Levels.add(1, lev1);
 
@@ -295,8 +305,15 @@ public class FinalProject extends Game {
         if (mvsCount % 30 == 0) {
             switch (mvs.get(mvsCount / 30)) {
                 case FORWARD:
-                    if (legalFwd())
+                    if (legalFwd()) {
                         hero.setPosition(this.gridSquareToPos(this.fwdSq()));
+                        // for more levels, need to write a find goal function
+                        System.out.println(this.posToGridSquare(hero.getPosition()));
+                        if (this.posToGridSquare(hero.getPosition()) == 23) {
+                            winState = true;
+                            movesTaken = mvs.size();
+                        }
+                    }
                     else
                         moving = false;
                     break;
@@ -423,6 +440,19 @@ public class FinalProject extends Game {
         }
     }
 
+    public void onVictory(Graphics g) {
+        int bS = this.Levels.get(currLev).getBestScore();
+        if(movesTaken <= bS){
+            if(threeStar != null){
+                threeStar.draw(g);
+            }
+        } else if (movesTaken < bS + 2) {
+            if(twoStar != null){twoStar.draw(g);}
+        } else {
+            if(oneStar != null){oneStar.draw(g);}
+        }
+    }
+
 
     @Override
     public void update(ArrayList<Integer> pressedKeys) {
@@ -448,6 +478,9 @@ public class FinalProject extends Game {
         drawMovesTaken(g);
 
         if(hero!=null){hero.draw(g);}
+        if(winState) {
+            onVictory(g);
+        }
 
     }
 
