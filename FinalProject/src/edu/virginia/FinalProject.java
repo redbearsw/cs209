@@ -302,52 +302,55 @@ public class FinalProject extends Game {
     /* Run through list of moves, performing one move per frame */
     private void runMoves() {
         ArrayList<Moves> mvs = this.Levels.get(currLev).getMovesTaken();
-        if (mvsCount % 30 == 0) {
-            switch (mvs.get(mvsCount / 30)) {
-                case FORWARD:
-                    if (legalFwd()) {
-                        hero.setPosition(this.gridSquareToPos(this.fwdSq()));
-                        // for more levels, need to write a find goal function
-                        System.out.println(this.posToGridSquare(hero.getPosition()));
-                        if (this.posToGridSquare(hero.getPosition()) == 23) {
-                            winState = true;
-                            movesTaken = mvs.size();
-                        }
-                    }
-                    else
-                        moving = false;
-                    break;
-                case ROTATE:
-                    if (mvsCount % 30 == 0) {
-                        if (hero.getRotation() == 270) {
-                            hero.setRotation(0);
-                        } else {
-                            hero.setRotation(hero.getRotation() + 90);
-                        }
-                    }
-                    break;
-                case STAB:
-                    //legalStab()
-                    //animate
-                    //update enemy state and
-                    break;
-                case COND:
-                    //legalCond()
-                    break;
-                case LOOP3:
-                    //legalLoop()
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        this.mvsCount++;
 
         if ((mvsCount / 30) >= mvs.size()) {
             mvsCount = 0;
             this.moving = false;
         }
+
+        switch (mvs.get(mvsCount / 30)) {
+            case FORWARD:
+                if (legalFwd()) {
+                    //set position to current position + (distance between final position and starting position)/30
+                    hero.setPosition(this.gridSquareToPos(this.fwdSq()));
+                    // for more levels, need to write a find goal function
+                    if (mvsCount % 30 == 0) {
+                        if (this.posToGridSquare(hero.getPosition()) == 23) {
+                            winState = true;
+                            movesTaken = mvs.size();
+                        }
+                    }
+                }
+                else
+                    moving = false;
+                break;
+            case ROTATE:
+                if (mvsCount % 30 == 0) {
+                    if (hero.getRotation() == 270) {
+                        hero.setRotation(0);
+                    } else {
+                        hero.setRotation(hero.getRotation() + 90);
+                    }
+                }
+                break;
+            case STAB:
+                //legalStab()
+                //animate
+                //update enemy state and
+                break;
+            case COND:
+                //legalCond()
+                break;
+            case LOOP3:
+                //legalLoop()
+                break;
+            default:
+                break;
+        }
+
+        this.mvsCount++;
+
+
     }
 
     private void drawMovesAvail(Graphics g) {
