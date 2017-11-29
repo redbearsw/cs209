@@ -301,11 +301,12 @@ public class FinalProject extends Game {
                         moving = false;
                     break;
                 case ROTATE:
-                    if (hero.getRotation() == 270) {
-                        hero.setRotation(0);
-                    }
-                    else {
-                        hero.setRotation(hero.getRotation() + 90);
+                    if (mvsCount % 30 == 0) {
+                        if (hero.getRotation() == 270) {
+                            hero.setRotation(0);
+                        } else {
+                            hero.setRotation(hero.getRotation() + 90);
+                        }
                     }
                     break;
                 case STAB:
