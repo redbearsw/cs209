@@ -405,7 +405,7 @@ public class FinalProject extends Game {
                     } else
                         moving = false;
                 }
-                else if (runCount % speed == 29)
+                else if (runCount % speed == speed - 1)
                     mvsCount += 1;
                 break;
             case ROTATE:
