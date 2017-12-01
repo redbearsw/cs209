@@ -32,7 +32,9 @@ public class FinalProject extends Game {
 
 
     /* Various game states and trackers */
+    private int speed;
     private int mvsCount; //tracks which move is currently running
+    private int runCount; //increments every frame that runMoves is called
     private int numLevs; //total number of levels
     private int currLev; //current level
     private Boolean moving; //true if currently running through moves
@@ -80,7 +82,9 @@ public class FinalProject extends Game {
             this.oneStar = new Sprite("OneStar", "oneStar.png");
 
         /* Game States*/
+            this.speed = 30;
             this.mvsCount = 0;
+            this.runCount = 0;
             this.currLev = 1;
             this.numLevs = 3;
             this.moving = false;
@@ -119,9 +123,9 @@ public class FinalProject extends Game {
             reset.setBounds(830,250, 100,25);
             reset.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    hero.setPosition(new Point(32,106*5));
+                    hero.setPosition(new Point(32,106*5)); //TODO: reset to start square of level
                     hero.setRotation(0);
-                    mvsCount = 0;
+                    runCount = 0;
                 }
             });
 
@@ -151,35 +155,112 @@ public class FinalProject extends Game {
             this.borderWidth = 32;
 
         /* Levels */
-            /* Level 1 */
+
+        /* Level 1 */
         //initial grid
-        ArrayList<Tuple<Boolean, Obstacles>> initGrid = createInitGrid();
-        initGrid.set(2, new Tuple<Boolean, Obstacles>(false, Obstacles.WALL));
-        initGrid.set(3, new Tuple<Boolean, Obstacles>(false, Obstacles.WALL));
-        initGrid.set(6, new Tuple<Boolean, Obstacles>(false, Obstacles.WALL));
-        initGrid.set(7, new Tuple<Boolean, Obstacles>(false, Obstacles.WALL));
-        initGrid.set(12, new Tuple<Boolean, Obstacles>(false, Obstacles.WALL));
-        initGrid.set(16, new Tuple<Boolean, Obstacles>(false, Obstacles.WALL));
-        initGrid.set(18, new Tuple<Boolean, Obstacles>(false, Obstacles.WALL));
-        initGrid.set(23, new Tuple<Boolean, Obstacles>(true, Obstacles.GOAL));
+        ArrayList<Tuple<Boolean, Obstacles>> initGrid1 = createInitGrid();
+        initGrid1.set(0, new Tuple<>(true, Obstacles.START));
+        initGrid1.set(2, new Tuple<>(false, Obstacles.WALL));
+        initGrid1.set(3, new Tuple<>(false, Obstacles.WALL));
+        initGrid1.set(6, new Tuple<>(false, Obstacles.WALL));
+        initGrid1.set(7, new Tuple<>(false, Obstacles.WALL));
+        initGrid1.set(12, new Tuple<>(false, Obstacles.WALL));
+        initGrid1.set(16, new Tuple<>(false, Obstacles.WALL));
+        initGrid1.set(18, new Tuple<>(false, Obstacles.WALL));
+        initGrid1.set(20, new Tuple<>(false, Obstacles.WALL));
+        initGrid1.set(21, new Tuple<>(false, Obstacles.WALL));
+        initGrid1.set(22, new Tuple<>(false, Obstacles.WALL));
+        initGrid1.set(23, new Tuple<>(true, Obstacles.GOAL));
 
         //available moves
-        ArrayList<Moves> mvsAvail = new ArrayList<>();
-        mvsAvail.add(Moves.FORWARD);
-        mvsAvail.add(Moves.ROTATE);
+        ArrayList<Moves> mvsAvail1 = new ArrayList<>();
+        mvsAvail1.add(Moves.FORWARD);
+        mvsAvail1.add(Moves.ROTATE);
 
         //position
-        Point position = new Point(0, 0);
+        Point pos1 = new Point(0, 0);
 
         //creating level 1
-        Level lev1 = new Level(initGrid, mvsAvail, position, 1, 12);
+        Level lev1 = new Level(initGrid1, mvsAvail1, pos1, 1, 12);
 
         this.Levels.add(1, lev1);
 
         /* Level 2 */
+        //initial grid
+        ArrayList<Tuple<Boolean, Obstacles>> initGrid2 = createInitGrid();
+        initGrid2.set(3, new Tuple<>(true, Obstacles.START));
+        initGrid2.set(0, new Tuple<>(false, Obstacles.WALL));
+        initGrid2.set(1, new Tuple<>(false, Obstacles.WALL));
+        initGrid2.set(4, new Tuple<>(false, Obstacles.WALL));
+        initGrid2.set(7, new Tuple<>(false, Obstacles.WALL));
+        initGrid2.set(8, new Tuple<>(false, Obstacles.WALL));
+        initGrid2.set(10, new Tuple<>(false, Obstacles.WALL));
+        initGrid2.set(11, new Tuple<>(false, Obstacles.WALL));
+        initGrid2.set(20, new Tuple<>(false, Obstacles.WALL));
+        initGrid2.set(12, new Tuple<>(false, Obstacles.WALL));
+        initGrid2.set(14, new Tuple<>(false, Obstacles.WALL));
+        initGrid2.set(15, new Tuple<>(false, Obstacles.WALL));
+        initGrid2.set(16, new Tuple<>(false, Obstacles.WALL));
+        initGrid2.set(18, new Tuple<>(false, Obstacles.WALL));
+        initGrid2.set(19, new Tuple<>(false, Obstacles.WALL));
+        initGrid2.set(20, new Tuple<>(false, Obstacles.WALL));
+        initGrid2.set(23, new Tuple<>(false, Obstacles.WALL));
+        initGrid2.set(22, new Tuple<>(true, Obstacles.GOAL));
+        initGrid2.set(13, new Tuple<>(false, Obstacles.BARRICADE));
+
+        //available moves
+        ArrayList<Moves> mvsAvail2 = new ArrayList<>();
+        mvsAvail2.add(Moves.FORWARD);
+        mvsAvail2.add(Moves.ROTATE);
+        mvsAvail2.add(Moves.STAB);
+        mvsAvail2.add(Moves.LOOP3);
+
+        //position
+        Point pos2 = new Point(0, 0); //TODO: change this
+
+        //creating level 2
+        Level lev2 = new Level(initGrid2, mvsAvail2, pos2, 2, 14);
+
+        this.Levels.add(2, lev2);
 
         /* Level 3 */
+        //initial grid
+        ArrayList<Tuple<Boolean, Obstacles>> initGrid3 = createInitGrid();
+        initGrid3.set(2, new Tuple<>(true, Obstacles.START));
+        initGrid3.set(0, new Tuple<>(false, Obstacles.WALL));
+        initGrid3.set(3, new Tuple<>(false, Obstacles.WALL));
+        initGrid3.set(8, new Tuple<>(false, Obstacles.WALL));
+        initGrid3.set(10, new Tuple<>(false, Obstacles.WALL));
+        initGrid3.set(11, new Tuple<>(false, Obstacles.WALL));
+        initGrid3.set(12, new Tuple<>(false, Obstacles.WALL));
+        initGrid3.set(14, new Tuple<>(false, Obstacles.WALL));
+        initGrid3.set(15, new Tuple<>(false, Obstacles.WALL));
+        initGrid3.set(16, new Tuple<>(false, Obstacles.WALL));
+        initGrid3.set(18, new Tuple<>(false, Obstacles.WALL));
+        initGrid3.set(19, new Tuple<>(false, Obstacles.WALL));
+        initGrid3.set(16, new Tuple<>(false, Obstacles.WALL));
+        initGrid3.set(18, new Tuple<>(false, Obstacles.WALL));
+        initGrid3.set(19, new Tuple<>(false, Obstacles.WALL));
+        initGrid3.set(17, new Tuple<>(false, Obstacles.ENEMY));
+        initGrid3.set(9, new Tuple<>(false, Obstacles.ENEMY));
+        initGrid3.set(20, new Tuple<>(true, Obstacles.GOAL));
 
+
+        //available moves
+        ArrayList<Moves> mvsAvail3 = new ArrayList<>();
+        mvsAvail3.add(Moves.FORWARD);
+        mvsAvail3.add(Moves.ROTATE);
+        mvsAvail3.add(Moves.STAB);
+        mvsAvail3.add(Moves.LOOP3);
+        mvsAvail3.add(Moves.COND);
+
+        //position
+        Point pos3 = new Point(0, 0); //TODO: change this
+
+        //creating level 3
+        Level lev3 = new Level(initGrid3, mvsAvail3, pos3, 3, 14);
+
+        this.Levels.add(3, lev3);
 
     }
 
@@ -192,7 +273,7 @@ public class FinalProject extends Game {
         return grid;
     }
 
-    /* Convert position to grid square */
+    /* Helper that returns column given x coordinate */
     private int xToCol(int x) {
         if (x < (sideBarWidth + sqWidth) && (x >= sideBarWidth))
             return 0;
@@ -206,6 +287,7 @@ public class FinalProject extends Game {
             return -1;
     }
 
+    /* Converts a global position into its grid square */
     private int posToGridSquare(Point pos) {
         //0-3
         if (pos.y >= sqHeight * 5 && pos.y < sqHeight * 6) {
@@ -230,6 +312,7 @@ public class FinalProject extends Game {
             return -1;
     }
 
+    /* Converts a grid square into the global position of its top left corner */
     private Point gridSquareToPos(int sq) {
         int x;
         int y;
@@ -252,6 +335,7 @@ public class FinalProject extends Game {
         }
         return new Point(x, y);
     }
+
     /* Helper function that returns square in front of hero. Returns -1 if invalid input or fwd square doesn't exist. */
     private int fwdSq() {
         int heroSq = posToGridSquare(this.hero.getPosition());
@@ -276,6 +360,7 @@ public class FinalProject extends Game {
     }
 
     /* Helpers that determine if a move can legally be performed */
+    //checks if forward move is legal
     private Boolean legalFwd() {
         int newSq = this.fwdSq();
         if (newSq > -1)
@@ -284,67 +369,79 @@ public class FinalProject extends Game {
             return false;
     }
 
+    //checks if stab is legal
     private Boolean legalStab() {
-        //TODO: implement this
-        return false;
+        return (this.Levels.get(currLev).getCurrGrid().get(this.fwdSq()).getY() == Obstacles.ENEMY ||
+                this.Levels.get(currLev).getCurrGrid().get(this.fwdSq()).getY() == Obstacles.BARRICADE);
     }
 
-    private Boolean legalCond() {
-        //TODO: implement this
-        return false;
-    }
-
+    //checks if loop is legal
     private Boolean legalLoop() {
         //TODO: implement this
         return false;
     }
 
-    /* Run through list of moves, performing one move per frame */
+    //checks if conditional is legal
+    private Boolean legalCond() {
+        //TODO: implement this
+        return false;
+    }
+
+
+    /* Updates game state to run through moves. Moves get executed in this.speed number of frames */
     private void runMoves() {
         ArrayList<Moves> mvs = this.Levels.get(currLev).getMovesTaken();
-        if (mvsCount % 30 == 0) {
-            switch (mvs.get(mvsCount / 30)) {
-                case FORWARD:
+        switch (mvs.get(mvsCount)) {
+            case FORWARD:
+                if (runCount % speed == 0) {
                     if (legalFwd()) {
-                        //set position to current position + (distance between final position and starting position)/30
                         hero.setPosition(this.gridSquareToPos(this.fwdSq()));
-                        // for more levels, need to write a find goal function
 
+                        // for more levels, need to write a find goal function
                         if (this.posToGridSquare(hero.getPosition()) == 23) {
                             winState = true;
                             movesTaken = mvs.size();
                         }
                     } else
                         moving = false;
-                    break;
-                case ROTATE:
-                    if (mvsCount % 30 == 0) {
-                        if (hero.getRotation() == 270) {
-                            hero.setRotation(0);
-                        } else {
-                            hero.setRotation(hero.getRotation() + 90);
-                        }
+                }
+                else if (runCount % speed == 29)
+                    mvsCount += 1;
+                break;
+            case ROTATE:
+                if (runCount % speed == 0) {
+                    if (hero.getRotation() == 270) {
+                        hero.setRotation(0);
+                    } else {
+                        hero.setRotation(hero.getRotation() + 90);
                     }
-                    break;
-                case STAB:
-                    //legalStab()
-                    //animate
-                    //update enemy state and
-                    break;
-                case COND:
-                    //legalCond()
-                    break;
-                case LOOP3:
-                    //legalLoop()
-                    break;
-                default:
-                    break;
-            }
+                }
+                else if (runCount % speed == speed - 1)
+                    mvsCount += 1;
+
+                break;
+            case STAB:
+                //if (speed frames)
+                //if (legalStab())
+                    //stabbing animation
+                    //update enemy state
+                //else
+                    //falling over animation
+                break;
+            case COND:
+                //legalCond()
+                break;
+            case LOOP3:
+                //legalLoop()
+                break;
+            default:
+                break;
         }
 
-        this.mvsCount++;
+        this.runCount++;
 
-        if ((mvsCount / 30) >= mvs.size()) {
+        //set mvsCount to 0 and moving to false when all moves complete
+        if (mvsCount >= mvs.size()) {
             mvsCount = 0;
             this.moving = false;
         }
@@ -352,6 +449,7 @@ public class FinalProject extends Game {
 
     }
 
+    /* Draws the buttons for the moves that are available in the current level */
     private void drawMovesAvail(Graphics g) {
 
         /* Move Buttons */
@@ -396,6 +494,7 @@ public class FinalProject extends Game {
 
     }
 
+    /* Draws the moves that have been taken in the grid */
     public void drawMovesTaken(Graphics g) {
         if (this.Levels != null) {
             ArrayList<Moves> moves = this.Levels.get(currLev).getMovesTaken();
@@ -442,6 +541,7 @@ public class FinalProject extends Game {
         }
     }
 
+    /* Displays score on victory */
     public void onVictory(Graphics g) {
         int bS = this.Levels.get(currLev).getBestScore();
         if(movesTaken <= bS){
@@ -460,8 +560,6 @@ public class FinalProject extends Game {
     public void update(ArrayList<Integer> pressedKeys) {
         super.update(pressedKeys);
 
-		/* Make sure mario is not null. Sometimes Swing can auto cause an extra frame to go before everything is initialized */
-
         if (moving)
             runMoves();
 
@@ -470,7 +568,6 @@ public class FinalProject extends Game {
 
     @Override
     public void draw(Graphics g) {
-        //check characters for null
 
         super.draw(g);
 
