@@ -25,6 +25,7 @@ public class FinalProject extends Game {
     private Sprite allLevels; //background image
     private Sprite moves; //image that gets populated with moves
     private Sprite hero; //character
+    private Sprite enemy; //enemy character
     private Sprite select; //highlighted next slot box
     private Sprite oneStar; // one star full
     private Sprite twoStar; // two stars full
@@ -69,26 +70,26 @@ public class FinalProject extends Game {
         super("Final Project", 940, 748);
 
         /* Sprites */
-            this.allLevels = new Sprite("All Levels", "levels.png");
-            this.moves = new Sprite("Move Board", "moves.png");
-                this.moves.setPosition(new Point(469,0));
-            this.hero = new Sprite("Hero", "character.png");
-                this.hero.setPosition(new Point(32,106*5));
-                this.hero.setPivotPoint(new Point (this.hero.getUnscaledWidth() / 2, this.hero.getUnscaledHeight() / 2));
-            this.select = new Sprite ("Select", "nextPlace.png");
-                this.select.setPosition(new Point(499, 53));
-            this.threeStar = new Sprite("ThreeStar", "threeStar.png");
-            this.twoStar = new Sprite ("TwoStar", "twoStar.png");
-            this.oneStar = new Sprite("OneStar", "oneStar.png");
+        this.allLevels = new Sprite("All Levels", "levels.png");
+        this.moves = new Sprite("Move Board", "moves.png");
+            this.moves.setPosition(new Point(469,0));
+        this.hero = new Sprite("Hero", "character.png");
+            this.hero.setPosition(new Point(32,106*5));
+            this.hero.setPivotPoint(new Point (this.hero.getUnscaledWidth() / 2, this.hero.getUnscaledHeight() / 2));
+        this.select = new Sprite ("Select", "nextPlace.png");
+            this.select.setPosition(new Point(499, 53));
+        this.threeStar = new Sprite("ThreeStar", "threeStar.png");
+        this.twoStar = new Sprite ("TwoStar", "twoStar.png");
+        this.oneStar = new Sprite("OneStar", "oneStar.png");
 
         /* Game States*/
-            this.speed = 30;
-            this.mvsCount = 0;
-            this.runCount = 0;
-            this.currLev = 1;
-            this.numLevs = 3;
-            this.moving = false;
-            this.winState = false;
+        this.speed = 30;
+        this.mvsCount = 0;
+        this.runCount = 0;
+        this.currLev = 1;
+        this.numLevs = 3;
+        this.moving = false;
+        this.winState = false;
 
         /* ArrayList of levels */
         this.Levels = new ArrayList<Level>();
@@ -145,16 +146,16 @@ public class FinalProject extends Game {
 
 
         /* Positions on screen */
-            this.sideBarWidth = 24;
-            this.mazeWidth = 470;
-            this.mazeHeight = 728;
-            this.gameWidth = 940;
-            this.gameHeight = 728;
-            this.charWidth = 96;
-            this.charHeight = 103;
-            this.sqWidth = 106;
-            this.sqHeight = 106;
-            this.borderWidth = 32;
+        this.sideBarWidth = 24;
+        this.mazeWidth = 470;
+        this.mazeHeight = 728;
+        this.gameWidth = 940;
+        this.gameHeight = 728;
+        this.charWidth = 96;
+        this.charHeight = 103;
+        this.sqWidth = 106;
+        this.sqHeight = 106;
+        this.borderWidth = 32;
 
         /* Levels */
 
@@ -422,12 +423,22 @@ public class FinalProject extends Game {
 
                     break;
                 case STAB:
-                    //if (speed frames)
-                    //if (legalStab())
-                    //stabbing animation
-                    //update enemy state
-                    //else
-                    //falling over animation
+                    if (runCount % speed == 0) {
+                        if (this.legalStab()) {
+                            //stabbing animation
+                            this.Levels.get(currLev).getCurrGrid().get(this.fwdSq()).setX(true);
+                            this.Levels.get(currLev).getCurrGrid().get(this.fwdSq()).setY(Obstacles.NOTHING);
+                            if (this.Levels.get(currLev).getCurrGrid().get(this.fwdSq()).getY() == Obstacles.ENEMY) {
+                                this.enemy.setVisible(false);
+                            } else if (this.Levels.get(currLev).getCurrGrid().get(this.fwdSq()).getY() == Obstacles.BARRICADE) {
+                                //update barricade image to next image
+                            }
+                        }
+                    }
+                    else {
+                        //falling over animation
+                        //lost game
+                    }
                     break;
                 case COND:
                     //legalCond()
