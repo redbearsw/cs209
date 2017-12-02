@@ -90,6 +90,12 @@ public class FinalProject extends Game {
             this.moving = false;
             this.winState = false;
 
+        /* ArrayList of levels */
+        this.Levels = new ArrayList<Level>();
+        int i;
+        for (i = 0; i < numLevs; i++)
+            Levels.add(null);
+
 
 
         /* Run, Backspace, Clear Buttons (TO BE REPLACED WITH IMAGES) */
@@ -97,8 +103,8 @@ public class FinalProject extends Game {
             run.setBounds(500, 250, 100, 25);
             run.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    moving = true;
-                    runMoves();
+                    if (Levels.get(currLev).getMovesTaken() != null && !Levels.get(currLev).getMovesTaken().isEmpty())
+                        moving = true;
                 }
             });
 
@@ -135,11 +141,7 @@ public class FinalProject extends Game {
         super.getScenePanel().add(back);
         super.getScenePanel().add(reset);
 
-        /* ArrayList of levels */
-        this.Levels = new ArrayList<Level>();
-        int i;
-        for (i = 0; i < numLevs; i++)
-            Levels.add(null);
+
 
 
         /* Positions on screen */
@@ -391,62 +393,61 @@ public class FinalProject extends Game {
     /* Updates game state to run through moves. Moves get executed in this.speed number of frames */
     private void runMoves() {
         ArrayList<Moves> mvs = this.Levels.get(currLev).getMovesTaken();
-        switch (mvs.get(mvsCount)) {
-            case FORWARD:
-                if (runCount % speed == 0) {
-                    if (legalFwd()) {
-                        hero.setPosition(this.gridSquareToPos(this.fwdSq()));
+        if (mvs != null && !mvs.isEmpty()) {
+            switch (mvs.get(mvsCount)) {
+                case FORWARD:
+                    if (runCount % speed == 0) {
+                        if (legalFwd()) {
+                            hero.setPosition(this.gridSquareToPos(this.fwdSq()));
 
-                        // for more levels, need to write a find goal function
-                        if (this.posToGridSquare(hero.getPosition()) == 23) {
-                            winState = true;
-                            movesTaken = mvs.size();
+                            // for more levels, need to write a find goal function
+                            if (this.posToGridSquare(hero.getPosition()) == 23) {
+                                winState = true;
+                                movesTaken = mvs.size();
+                            }
+                        } else
+                            moving = false;
+                    } else if (runCount % speed == speed - 1)
+                        mvsCount += 1;
+                    break;
+                case ROTATE:
+                    if (runCount % speed == 0) {
+                        if (hero.getRotation() == 270) {
+                            hero.setRotation(0);
+                        } else {
+                            hero.setRotation(hero.getRotation() + 90);
                         }
-                    } else
-                        moving = false;
-                }
-                else if (runCount % speed == speed - 1)
-                    mvsCount += 1;
-                break;
-            case ROTATE:
-                if (runCount % speed == 0) {
-                    if (hero.getRotation() == 270) {
-                        hero.setRotation(0);
-                    } else {
-                        hero.setRotation(hero.getRotation() + 90);
-                    }
-                }
-                else if (runCount % speed == speed - 1)
-                    mvsCount += 1;
+                    } else if (runCount % speed == speed - 1)
+                        mvsCount += 1;
 
-                break;
-            case STAB:
-                //if (speed frames)
-                //if (legalStab())
+                    break;
+                case STAB:
+                    //if (speed frames)
+                    //if (legalStab())
                     //stabbing animation
                     //update enemy state
-                //else
+                    //else
                     //falling over animation
-                break;
-            case COND:
-                //legalCond()
-                break;
-            case LOOP3:
-                //legalLoop()
-                break;
-            default:
-                break;
+                    break;
+                case COND:
+                    //legalCond()
+                    break;
+                case LOOP3:
+                    //legalLoop()
+                    break;
+                default:
+                    break;
+            }
+
+            this.runCount++;
+
+            //set mvsCount to 0 and moving to false when all moves complete
+            if (mvsCount >= mvs.size()) {
+                mvsCount = 0;
+                this.moving = false;
+            }
+
         }
-
-        this.runCount++;
-
-        //set mvsCount to 0 and moving to false when all moves complete
-        if (mvsCount >= mvs.size()) {
-            mvsCount = 0;
-            this.moving = false;
-        }
-
-
     }
 
     /* Draws the buttons for the moves that are available in the current level */
@@ -468,7 +469,8 @@ public class FinalProject extends Game {
                 Levels.get(currLev).getMovesTaken().add(Moves.FORWARD);
             }
         });
-        if (this.Levels != null) {
+
+        if (this.Levels != null && this.Levels.get(currLev) != null) {
             for (int i = 0; i < this.Levels.get(currLev).getMovesAvail().size(); i++) {
                 switch (Levels.get(currLev).getMovesAvail().get(i)) {
                     case FORWARD:
@@ -496,7 +498,7 @@ public class FinalProject extends Game {
 
     /* Draws the moves that have been taken in the grid */
     public void drawMovesTaken(Graphics g) {
-        if (this.Levels != null) {
+        if (this.Levels != null && this.Levels.get(currLev) != null) {
             ArrayList<Moves> moves = this.Levels.get(currLev).getMovesTaken();
             if(moves.size() == 0){
                 this.select.setPosition(new Point(499, 53));
