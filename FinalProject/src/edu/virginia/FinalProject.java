@@ -23,29 +23,29 @@ import edu.virginia.engine.util.Moves;
 public class FinalProject extends Game {
 
     /* Sprites */
-    private Sprite allLevels; //background image
-    private Sprite moves; //image that gets populated with moves
-    private Sprite hero; //character
-    private Sprite enemy; //enemy character
-    private Sprite select; //highlighted next slot box
+    private Sprite allLevels; // background image
+    private Sprite moves; // image that gets populated with moves
+    private Sprite hero; // character
+    private Sprite enemy; // enemy character
+    private Sprite select; // highlighted next slot box
     private Sprite oneStar; // one star full
     private Sprite twoStar; // two stars full
     private Sprite threeStar; // three stars full
 
 
     /* Various game states and trackers */
-    private int speed;
-    private int mvsCount; //tracks which move is currently running
-    private int runCount; //increments every frame that runMoves is called
-    private int numLevs; //total number of levels
-    private int currLev; //current level
-    private Boolean moving; //true if currently running through moves
+    private int speed; // number of frames it takes to run one move, transition to new level
+    private int mvsCount; // tracks which move is currently running
+    private int runCount; // increments every frame that runMoves is called
+    private int numLevs; // total number of levels
+    private int currLev; // current level
+    private Boolean moving; // true if currently running through moves
     private Boolean winState; // true if the level has been won
     private int transition; // counts # of steps taken when in transition, otherwise 0
     private int movesTaken; // number of moves taken to win (only set upon victory)
 
     /* List of Levels */
-    //slot 0 for opening menu?, slot 1 for level 1, etc.
+    //slot 1 for level 1, etc.
     private ArrayList<Level> Levels;
 
     /* Variables to keep track of where things are on the screen */
@@ -73,6 +73,7 @@ public class FinalProject extends Game {
 
         /* Sprites */
         this.allLevels = new Sprite("All Levels", "levels.png");
+            this.allLevels.setPosition(new Point (sideBarWidth, 0));
         this.moves = new Sprite("Move Board", "moves.png");
             this.moves.setPosition(new Point(469,0));
         this.hero = new Sprite("Hero", "character.png");
@@ -139,26 +140,19 @@ public class FinalProject extends Game {
                 }
             });
 
-            JButton nxt = new JButton("Next");
-            nxt.setBounds(430, 250 , 100, 25);
-            nxt.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    if (currLev < numLevs)
-                        transition = 1;
-                }
-            });
+
 
         // adds run, clear, back buttons to screen
         super.getScenePanel().add(run);
         super.getScenePanel().add(clear);
         super.getScenePanel().add(back);
         super.getScenePanel().add(reset);
-        super.getScenePanel().add(nxt);
+
 
 
         /* Positions on screen */
         this.sideBarWidth = 24;
-        this.mazeWidth = 470;
+        this.mazeWidth = 423;
         this.mazeHeight = 636;
         this.gameWidth = 940;
         this.gameHeight = 728;
@@ -567,6 +561,7 @@ public class FinalProject extends Game {
 
     /* Displays score on victory */
     public void onVictory(Graphics g) {
+        // display score
         int bS = this.Levels.get(currLev).getBestScore();
         if(movesTaken <= bS){
             if(threeStar != null){
@@ -577,6 +572,34 @@ public class FinalProject extends Game {
         } else {
             if(oneStar != null){oneStar.draw(g);}
         }
+
+        //display next and restart buttons
+        JButton next = new JButton("Next");
+        next.setBounds(430, 250 , 100, 25);
+        next.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (currLev < numLevs)
+                    transition = 1;
+                    winState = false;
+                    getScenePanel().remove(next);
+            }
+        });
+
+        JButton restart = new JButton("Restart");
+        restart.setBounds(0,0, 100, 25);
+        restart.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                hero.setPosition(new Point(32,106*5)); //TODO: reset to start square of level
+                hero.setRotation(0);
+                runCount = 0;
+                winState = false;
+                getScenePanel().remove(restart);
+
+            }
+        });
+
+        super.getScenePanel().add(next);
+        super.getScenePanel().add(restart);
     }
 
 
@@ -627,7 +650,7 @@ public class FinalProject extends Game {
 
         if(winState)
             onVictory(g);
-        
+
     }
 
     public static void main(String[] args) {
