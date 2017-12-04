@@ -82,7 +82,7 @@ public class FinalProject extends Game {
         this.sqWidth = 106;
         this.sqHeight = 106;
         this.borderWidth = 32;
-        
+
         /* Sprites */
         this.allLevels = new Sprite("All Levels", "levels.png");
             this.allLevels.setPosition(new Point (sideBarWidth, 0));
@@ -115,52 +115,6 @@ public class FinalProject extends Game {
 
 
 
-        /* Run, Backspace, Clear Buttons (TO BE REPLACED WITH IMAGES) */
-            JButton run = new JButton("Run");
-            run.setBounds(500, 250, 100, 25);
-            run.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    if (Levels.get(currLev).getMovesTaken() != null && !Levels.get(currLev).getMovesTaken().isEmpty())
-                        moving = true;
-                }
-            });
-
-            JButton back = new JButton("Back");
-            back.setBounds(610,250, 100,25);
-            back.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    if (Levels.get(currLev).getMovesTaken().size()!=0) {
-                        Levels.get(currLev).getMovesTaken().remove(Levels.get(currLev).getMovesTaken().size() - 1);
-                    }
-                }
-            });
-            JButton clear = new JButton("Clear");
-            clear.setBounds(720,250, 100,25);
-            clear.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    Levels.get(currLev).getMovesTaken().clear();
-                }
-            });
-
-            JButton reset = new JButton("Reset");
-            reset.setBounds(830,250, 100,25);
-            reset.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    hero.setPosition(new Point(32,106*5)); //TODO: reset to start square of level
-                    hero.setRotation(0);
-                    runCount = 0;
-                }
-            });
-
-
-
-        // adds run, clear, back buttons to screen
-        super.getScenePanel().add(run);
-        super.getScenePanel().add(clear);
-        super.getScenePanel().add(back);
-        super.getScenePanel().add(reset);
-
-
         /* Levels */
 
         /* Level 1 */
@@ -188,7 +142,7 @@ public class FinalProject extends Game {
         Point pos1 = new Point(0, 2 * (mazeHeight - sqHeight));
 
         //creating level 1
-        Level lev1 = new Level(initGrid1, mvsAvail1, pos1, 1, 12);
+        Level lev1 = new Level(initGrid1, mvsAvail1, pos1, 1, 12, 0 ,23);
 
         this.Levels.add(1, lev1);
 
@@ -226,7 +180,7 @@ public class FinalProject extends Game {
         Point pos2 = new Point(0, mazeHeight - sqHeight);
 
         //creating level 2
-        Level lev2 = new Level(initGrid2, mvsAvail2, pos2, 2, 14);
+        Level lev2 = new Level(initGrid2, mvsAvail2, pos2, 2, 14, 3, 22);
 
         this.Levels.add(2, lev2);
 
@@ -265,7 +219,7 @@ public class FinalProject extends Game {
         Point pos3 = new Point(0, 0);
 
         //creating level 3
-        Level lev3 = new Level(initGrid3, mvsAvail3, pos3, 3, 14);
+        Level lev3 = new Level(initGrid3, mvsAvail3, pos3, 3, 14, 2, 20);
 
         this.Levels.add(3, lev3);
 
@@ -468,22 +422,55 @@ public class FinalProject extends Game {
     /* Draws the buttons for the moves that are available in the current level */
     private void drawMovesAvail(Graphics g) {
 
+        int left = 10;
+        int gap = 12;
+        int width = 75;
+        int height = 75;
+        int top = 640;
+
         /* Move Buttons */
+        JButton fwd = new JButton(new ImageIcon("resources/forward.png"));
+        fwd.setBounds(left + gap, top, width, height);
+        fwd.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Levels.get(currLev).getMovesTaken().add(Moves.FORWARD);
+            }
+        });
+
         JButton turn = new JButton(new ImageIcon("resources/turn.png"));
-        turn.setBounds(109, 640, 75, 75);
+        turn.setBounds(left + width + (2 * gap), top, width, height);
         turn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Levels.get(currLev).getMovesTaken().add(Moves.ROTATE);
             }
         });
 
-        JButton fwd = new JButton(new ImageIcon("resources/forward.png"));
-        fwd.setBounds(22, 640, 75, 75);
-        fwd.addActionListener(new ActionListener() {
+        JButton stab = new JButton("Stab");
+        stab.setBounds(left + (2 * width) + (3 * gap), top, width, height);
+        stab.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Levels.get(currLev).getMovesTaken().add(Moves.FORWARD);
+                Levels.get(currLev).getMovesTaken().add(Moves.STAB);
             }
         });
+
+        JButton loop = new JButton ("X3");
+        loop.setBounds(left + (3 * width) + (4 * gap), top, width, height);
+        loop.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Levels.get(currLev).getMovesTaken().add(Moves.LOOP3);
+            }
+        });
+
+        JButton condStab = new JButton("Cond Stab");
+        condStab.setBounds(left + (4 * width) + (5 * gap), top, width, height);
+        condStab.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Levels.get(currLev).getMovesTaken().add(Moves.COND);
+            }
+        });
+
+
+
 
         if (this.Levels != null && this.Levels.get(currLev) != null) {
             for (int i = 0; i < this.Levels.get(currLev).getMovesAvail().size(); i++) {
@@ -495,13 +482,13 @@ public class FinalProject extends Game {
                         super.getScenePanel().add(turn);
                         break;
                     case STAB:
-
+                        super.getScenePanel().add(stab);
                         break;
                     case COND:
-
+                        super.getScenePanel().add(condStab);
                         break;
                     case LOOP3:
-
+                        super.getScenePanel().add(loop);
                         break;
                     default:
                         break;
@@ -523,20 +510,20 @@ public class FinalProject extends Game {
                 switch(moves.get(i)) {
                     case FORWARD:
                         Sprite fw = new Sprite("Forward" + i, "forward.png");
-                        fw.setPosition(new Point(497+(i%5)*85,51+94*(i/5)));
+                        fw.setPosition(new Point(497 + (i % 5) * 85,51 + 94 * (i/5)));
                         fw.draw(g);
                         if(this.select!=null){
-                            this.select.setPosition(new Point(499+((i+1)%5)*85, 53+94*((i+1)/5)));
+                            this.select.setPosition(new Point(499 + ((i + 1) % 5) * 85, 53 + 94 * ((i + 1)/5)));
                             this.select.draw(g);
                         }
                         break;
                     case ROTATE:
                         Sprite rt = new Sprite("Rotate" + i, "turn.png");
                         rt.setPosition(new Point(490 + (i % 5) * 86, 48 + 89 * (i / 5)));
-                        rt.setPosition(new Point(497+(i%5)*85,51+94*(i/5)));
+                        rt.setPosition(new Point(497 + (i % 5) * 85,51 + 94 * (i/5)));
                         rt.draw(g);
                         if(this.select!=null){
-                            this.select.setPosition(new Point(499+((i+1)%5)*85, 53+94*((i+1)/5)));
+                            this.select.setPosition(new Point(499 + ((i + 1) % 5) * 85, 53 + 94 * ((i + 1)/5)));
                             this.select.draw(g);
                         }
                         break;
@@ -572,33 +559,40 @@ public class FinalProject extends Game {
             if(oneStar != null){oneStar.draw(g);}
         }
 
-        //display next and restart buttons
+        // display next and restart buttons
         JButton next = new JButton("Next");
         next.setBounds(430, 250 , 100, 25);
+
+
+        JButton restart = new JButton("Restart");
+        restart.setBounds(0,0, 100, 25);
+
+        super.getScenePanel().add(next);
+        super.getScenePanel().add(restart);
+
+
+
         next.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (currLev < numLevs)
                     transition = 1;
                     winState = false;
-                    getScenePanel().remove(next);
             }
         });
 
-        JButton restart = new JButton("Restart");
-        restart.setBounds(0,0, 100, 25);
         restart.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                hero.setPosition(new Point(32,106*5)); //TODO: reset to start square of level
+                hero.setPosition(gridSquareToPos(Levels.get(currLev).getStartSquare()));
                 hero.setRotation(0);
                 runCount = 0;
                 winState = false;
-                getScenePanel().remove(restart);
+            }});
 
-            }
-        });
+//        if (!winState) {
+//            getScenePanel().remove(next);
+//            getScenePanel().remove(restart);
+//        }
 
-        super.getScenePanel().add(next);
-        super.getScenePanel().add(restart);
     }
 
 
@@ -608,6 +602,8 @@ public class FinalProject extends Game {
 
         if (moving)
             runMoves();
+        if (transition != 0)
+                super.getScenePanel().removeAll();
         if (transition > speed) {
             if (currLev < 3)
                 currLev += 1;
@@ -622,34 +618,91 @@ public class FinalProject extends Game {
 
        super.draw(g);
 
+       // offset for background and hero during transition
+        int offset = ((mazeHeight - sqHeight) * transition / speed);
+
+        // draw background image for current level
         if (this.Levels != null && this.Levels.get(currLev) != null) {
-            Point src = this.Levels.get(currLev).getPosition();
-            if (allLevels != null) {
-                BufferedImage subImg = allLevels.getDisplayImage().getSubimage(src.x,
-                        src.y - ((mazeHeight - sqHeight) * transition / speed), mazeWidth, mazeHeight);
-                Sprite lev = new Sprite("level");
-                lev.setImage(subImg);
-                lev.setPosition(allLevels.getPosition());
+           if (allLevels != null) {
+               Point src = this.Levels.get(currLev).getPosition();
 
-                if (transition != 0) {
-                    transition += 1;
-                }
+               // crops image to correct maze or transitioning maze
+               BufferedImage subImg = allLevels.getDisplayImage().getSubimage(src.x,
+                       src.y - offset, mazeWidth, mazeHeight);
+               Sprite lev = new Sprite("level");
+               lev.setImage(subImg);
+               lev.setPosition(allLevels.getPosition());
+               lev.draw(g);
 
-                lev.draw(g);
+               //increment transition
+               if (transition != 0) {
+                   transition += 1;
+               }
             }
-        }
+       }
 
-        if (moves != null)
-            moves.draw(g);
-        drawMovesAvail(g);
-        drawMovesTaken(g);
+       // draw hero, moving it with background if transitioning
+        if (hero != null) {
+           if (transition > 0) {
+               hero.setPosition(new Point(hero.getPosition().x,
+                       this.gridSquareToPos(this.Levels.get(currLev).getWinSquare()).y + offset));
+           }
+           hero.draw(g);
+       }
 
-        if(hero!=null)
-            hero.draw(g);
+       // draw all moves
+       if (moves != null)
+           moves.draw(g);
+       drawMovesAvail(g);
+       drawMovesTaken(g);
 
-        if(winState)
-            onVictory(g);
+       // display score and transition buttons on victory
+       if(winState)
+           onVictory(g);
 
+       /* Run, Backspace, Clear Buttons (TO BE REPLACED WITH IMAGES) */
+       // create buttons
+       JButton run = new JButton("Run");
+       run.setBounds(500, 250, 100, 25);
+       run.addActionListener(new ActionListener() {
+           public void actionPerformed(ActionEvent e) {
+               if (Levels.get(currLev).getMovesTaken() != null && !Levels.get(currLev).getMovesTaken().isEmpty())
+                   moving = true;
+           }
+       });
+
+       JButton back = new JButton("Back");
+       back.setBounds(610,250, 100,25);
+       back.addActionListener(new ActionListener() {
+           public void actionPerformed(ActionEvent e) {
+               if (Levels.get(currLev).getMovesTaken().size()!=0) {
+                   Levels.get(currLev).getMovesTaken().remove(Levels.get(currLev).getMovesTaken().size() - 1);
+               }
+           }
+       });
+       JButton clear = new JButton("Clear");
+       clear.setBounds(720,250, 100,25);
+       clear.addActionListener(new ActionListener() {
+           public void actionPerformed(ActionEvent e) {
+               Levels.get(currLev).getMovesTaken().clear();
+           }
+       });
+
+       JButton reset = new JButton("Reset");
+       reset.setBounds(830,250, 100,25);
+       reset.addActionListener(new ActionListener() {
+           public void actionPerformed(ActionEvent e) {
+               hero.setPosition(gridSquareToPos(Levels.get(currLev).getStartSquare()));
+               hero.setRotation(0);
+               runCount = 0;
+           }
+       });
+
+       // adds run, clear, back buttons to screen
+        super.getScenePanel().add(run);
+        super.getScenePanel().add(clear);
+        super.getScenePanel().add(back);
+        super.getScenePanel().add(reset);
     }
 
     public static void main(String[] args) {

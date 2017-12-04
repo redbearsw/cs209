@@ -35,6 +35,8 @@ public class Level {
     private Point position;
     private int id;
     private int bestScore;
+    private int winSquare;
+    private int startSquare;
 
     /* enum Moves and enum GridSquares */
     //possibilities for move buttons
@@ -43,7 +45,7 @@ public class Level {
 
 
     /* Constructor */
-    public Level(ArrayList <Tuple <Boolean, Obstacles>> iG, ArrayList <Moves> mvAv, Point position, int id, int bestScore) {
+    public Level(ArrayList <Tuple <Boolean, Obstacles>> iG, ArrayList <Moves> mvAv, Point position, int id, int bestScore, int strt, int end) {
         this.setId(id);
         this.setPosition(position);
         this.setMovesAvail(mvAv);
@@ -51,6 +53,8 @@ public class Level {
         this.setInitGrid(iG);
         this.setCurrGrid(iG);
         this.setBestScore(bestScore);
+        this.setWinSquare(end);
+        this.setStartSquare(strt);
 
     }
 
@@ -80,6 +84,13 @@ public class Level {
     public void setBestScore(int bestScore) {
         this.bestScore = bestScore;
     }
+
+    public void setWinSquare(int sq) {this.winSquare = sq;}
+    public int getWinSquare() {return this.winSquare;}
+
+    public void setStartSquare(int sq) {this.startSquare = sq;}
+    public int getStartSquare() {return this.startSquare;}
+
 
     /* updateCurrGrid updates the state of a given grid square */
     void updateCurrGrid(int square, Boolean enter, Obstacles state) {
