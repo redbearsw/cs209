@@ -143,7 +143,8 @@ public class FinalProject extends Game {
             nxt.setBounds(430, 250 , 100, 25);
             nxt.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    transition = 1;
+                    if (currLev < numLevs)
+                        transition = 1;
                 }
             });
 
@@ -586,7 +587,8 @@ public class FinalProject extends Game {
         if (moving)
             runMoves();
         if (transition > speed) {
-            currLev += 1;
+            if (currLev < 3)
+                currLev += 1;
             transition = 0;
         }
 
@@ -601,7 +603,8 @@ public class FinalProject extends Game {
         if (this.Levels != null && this.Levels.get(currLev) != null) {
             Point src = this.Levels.get(currLev).getPosition();
             if (allLevels != null) {
-                BufferedImage subImg = allLevels.getDisplayImage().getSubimage(src.x, src.y - ((mazeHeight - sqHeight) * transition / speed), mazeWidth, mazeHeight);
+                BufferedImage subImg = allLevels.getDisplayImage().getSubimage(src.x,
+                        src.y - ((mazeHeight - sqHeight) * transition / speed), mazeWidth, mazeHeight);
                 Sprite lev = new Sprite("level");
                 lev.setImage(subImg);
                 lev.setPosition(allLevels.getPosition());
@@ -624,9 +627,7 @@ public class FinalProject extends Game {
 
         if(winState)
             onVictory(g);
-
-
-
+        
     }
 
     public static void main(String[] args) {
