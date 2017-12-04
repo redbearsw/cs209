@@ -71,6 +71,18 @@ public class FinalProject extends Game {
     public FinalProject() {
         super("Final Project", 940, 748);
 
+        /* Positions on screen */
+        this.sideBarWidth = 24;
+        this.mazeWidth = 423;
+        this.mazeHeight = 636;
+        this.gameWidth = 940;
+        this.gameHeight = 728;
+        this.charWidth = 96;
+        this.charHeight = 103;
+        this.sqWidth = 106;
+        this.sqHeight = 106;
+        this.borderWidth = 32;
+        
         /* Sprites */
         this.allLevels = new Sprite("All Levels", "levels.png");
             this.allLevels.setPosition(new Point (sideBarWidth, 0));
@@ -148,19 +160,6 @@ public class FinalProject extends Game {
         super.getScenePanel().add(back);
         super.getScenePanel().add(reset);
 
-
-
-        /* Positions on screen */
-        this.sideBarWidth = 24;
-        this.mazeWidth = 423;
-        this.mazeHeight = 636;
-        this.gameWidth = 940;
-        this.gameHeight = 728;
-        this.charWidth = 96;
-        this.charHeight = 103;
-        this.sqWidth = 106;
-        this.sqHeight = 106;
-        this.borderWidth = 32;
 
         /* Levels */
 
