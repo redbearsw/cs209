@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
@@ -40,6 +41,7 @@ public class FinalProject extends Game {
     private int currLev; //current level
     private Boolean moving; //true if currently running through moves
     private Boolean winState; // true if the level has been won
+    private int transition; // counts # of steps taken when in transition, otherwise 0
     private int movesTaken; // number of moves taken to win (only set upon victory)
 
     /* List of Levels */
@@ -83,7 +85,7 @@ public class FinalProject extends Game {
         this.oneStar = new Sprite("OneStar", "oneStar.png");
 
         /* Game States*/
-        this.speed = 30;
+        this.speed = 5;
         this.mvsCount = 0;
         this.runCount = 0;
         this.currLev = 1;
@@ -136,13 +138,20 @@ public class FinalProject extends Game {
                 }
             });
 
+            JButton nxt = new JButton("Next");
+            nxt.setBounds(430, 250 , 100, 25);
+            nxt.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    transition = 1;
+                }
+            });
+
         // adds run, clear, back buttons to screen
         super.getScenePanel().add(run);
         super.getScenePanel().add(clear);
         super.getScenePanel().add(back);
         super.getScenePanel().add(reset);
-
-
+        super.getScenePanel().add(nxt);
 
 
         /* Positions on screen */
@@ -181,7 +190,7 @@ public class FinalProject extends Game {
         mvsAvail1.add(Moves.ROTATE);
 
         //position
-        Point pos1 = new Point(0, 0);
+        Point pos1 = new Point(0, 2 * (mazeHeight - sqHeight));
 
         //creating level 1
         Level lev1 = new Level(initGrid1, mvsAvail1, pos1, 1, 12);
@@ -219,7 +228,7 @@ public class FinalProject extends Game {
         mvsAvail2.add(Moves.LOOP3);
 
         //position
-        Point pos2 = new Point(0, 0); //TODO: change this
+        Point pos2 = new Point(0, mazeHeight - sqHeight);
 
         //creating level 2
         Level lev2 = new Level(initGrid2, mvsAvail2, pos2, 2, 14);
@@ -258,7 +267,7 @@ public class FinalProject extends Game {
         mvsAvail3.add(Moves.COND);
 
         //position
-        Point pos3 = new Point(0, 0); //TODO: change this
+        Point pos3 = new Point(0, 0);
 
         //creating level 3
         Level lev3 = new Level(initGrid3, mvsAvail3, pos3, 3, 14);
@@ -575,6 +584,10 @@ public class FinalProject extends Game {
 
         if (moving)
             runMoves();
+        if (transition > speed) {
+            currLev += 1;
+            transition = 0;
+        }
 
     }
 
@@ -582,17 +595,38 @@ public class FinalProject extends Game {
     @Override
     public void draw(Graphics g) {
 
-        super.draw(g);
+       super.draw(g);
 
-        if (allLevels != null) allLevels.draw(g);
-        if (moves != null) moves.draw(g);
+        if (this.Levels != null && this.Levels.get(currLev) != null) {
+            Point src = this.Levels.get(currLev).getPosition();
+            if (allLevels != null) {
+                System.out.println("x" + src.x + "y" + src.y);
+                System.out.println("x + mazeWidth: " + (src.x + mazeWidth) + "y + mazeHeight" + (src.y + mazeHeight));
+                BufferedImage subImg = allLevels.getDisplayImage().getSubimage(src.x, src.y, mazeWidth, mazeHeight);
+                Sprite lev = new Sprite("level");
+                lev.setImage(subImg);
+                lev.setPosition(src);
+                if (transition != 0) {
+                    lev.setPosition(new Point (0, src.y - (mazeHeight * transition / speed)));
+                    transition += 1;
+
+                }
+                lev.draw(g);
+            }
+        }
+
+        if (moves != null)
+            moves.draw(g);
         drawMovesAvail(g);
         drawMovesTaken(g);
 
-        if(hero!=null){hero.draw(g);}
-        if(winState) {
+        if(hero!=null)
+            hero.draw(g);
+
+        if(winState)
             onVictory(g);
-        }
+
+
 
     }
 
