@@ -85,13 +85,14 @@ public class FinalProject extends Game {
         this.oneStar = new Sprite("OneStar", "oneStar.png");
 
         /* Game States*/
-        this.speed = 5;
+        this.speed = 30;
         this.mvsCount = 0;
         this.runCount = 0;
         this.currLev = 1;
         this.numLevs = 3;
         this.moving = false;
         this.winState = false;
+        this.transition = 0;
 
         /* ArrayList of levels */
         this.Levels = new ArrayList<Level>();
@@ -157,7 +158,7 @@ public class FinalProject extends Game {
         /* Positions on screen */
         this.sideBarWidth = 24;
         this.mazeWidth = 470;
-        this.mazeHeight = 728;
+        this.mazeHeight = 636;
         this.gameWidth = 940;
         this.gameHeight = 728;
         this.charWidth = 96;
@@ -600,17 +601,15 @@ public class FinalProject extends Game {
         if (this.Levels != null && this.Levels.get(currLev) != null) {
             Point src = this.Levels.get(currLev).getPosition();
             if (allLevels != null) {
-                System.out.println("x" + src.x + "y" + src.y);
-                System.out.println("x + mazeWidth: " + (src.x + mazeWidth) + "y + mazeHeight" + (src.y + mazeHeight));
-                BufferedImage subImg = allLevels.getDisplayImage().getSubimage(src.x, src.y, mazeWidth, mazeHeight);
+                BufferedImage subImg = allLevels.getDisplayImage().getSubimage(src.x, src.y - ((mazeHeight - sqHeight) * transition / speed), mazeWidth, mazeHeight);
                 Sprite lev = new Sprite("level");
                 lev.setImage(subImg);
-                lev.setPosition(src);
-                if (transition != 0) {
-                    lev.setPosition(new Point (0, src.y - (mazeHeight * transition / speed)));
-                    transition += 1;
+                lev.setPosition(allLevels.getPosition());
 
+                if (transition != 0) {
+                    transition += 1;
                 }
+
                 lev.draw(g);
             }
         }
