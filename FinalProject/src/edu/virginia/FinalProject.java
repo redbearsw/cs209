@@ -341,8 +341,11 @@ public class FinalProject extends Game {
 
     //checks if loop is legal
     private Boolean legalLoop() {
-        Moves mv = this.Levels.get(currLev).getMovesTaken().get(mvsCount + 1);
-        return ((mv != null) && (mv != Moves.COND) && (mv != Moves.LOOP3));
+        if(mvsCount + 1 < this.Levels.get(currLev).getMovesTaken().size()) {
+            Moves mv = this.Levels.get(currLev).getMovesTaken().get(mvsCount + 1);
+            return ((mv != null) && (mv != Moves.COND) && (mv != Moves.LOOP3));
+        }
+        return false;
     }
 
     //checks if conditional is legal
@@ -413,6 +416,8 @@ public class FinalProject extends Game {
                         Moves inner = mvs.get(mvsCount + 1);
                         mvs.add(mvsCount + 1, inner);
                         mvs.add(mvsCount + 1, inner); // adds move 2x because it's already there once
+                        mvs.add(mvsCount + 1, inner); // adds move twice because already there once
+                        mvs.add(mvsCount + 4, Moves.ENDLOOP);
                         runCount += speed - 1;
                         mvsCount += 1;
                     }
@@ -432,6 +437,9 @@ public class FinalProject extends Game {
                         // TODO: reset?
                     }
                     break;
+                case ENDLOOP:
+                    // just want it to keep going and skip this here but not sure how to do that
+                    mvsCount += 1;
                 default:
                     break;
             }
@@ -473,7 +481,7 @@ public class FinalProject extends Game {
             }
         });
 
-        JButton stab = new JButton("Stab");
+        JButton stab = new JButton(new ImageIcon("resources/stab.png"));
         stab.setBounds(left + (2 * width) + (3 * gap), top, width, height);
         stab.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -481,7 +489,7 @@ public class FinalProject extends Game {
             }
         });
 
-        JButton loop = new JButton ("X3");
+        JButton loop = new JButton (new ImageIcon("resources/loop.png"));
         loop.setBounds(left + (3 * width) + (4 * gap), top, width, height);
         loop.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -489,15 +497,13 @@ public class FinalProject extends Game {
             }
         });
 
-        JButton condStab = new JButton("Cond Stab");
+        JButton condStab = new JButton(new ImageIcon("resources/conditional.png"));
         condStab.setBounds(left + (4 * width) + (5 * gap), top, width, height);
         condStab.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Levels.get(currLev).getMovesTaken().add(Moves.COND);
             }
         });
-
-
 
 
         if (this.Levels != null && this.Levels.get(currLev) != null) {
@@ -525,11 +531,43 @@ public class FinalProject extends Game {
         }
 
     }
+    /* Draw Moves Taken helper - to be used on loops*/
+    private ArrayList<Integer> indexOfAll(Object obj, ArrayList list){
+        ArrayList<Integer> indexList = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++)
+            if(obj.equals(list.get(i)))
+                indexList.add(i);
+        return indexList;
+    }
+    /* Draw Moves Taken helper - removes extra moves added by runMoves */
+    private ArrayList<Moves> resetLoop(ArrayList<Moves> moves){
 
+        ArrayList<Integer> loopLocs = indexOfAll(Moves.LOOP3,moves);
+
+        int size = loopLocs.size();
+        for(int i = 0; i<size; i++)
+        {
+            loopLocs = indexOfAll(Moves.LOOP3,moves);
+            if(loopLocs.get(i)+4 <= moves.size()-1){
+                System.out.println("HELLO, SIZE = " + moves.size() + "INDEX = " + loopLocs.get(i)+4);
+                if(moves.get(loopLocs.get(i)+4) == Moves.ENDLOOP) {
+                    moves.remove(loopLocs.get(i)+2);
+                    moves.remove(loopLocs.get(i)+2);
+                    moves.remove(loopLocs.get(i)+2);
+                }
+            }
+
+        }
+
+        return moves;
+    }
     /* Draws the moves that have been taken in the grid */
     public void drawMovesTaken(Graphics g) {
         if (this.Levels != null && this.Levels.get(currLev) != null) {
-            ArrayList<Moves> moves = this.Levels.get(currLev).getMovesTaken();
+            ArrayList<Moves> moves = new ArrayList<>(this.Levels.get(currLev).getMovesTaken());
+            moves = resetLoop(moves);
+            System.out.println(moves);
+            System.out.println(this.Levels.get(currLev).getMovesTaken());
             if(moves.size() == 0){
                 this.select.setPosition(new Point(499, 53));
                 select.draw(g);
@@ -556,13 +594,34 @@ public class FinalProject extends Game {
                         }
                         break;
                     case STAB:
-
+                        Sprite st = new Sprite("Stab" + i, "stab.png");
+                        st.setPosition(new Point(490 + (i % 5) * 86, 48 + 89 * (i / 5)));
+                        st.setPosition(new Point(497 + (i % 5) * 85,51 + 94 * (i/5)));
+                        st.draw(g);
+                        if(this.select!=null){
+                            this.select.setPosition(new Point(499 + ((i + 1) % 5) * 85, 53 + 94 * ((i + 1)/5)));
+                            this.select.draw(g);
+                        }
                         break;
                     case COND:
-
+                        Sprite cd = new Sprite("Conditional" + i, "conditional.png");
+                        cd.setPosition(new Point(490 + (i % 5) * 86, 48 + 89 * (i / 5)));
+                        cd.setPosition(new Point(497 + (i % 5) * 85,51 + 94 * (i/5)));
+                        cd.draw(g);
+                        if(this.select!=null){
+                            this.select.setPosition(new Point(499 + ((i + 1) % 5) * 85, 53 + 94 * ((i + 1)/5)));
+                            this.select.draw(g);
+                        }
                         break;
                     case LOOP3:
-
+                        Sprite lp = new Sprite("Loop" + i, "loop.png");
+                        lp.setPosition(new Point(490 + (i % 5) * 86, 48 + 89 * (i / 5)));
+                        lp.setPosition(new Point(497 + (i % 5) * 85,51 + 94 * (i/5)));
+                        lp.draw(g);
+                        if(this.select!=null) {
+                            this.select.setPosition(new Point(499 + ((i + 1) % 5) * 85, 53 + 94 * ((i + 1) / 5)));
+                            this.select.draw(g);
+                        }
                         break;
                     default:
                         break;
@@ -572,6 +631,7 @@ public class FinalProject extends Game {
 
         }
     }
+
 
 
     /* Displays score on victory */
@@ -712,8 +772,8 @@ public class FinalProject extends Game {
 
        /* Run, Backspace, Clear Buttons (TO BE REPLACED WITH IMAGES) */
        // create buttons
-       JButton run = new JButton("Run");
-       run.setBounds(500, 250, 100, 25);
+       JButton run = new JButton(new ImageIcon("resources/play.png"));
+       run.setBounds(500, 250, 93, 67);
        run.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent e) {
                if (Levels.get(currLev).getMovesTaken() != null && !Levels.get(currLev).getMovesTaken().isEmpty())
@@ -721,8 +781,8 @@ public class FinalProject extends Game {
            }
        });
 
-       JButton back = new JButton("Back");
-       back.setBounds(610,250, 100,25);
+       JButton back = new JButton(new ImageIcon("resources/backspace.png"));
+       back.setBounds(610,250, 93,67);
        back.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent e) {
                if (Levels.get(currLev).getMovesTaken().size()!=0) {
@@ -730,8 +790,8 @@ public class FinalProject extends Game {
                }
            }
        });
-       JButton clear = new JButton("Clear");
-       clear.setBounds(720,250, 100,25);
+       JButton clear = new JButton(new ImageIcon("resources/clear.png"));
+       clear.setBounds(720,250, 93,67);
        clear.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent e) {
                Levels.get(currLev).getMovesTaken().clear();
@@ -739,7 +799,7 @@ public class FinalProject extends Game {
        });
 
        JButton reset = new JButton("Reset");
-       reset.setBounds(830,250, 100,25);
+       reset.setBounds(830,250, 93,67);
        reset.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent e) {
                hero.setPosition(gridSquareToPos(Levels.get(currLev).getStartSquare()));

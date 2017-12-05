@@ -5,5 +5,6 @@ public enum Moves {
     ROTATE,
     STAB,
     COND,
-    LOOP3
+    LOOP3,
+    ENDLOOP
 }
