@@ -398,9 +398,10 @@ public class FinalProject extends Game {
                             }
                             if (nxtSq.getY() == Obstacles.BARRICADE) {
                                 // TODO: update barricade image to next image
-                                // if barricade image was final image
-                                // nxtSq.setX(true);
-                                // nxtSq.setY(Obstacles.NOTHING);
+                                // if barricade image was final image {
+                                nxtSq.setX(true);
+                                nxtSq.setY(Obstacles.NOTHING);
+                                //}
 
 
                             }
