@@ -461,7 +461,7 @@ public class FinalProject extends Game {
             }
         });
 
-        JButton stab = new JButton("Stab");
+        JButton stab = new JButton(new ImageIcon("resources/stab.png"));
         stab.setBounds(left + (2 * width) + (3 * gap), top, width, height);
         stab.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -469,7 +469,7 @@ public class FinalProject extends Game {
             }
         });
 
-        JButton loop = new JButton ("X3");
+        JButton loop = new JButton (new ImageIcon("resources/loop.png"));
         loop.setBounds(left + (3 * width) + (4 * gap), top, width, height);
         loop.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -477,7 +477,7 @@ public class FinalProject extends Game {
             }
         });
 
-        JButton condStab = new JButton("Cond Stab");
+        JButton condStab = new JButton(new ImageIcon("resources/conditional.png"));
         condStab.setBounds(left + (4 * width) + (5 * gap), top, width, height);
         condStab.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -544,13 +544,34 @@ public class FinalProject extends Game {
                         }
                         break;
                     case STAB:
-
+                        Sprite st = new Sprite("Stab" + i, "stab.png");
+                        st.setPosition(new Point(490 + (i % 5) * 86, 48 + 89 * (i / 5)));
+                        st.setPosition(new Point(497 + (i % 5) * 85,51 + 94 * (i/5)));
+                        st.draw(g);
+                        if(this.select!=null){
+                            this.select.setPosition(new Point(499 + ((i + 1) % 5) * 85, 53 + 94 * ((i + 1)/5)));
+                            this.select.draw(g);
+                        }
                         break;
                     case COND:
-
+                        Sprite cd = new Sprite("Conditional" + i, "conditional.png");
+                        cd.setPosition(new Point(490 + (i % 5) * 86, 48 + 89 * (i / 5)));
+                        cd.setPosition(new Point(497 + (i % 5) * 85,51 + 94 * (i/5)));
+                        cd.draw(g);
+                        if(this.select!=null){
+                            this.select.setPosition(new Point(499 + ((i + 1) % 5) * 85, 53 + 94 * ((i + 1)/5)));
+                            this.select.draw(g);
+                        }
                         break;
                     case LOOP3:
-
+                        Sprite lp = new Sprite("Loop" + i, "loop.png");
+                        lp.setPosition(new Point(490 + (i % 5) * 86, 48 + 89 * (i / 5)));
+                        lp.setPosition(new Point(497 + (i % 5) * 85,51 + 94 * (i/5)));
+                        lp.draw(g);
+                        if(this.select!=null) {
+                            this.select.setPosition(new Point(499 + ((i + 1) % 5) * 85, 53 + 94 * ((i + 1) / 5)));
+                            this.select.draw(g);
+                        }
                         break;
                     default:
                         break;
@@ -700,8 +721,8 @@ public class FinalProject extends Game {
 
        /* Run, Backspace, Clear Buttons (TO BE REPLACED WITH IMAGES) */
        // create buttons
-       JButton run = new JButton("Run");
-       run.setBounds(500, 250, 100, 25);
+       JButton run = new JButton(new ImageIcon("resources/play.png"));
+       run.setBounds(500, 250, 93, 67);
        run.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent e) {
                if (Levels.get(currLev).getMovesTaken() != null && !Levels.get(currLev).getMovesTaken().isEmpty())
@@ -709,8 +730,8 @@ public class FinalProject extends Game {
            }
        });
 
-       JButton back = new JButton("Back");
-       back.setBounds(610,250, 100,25);
+       JButton back = new JButton(new ImageIcon("resources/backspace.png"));
+       back.setBounds(610,250, 93,67);
        back.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent e) {
                if (Levels.get(currLev).getMovesTaken().size()!=0) {
@@ -718,8 +739,8 @@ public class FinalProject extends Game {
                }
            }
        });
-       JButton clear = new JButton("Clear");
-       clear.setBounds(720,250, 100,25);
+       JButton clear = new JButton(new ImageIcon("resources/clear.png"));
+       clear.setBounds(720,250, 93,67);
        clear.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent e) {
                Levels.get(currLev).getMovesTaken().clear();
@@ -727,7 +748,7 @@ public class FinalProject extends Game {
        });
 
        JButton reset = new JButton("Reset");
-       reset.setBounds(830,250, 100,25);
+       reset.setBounds(830,250, 93,67);
        reset.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent e) {
                hero.setPosition(gridSquareToPos(Levels.get(currLev).getStartSquare()));
