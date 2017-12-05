@@ -429,7 +429,7 @@ public class FinalProject extends Game {
                 case COND:
                     if (legalCond()) {
                         //if enemy, run next move
-                        if (this.Levels.get(currLev).getCurrGrid().get(this.posToGridSquare(this.hero.getPosition())).)
+                        //if (this.Levels.get(currLev).getCurrGrid().get(this.posToGridSquare(this.hero.getPosition())).)
                         // else, skip next move
                     }
                     else {
