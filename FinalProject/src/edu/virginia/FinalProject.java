@@ -50,7 +50,6 @@ public class FinalProject extends Game {
 
     /* Variables to keep track of where things are on the screen */
     private int sideBarWidth;
-    private int sideBarHeight;
 
     private int mazeWidth;
     private int mazeHeight;
@@ -98,7 +97,7 @@ public class FinalProject extends Game {
         this.oneStar = new Sprite("OneStar", "oneStar.png");
 
         /* Game States*/
-        this.speed = 30;
+        this.speed = 15;
         this.mvsCount = 0;
         this.runCount = 0;
         this.currLev = 1;
@@ -338,8 +337,8 @@ public class FinalProject extends Game {
 
     //checks if loop is legal
     private Boolean legalLoop() {
-        //TODO: implement this
-        return false;
+        Moves mv = this.Levels.get(currLev).getMovesTaken().get(mvsCount + 1);
+        return ((mv != null) && (mv != Moves.COND) && (mv != Moves.LOOP3));
     }
 
     //checks if conditional is legal
@@ -383,26 +382,40 @@ public class FinalProject extends Game {
                 case STAB:
                     if (runCount % speed == 0) {
                         if (this.legalStab()) {
-                            //stabbing animation
-                            this.Levels.get(currLev).getCurrGrid().get(this.fwdSq()).setX(true);
-                            this.Levels.get(currLev).getCurrGrid().get(this.fwdSq()).setY(Obstacles.NOTHING);
-                            if (this.Levels.get(currLev).getCurrGrid().get(this.fwdSq()).getY() == Obstacles.ENEMY) {
+
+                            // TODO: stabbing animation
+
+                            Tuple<Boolean, Obstacles> nxtSq = this.Levels.get(currLev).getCurrGrid().get(this.fwdSq());
+                            nxtSq.setX(true);
+                            nxtSq.setY(Obstacles.NOTHING);
+                            if (nxtSq.getY() == Obstacles.ENEMY) {
                                 this.enemy.setVisible(false);
-                            } else if (this.Levels.get(currLev).getCurrGrid().get(this.fwdSq()).getY() == Obstacles.BARRICADE) {
-                                //update barricade image to next image
+                            } else if (nxtSq.getY() == Obstacles.BARRICADE) {
+
+                                // TODO: update barricade image to next image
+
                             }
                         }
                     }
                     else {
-                        //falling over animation
-                        //lost game
+                        // TODO: falling over animation
+                        // TODO: lost game
+                    }
+                    break;
+                case LOOP3:
+                    if (this.legalLoop()) {
+                        Moves inner = mvs.get(mvsCount + 1);
+                        mvs.add(mvsCount + 1, inner);
+                        mvs.add(mvsCount + 1, inner); // adds move twice because already there once
+                        runCount += speed - 1;
+                        mvsCount += 1;
+                    }
+                    else {
+                        // TODO: confused animation
                     }
                     break;
                 case COND:
                     //legalCond()
-                    break;
-                case LOOP3:
-                    //legalLoop()
                     break;
                 default:
                     break;
@@ -604,7 +617,7 @@ public class FinalProject extends Game {
             runMoves();
         if (transition != 0)
                 super.getScenePanel().removeAll();
-        if (transition > speed) {
+        if (transition > (speed * 2)) {
             if (currLev < 3)
                 currLev += 1;
             transition = 0;
@@ -619,7 +632,7 @@ public class FinalProject extends Game {
        super.draw(g);
 
        // offset for background and hero during transition
-        int offset = ((mazeHeight - sqHeight) * transition / speed);
+        int offset = ((mazeHeight - sqHeight) * transition / (speed * 2));
 
         // draw background image for current level
         if (this.Levels != null && this.Levels.get(currLev) != null) {
