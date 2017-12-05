@@ -341,8 +341,11 @@ public class FinalProject extends Game {
 
     //checks if loop is legal
     private Boolean legalLoop() {
-        Moves mv = this.Levels.get(currLev).getMovesTaken().get(mvsCount + 1);
-        return ((mv != null) && (mv != Moves.COND) && (mv != Moves.LOOP3));
+        if(mvsCount + 1 < this.Levels.get(currLev).getMovesTaken().size()) {
+            Moves mv = this.Levels.get(currLev).getMovesTaken().get(mvsCount + 1);
+            return ((mv != null) && (mv != Moves.COND) && (mv != Moves.LOOP3));
+        }
+        return false;
     }
 
     //checks if conditional is legal
@@ -410,6 +413,7 @@ public class FinalProject extends Game {
                         Moves inner = mvs.get(mvsCount + 1);
                         mvs.add(mvsCount + 1, inner);
                         mvs.add(mvsCount + 1, inner); // adds move twice because already there once
+                        mvs.add(mvsCount + 4, Moves.ENDLOOP);
                         runCount += speed - 1;
                         mvsCount += 1;
                     }
@@ -420,6 +424,9 @@ public class FinalProject extends Game {
                 case COND:
                     //legalCond()
                     break;
+                case ENDLOOP:
+                    // just want it to keep going and skip this here but not sure how to do that
+                    mvsCount += 1;
                 default:
                     break;
             }
@@ -486,8 +493,6 @@ public class FinalProject extends Game {
         });
 
 
-
-
         if (this.Levels != null && this.Levels.get(currLev) != null) {
             for (int i = 0; i < this.Levels.get(currLev).getMovesAvail().size(); i++) {
                 switch (Levels.get(currLev).getMovesAvail().get(i)) {
@@ -513,11 +518,43 @@ public class FinalProject extends Game {
         }
 
     }
+    /* Draw Moves Taken helper - to be used on loops*/
+    private ArrayList<Integer> indexOfAll(Object obj, ArrayList list){
+        ArrayList<Integer> indexList = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++)
+            if(obj.equals(list.get(i)))
+                indexList.add(i);
+        return indexList;
+    }
+    /* Draw Moves Taken helper - removes extra moves added by runMoves */
+    private ArrayList<Moves> resetLoop(ArrayList<Moves> moves){
 
+        ArrayList<Integer> loopLocs = indexOfAll(Moves.LOOP3,moves);
+
+        int size = loopLocs.size();
+        for(int i = 0; i<size; i++)
+        {
+            loopLocs = indexOfAll(Moves.LOOP3,moves);
+            if(loopLocs.get(i)+4 <= moves.size()-1){
+                System.out.println("HELLO, SIZE = " + moves.size() + "INDEX = " + loopLocs.get(i)+4);
+                if(moves.get(loopLocs.get(i)+4) == Moves.ENDLOOP) {
+                    moves.remove(loopLocs.get(i)+2);
+                    moves.remove(loopLocs.get(i)+2);
+                    moves.remove(loopLocs.get(i)+2);
+                }
+            }
+
+        }
+
+        return moves;
+    }
     /* Draws the moves that have been taken in the grid */
     public void drawMovesTaken(Graphics g) {
         if (this.Levels != null && this.Levels.get(currLev) != null) {
-            ArrayList<Moves> moves = this.Levels.get(currLev).getMovesTaken();
+            ArrayList<Moves> moves = new ArrayList<>(this.Levels.get(currLev).getMovesTaken());
+            moves = resetLoop(moves);
+            System.out.println(moves);
+            System.out.println(this.Levels.get(currLev).getMovesTaken());
             if(moves.size() == 0){
                 this.select.setPosition(new Point(499, 53));
                 select.draw(g);
@@ -581,6 +618,7 @@ public class FinalProject extends Game {
 
         }
     }
+
 
 
     /* Displays score on victory */
