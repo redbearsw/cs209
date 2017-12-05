@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 
@@ -26,7 +27,6 @@ public class FinalProject extends Game {
     private Sprite allLevels; // background image
     private Sprite moves; // image that gets populated with moves
     private Sprite hero; // character
-    private Sprite enemy; // enemy character
     private Sprite select; // highlighted next slot box
     private Sprite oneStar; // one star full
     private Sprite twoStar; // two stars full
@@ -43,6 +43,9 @@ public class FinalProject extends Game {
     private Boolean winState; // true if the level has been won
     private int transition; // counts # of steps taken when in transition, otherwise 0
     private int movesTaken; // number of moves taken to win (only set upon victory)
+    private int randomNum1;
+    private int randomNum2;
+    private int frameCount;
 
     /* List of Levels */
     //slot 1 for level 1, etc.
@@ -105,6 +108,7 @@ public class FinalProject extends Game {
         this.moving = false;
         this.winState = false;
         this.transition = 0;
+        this.frameCount = 0;
 
         /* ArrayList of levels */
         this.Levels = new ArrayList<Level>();
@@ -359,7 +363,7 @@ public class FinalProject extends Game {
                             hero.setPosition(this.gridSquareToPos(this.fwdSq()));
 
                             // for more levels, need to write a find goal function
-                            if (this.posToGridSquare(hero.getPosition()) == 23) {
+                            if (this.posToGridSquare(hero.getPosition()) == this.Levels.get(currLev).getWinSquare()) {
                                 winState = true;
                                 movesTaken = mvs.size();
                             }
@@ -380,6 +384,8 @@ public class FinalProject extends Game {
 
                     break;
                 case STAB:
+                    if (runCount % speed == speed - 1)
+                        mvsCount += 1;
                     if (runCount % speed == 0) {
                         if (this.legalStab()) {
 
@@ -388,18 +394,15 @@ public class FinalProject extends Game {
                             Tuple<Boolean, Obstacles> nxtSq = this.Levels.get(currLev).getCurrGrid().get(this.fwdSq());
                             nxtSq.setX(true);
                             nxtSq.setY(Obstacles.NOTHING);
-                            if (nxtSq.getY() == Obstacles.ENEMY) {
-                                this.enemy.setVisible(false);
-                            } else if (nxtSq.getY() == Obstacles.BARRICADE) {
-
+                            if (nxtSq.getY() == Obstacles.BARRICADE) {
                                 // TODO: update barricade image to next image
 
                             }
                         }
-                    }
                     else {
-                        // TODO: falling over animation
-                        // TODO: lost game
+                            // TODO: falling over animation
+                            // TODO: lost game
+                        }
                     }
                     break;
                 case LOOP3:
@@ -558,6 +561,7 @@ public class FinalProject extends Game {
         }
     }
 
+
     /* Displays score on victory */
     public void onVictory(Graphics g) {
         // display score
@@ -601,11 +605,6 @@ public class FinalProject extends Game {
                 winState = false;
             }});
 
-//        if (!winState) {
-//            getScenePanel().remove(next);
-//            getScenePanel().remove(restart);
-//        }
-
     }
 
 
@@ -613,8 +612,10 @@ public class FinalProject extends Game {
     public void update(ArrayList<Integer> pressedKeys) {
         super.update(pressedKeys);
 
-        if (moving)
+        if (moving) {
+            frameCount = 0;
             runMoves();
+        }
         if (transition != 0)
                 super.getScenePanel().removeAll();
         if (transition > (speed * 2)) {
@@ -622,7 +623,7 @@ public class FinalProject extends Game {
                 currLev += 1;
             transition = 0;
         }
-
+        frameCount++;
     }
 
 
@@ -662,6 +663,30 @@ public class FinalProject extends Game {
            }
            hero.draw(g);
        }
+
+       // draw enemy in level 2
+
+        if (currLev == 3) {
+            Sprite enemy1 = new Sprite("Enemy1", "enemy.png");
+            Sprite enemy2 = new Sprite("Enemy2", "enemy.png");
+            Random numGen = new Random();
+            if (frameCount % speed == 0) {
+                randomNum1 = numGen.nextInt(2);
+                randomNum2 = numGen.nextInt(2);
+            }
+            enemy1.setPosition(gridSquareToPos(8 + randomNum1));
+            enemy2.setPosition(gridSquareToPos(16 + randomNum2));
+            if (this.Levels.get(currLev).getCurrGrid().get(8 + randomNum1).getY() == Obstacles.ENEMY)
+                enemy1.setVisible(true);
+            else
+                enemy1.setVisible(false);
+            if (this.Levels.get(currLev).getCurrGrid().get(16 + randomNum2).getY() == Obstacles.ENEMY)
+                enemy2.setVisible(true);
+            else
+                enemy2.setVisible(false);
+            enemy1.draw(g);
+            enemy2.draw(g);
+        }
 
        // draw all moves
        if (moves != null)
