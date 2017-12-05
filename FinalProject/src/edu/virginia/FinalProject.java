@@ -347,10 +347,9 @@ public class FinalProject extends Game {
 
     //checks if conditional is legal
     private Boolean legalCond() {
-        //TODO: implement this
-        return false;
+        Moves mv = this.Levels.get(currLev).getMovesTaken().get(mvsCount + 1);
+        return ((mv != null) && (mv != Moves.COND));
     }
-
 
     /* Updates game state to run through moves. Moves get executed in this.speed number of frames */
     private void runMoves() {
@@ -361,8 +360,6 @@ public class FinalProject extends Game {
                     if (runCount % speed == 0) {
                         if (legalFwd()) {
                             hero.setPosition(this.gridSquareToPos(this.fwdSq()));
-
-                            // for more levels, need to write a find goal function
                             if (this.posToGridSquare(hero.getPosition()) == this.Levels.get(currLev).getWinSquare()) {
                                 winState = true;
                                 movesTaken = mvs.size();
@@ -392,16 +389,22 @@ public class FinalProject extends Game {
                             // TODO: stabbing animation
 
                             Tuple<Boolean, Obstacles> nxtSq = this.Levels.get(currLev).getCurrGrid().get(this.fwdSq());
-                            nxtSq.setX(true);
-                            nxtSq.setY(Obstacles.NOTHING);
+                            if (nxtSq.getY() == Obstacles.ENEMY) {
+                                nxtSq.setX(true);
+                                nxtSq.setY(Obstacles.NOTHING);
+                            }
                             if (nxtSq.getY() == Obstacles.BARRICADE) {
                                 // TODO: update barricade image to next image
+                                // if barricade image was final image
+                                // nxtSq.setX(true);
+                                // nxtSq.setY(Obstacles.NOTHING);
+
 
                             }
                         }
                     else {
                             // TODO: falling over animation
-                            // TODO: lost game
+                            // TODO: reset?
                         }
                     }
                     break;
@@ -409,16 +412,25 @@ public class FinalProject extends Game {
                     if (this.legalLoop()) {
                         Moves inner = mvs.get(mvsCount + 1);
                         mvs.add(mvsCount + 1, inner);
-                        mvs.add(mvsCount + 1, inner); // adds move twice because already there once
+                        mvs.add(mvsCount + 1, inner); // adds move 2x because it's already there once
                         runCount += speed - 1;
                         mvsCount += 1;
                     }
                     else {
                         // TODO: confused animation
+                        // TODO: reset?
                     }
                     break;
                 case COND:
-                    //legalCond()
+                    if (legalCond()) {
+                        //if enemy, run next move
+                        if (this.Levels.get(currLev).getCurrGrid().get(this.posToGridSquare(this.hero.getPosition())).)
+                        // else, skip next move
+                    }
+                    else {
+                        // TODO: confused animation
+                        // TODO: reset?
+                    }
                     break;
                 default:
                     break;
