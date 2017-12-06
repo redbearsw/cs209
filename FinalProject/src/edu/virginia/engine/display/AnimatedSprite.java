@@ -110,6 +110,7 @@ public class AnimatedSprite extends Sprite {
     public void animate(String id) {
         this.setStartFrame(getAnimation(id).getStartFrame());
         this.setEndFrame(getAnimation(id).getEndFrame());
+        this.setCurrentFrame(getAnimation(id).getStartFrame());
     }
 
 

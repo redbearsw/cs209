@@ -116,7 +116,23 @@ public class FinalProject extends Game {
         Animation an = new Animation("stab", 0, 11);
         hero.setAnimations(an);
 
+        /* confused */
+        this.hero.addFrame("confusedframe00.png");
+        this.hero.addFrame("confusedframe01.png");
+        this.hero.addFrame("confusedframe02.png");
+        this.hero.addFrame("confusedframe03.png");
+        this.hero.addFrame("confusedframe04.png");
+        this.hero.addFrame("confusedframe05.png");
+        this.hero.addFrame("confusedframe06.png");
+        this.hero.addFrame("confusedframe07.png");
+        this.hero.addFrame("confusedframe08.png");
+        this.hero.addFrame("confusedframe09.png");
+        this.hero.addFrame("confusedframe10.png");
+        this.hero.addFrame("confusedframe11.png");
+        this.hero.addFrame("confusedframe12.png");
 
+        an = new Animation("confused", 12, 23);
+        hero.setAnimations(an);
 
         /* Game States*/
         this.speed = 15;
@@ -386,6 +402,8 @@ public class FinalProject extends Game {
                                 movesTaken = mvs.size();
                             }
                         } else {
+                            this.hero.setPlaying(true);
+                            this.hero.animate("confused");
                             moving = false;
                         }
                     } else if (runCount % speed == speed - 1)
@@ -408,7 +426,6 @@ public class FinalProject extends Game {
                     if (runCount % speed == 0) {
 
                         if (this.legalStab()) {
-                            // TODO: stabbing animation
 
                             this.hero.setPlaying(true);
                             this.hero.animate("stab");
@@ -427,7 +444,8 @@ public class FinalProject extends Game {
                             }
                         }
                     else {
-                            // TODO: falling over animation
+                            this.hero.setPlaying(true);
+                            this.hero.animate("confused");
                             // TODO: reset?
                         }
                     }
@@ -442,7 +460,8 @@ public class FinalProject extends Game {
                         mvsCount += 1;
                     }
                     else {
-                        // TODO: confused animation
+                        this.hero.setPlaying(true);
+                        this.hero.animate("confused");
                         // TODO: reset?
                     }
                     break;
@@ -465,7 +484,8 @@ public class FinalProject extends Game {
                         }
                     }
                     else {
-                        // TODO: confused animation
+                        this.hero.setPlaying(true);
+                        this.hero.animate("confused");
                         // TODO: reset?
                     }
                     break;
