@@ -822,7 +822,7 @@ public class FinalProject extends Game {
             runCount = 0;
         }
         frameCount++;
-        if(frameCount % speed == 0 && !moving && !winState){
+        if(frameCount % speed == 0 && !moving && !winState && transition==0){
             resetPos();
             runCount = 0;
             mvsCount = 0;
@@ -995,14 +995,6 @@ public class FinalProject extends Game {
            }
        });
 
-       JButton reset = new JButton("Reset");
-       reset.setBounds(830,400, 93,67);
-       reset.addActionListener(new ActionListener() {
-           public void actionPerformed(ActionEvent e) {
-               resetPos();
-               runCount = 0;
-           }
-       });
 
        // adds run, clear, back buttons to screen
 
