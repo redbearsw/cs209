@@ -89,7 +89,7 @@ public class FinalProject extends Game {
             this.moves.setPosition(new Point(469,0));
         this.hero = new AnimatedSprite("Hero", "frame00.png");
             hero.setPosition(new Point(this.gridSquareToPos(0).x + 1, this.gridSquareToPos(0).y -21));
-            this.hero.setPivotPoint(new Point (this.hero.getUnscaledWidth() / 2, this.hero.getUnscaledHeight() / 2));
+            this.hero.setPivotPoint(new Point (52, 75));
         this.select = new Sprite ("Select", "nextPlace.png");
             this.select.setPosition(new Point(499, 53));
         this.threeStar = new Sprite("ThreeStar", "threeStar.png");
@@ -273,7 +273,8 @@ public class FinalProject extends Game {
 
     /* Resets Hero's position to grid one */
     private void resetPos(){
-        this.hero.setPosition(new Point(this.gridSquareToPos(0).x, this.gridSquareToPos(0).y -21));
+        hero.setPosition(new Point(gridSquareToPos(Levels.get(currLev).getStartSquare()).x,
+                gridSquareToPos(Levels.get(currLev).getStartSquare()).y - 21));
         this.hero.setRotation(0);
     }
     /* Helper that returns column given x coordinate */
@@ -407,7 +408,8 @@ public class FinalProject extends Game {
                         if (legalFwd()) {
                             hero.setPosition(this.gridSquareToPos(this.fwdSq()));
                             hero.setPosition(new Point (hero.getPosition().x, hero.getPosition().y - 21));
-                            if (this.posToGridSquare(hero.getPosition()) == this.Levels.get(currLev).getWinSquare()) {
+                            if (this.posToGridSquare(new Point (hero.getPosition().x, hero.getPosition().y + 24))
+                                    == this.Levels.get(currLev).getWinSquare()) {
                                 winState = true;
                                 movesTaken = mvs.size();
                             }
@@ -513,8 +515,6 @@ public class FinalProject extends Game {
                 mvsCount = 0;
                 this.moving = false;
             }
-            if (runCount % speed == 0)
-                if(!moving) {resetPos();}
 
         }
     }
@@ -676,7 +676,7 @@ public class FinalProject extends Game {
                                 sqDraw--;
                                 st.setScaleX(.6);
                                 st.setScaleY(.6);
-                                st.setPosition(new Point(st.getPosition().x + 18 - 85,  + 18));
+                                st.setPosition(new Point(st.getPosition().x + 18 - 85,  st.getPosition().y + 18));
 
                             }
                         }
@@ -726,7 +726,7 @@ public class FinalProject extends Game {
         // display next and restart buttons
         if (currLev < 3) {
             JButton next = new JButton("Next");
-            next.setBounds(430, 250, 100, 25);
+            next.setBounds(360, 450, 100, 25);
             super.getScenePanel().add(next);
             next.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -738,7 +738,7 @@ public class FinalProject extends Game {
         }
 
         JButton restart = new JButton("Restart");
-        restart.setBounds(0,0, 100, 25);
+        restart.setBounds(480,450, 100, 25);
         super.getScenePanel().add(restart);
 
 
@@ -804,7 +804,7 @@ public class FinalProject extends Game {
         if (hero != null) {
            if (transition > 0) {
                hero.setPosition(new Point(hero.getPosition().x,
-                       this.gridSquareToPos(this.Levels.get(currLev).getWinSquare()).y + offset));
+                       this.gridSquareToPos(this.Levels.get(currLev).getWinSquare()).y + offset -21));
            }
            hero.draw(g);
        }
@@ -897,8 +897,7 @@ public class FinalProject extends Game {
        drawMovesTaken(g);
 
        // display score and transition buttons on victory
-       if (winState)
-           onVictory(g);
+
 
        /* Run, Backspace, Clear Buttons (TO BE REPLACED WITH IMAGES) */
        // create buttons
@@ -940,10 +939,22 @@ public class FinalProject extends Game {
        });
 
        // adds run, clear, back buttons to screen
-        super.getScenePanel().add(run);
-        super.getScenePanel().add(clear);
-        super.getScenePanel().add(back);
-        super.getScenePanel().add(reset);
+
+        if (winState) {
+            onVictory(g);
+            super.getScenePanel().remove(run);
+            super.getScenePanel().remove(clear);
+            super.getScenePanel().remove(back);
+            super.getScenePanel().remove(reset);
+
+        } else {
+            super.getScenePanel().add(run);
+            super.getScenePanel().add(clear);
+            super.getScenePanel().add(back);
+            super.getScenePanel().add(reset);
+        }
+
+
     }
 
     public static void main(String[] args) {
