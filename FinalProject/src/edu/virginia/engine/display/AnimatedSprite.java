@@ -17,20 +17,19 @@ public class AnimatedSprite extends Sprite {
     private int currentFrame;
     private int startFrame;
     private int endFrame;
-    static final int DEFAULT_ANIMATION_SPEED = 3;
+    static final int DEFAULT_ANIMATION_SPEED = 5;
     private int animationSpeed;
     private GameClock gameClock;
     private int frameCount;
     private Boolean paused;
 
 
-    public AnimatedSprite(String id, String fn, Point pos) {
+    public AnimatedSprite(String id, String fn) {
         super(id);
         this.setCount(30);
         this.initGameClock();
         this.setId(id);
         this.setImage(fn);
-        this.setPosition(pos);
         this.setAnimationSpeed(DEFAULT_ANIMATION_SPEED);
         this.setStartFrame(0);
         this.setEndFrame(0);
@@ -138,17 +137,11 @@ public class AnimatedSprite extends Sprite {
         BufferedImage frame;
 
             if (playing == true) {
-                if (super.getFrameCount() == this.animationSpeed) {
-
-                    frame = this.frames.get(cf);
-                    if (cf == ef) {
-                        this.setCurrentFrame(sf - 1);
-                    }
-                    this.setCurrentFrame(this.getCurrentFrame() + 1);
-                    super.setFrameCount(0);
-                } else {
-                    frame = this.frames.get(cf);
+                frame = this.frames.get(cf);
+                if (cf == ef) {
+                    this.setCurrentFrame(sf);
                 }
+                this.setCurrentFrame(this.getCurrentFrame() + 1);
                 if(this.getCurrentFrame() == this.getEndFrame()){
                    setPlaying(false);
                 }
