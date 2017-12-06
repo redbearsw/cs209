@@ -426,9 +426,7 @@ public class FinalProject extends Game {
                             this.hero.setPlaying(true);
                             this.hero.animate("confused");
                             sounds.PlaySoundEffect("Huh");
-                            if(runCount == 13) {
-                                moving = false;
-                            }
+                            moving = false;
                         }
                     } else if (runCount % speed == speed - 1)
                         mvsCount += 1;
