@@ -744,10 +744,10 @@ public class FinalProject extends Game {
 
         restart.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                hero.setPosition(gridSquareToPos(Levels.get(currLev).getStartSquare()));
-                hero.setRotation(0);
+                resetPos();
                 runCount = 0;
                 winState = false;
+                mvsCount = 0;
             }});
 
     }
@@ -935,6 +935,7 @@ public class FinalProject extends Game {
            public void actionPerformed(ActionEvent e) {
                resetPos();
                runCount = 0;
+               mvsCount = 0;
            }
        });
 
