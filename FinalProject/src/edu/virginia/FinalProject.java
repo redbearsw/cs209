@@ -754,7 +754,8 @@ public class FinalProject extends Game {
 
         restart.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                resetPos();
+                hero.setPosition(gridSquareToPos(Levels.get(currLev).getStartSquare()));
+                hero.setRotation(0);
                 runCount = 0;
                 winState = false;
                 mvsCount = 0;
@@ -937,7 +938,15 @@ public class FinalProject extends Game {
        back.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent e) {
                if (Levels.get(currLev).getMovesTaken().size()!=0) {
-                   Levels.get(currLev).getMovesTaken().remove(Levels.get(currLev).getMovesTaken().size() - 1);
+                   if(Levels.get(currLev).getMovesTaken().get(Levels.get(currLev).getMovesTaken().size()-1)
+                           == Moves.ENDLOOP) {
+                       Levels.get(currLev).getMovesTaken().remove(Levels.get(currLev).getMovesTaken().size() - 1);
+                       Levels.get(currLev).getMovesTaken().remove(Levels.get(currLev).getMovesTaken().size() - 1);
+                       Levels.get(currLev).getMovesTaken().remove(Levels.get(currLev).getMovesTaken().size() - 1);
+                       Levels.get(currLev).getMovesTaken().remove(Levels.get(currLev).getMovesTaken().size() - 1);
+                   } else {
+                       Levels.get(currLev).getMovesTaken().remove(Levels.get(currLev).getMovesTaken().size() - 1);
+                   }
                }
            }
        });
