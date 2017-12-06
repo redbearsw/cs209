@@ -376,8 +376,9 @@ public class FinalProject extends Game {
 
     //checks if stab is legal
     private Boolean legalStab() {
-        return (this.Levels.get(currLev).getCurrGrid().get(this.fwdSq()).getY() == Obstacles.ENEMY ||
-                this.Levels.get(currLev).getCurrGrid().get(this.fwdSq()).getY() == Obstacles.BARRICADE);
+        Tuple <Boolean, Obstacles> nxtSq = this.Levels.get(currLev).getCurrGrid().get(this.fwdSq());
+        return (nxtSq.getY() == Obstacles.ENEMY ||
+                nxtSq.getY() == Obstacles.BARRICADE);
     }
 
     //checks if loop is legal
@@ -399,6 +400,7 @@ public class FinalProject extends Game {
     private void runMoves() {
         ArrayList<Moves> mvs = this.Levels.get(currLev).getMovesTaken();
         if (mvs != null && !mvs.isEmpty()) {
+            System.out.println(mvs.get(mvsCount));
             switch (mvs.get(mvsCount)) {
                 case FORWARD:
                     if (runCount % speed == 0) {
@@ -434,15 +436,15 @@ public class FinalProject extends Game {
                     if (runCount % speed == 0) {
 
                         if (this.legalStab()) {
-
-                            this.hero.setPlaying(true);
-                            this.hero.animate("stab");
-
                             Tuple<Boolean, Obstacles> nxtSq = this.Levels.get(currLev).getCurrGrid().get(this.fwdSq());
-                            if (nxtSq.getY() == Obstacles.ENEMY && nxtSq.getX() == false) {
-                                nxtSq.setX(true);
-                                nxtSq.setY(Obstacles.NOTHING);
-                            }
+
+                                this.hero.setPlaying(true);
+                                this.hero.animate("stab");
+
+                                if (nxtSq.getY() == Obstacles.ENEMY) {
+                                    nxtSq.setX(true);
+                                    nxtSq.setY(Obstacles.NOTHING);
+                                }
                             if (nxtSq.getY() == Obstacles.BARRICADE) {
                                 // TODO: update barricade image to next image
                                 // if barricade image was final image {
@@ -478,7 +480,7 @@ public class FinalProject extends Game {
                         if (runCount % speed == 0) {
                             Tuple <Boolean, Obstacles> nxtSq = this.Levels.get(currLev).getCurrGrid().get(this.fwdSq());
                             //if enemy, run next move
-                            if (nxtSq.getY() == Obstacles.ENEMY) {
+                            if (nxtSq.getY() == Obstacles.ENEMY && !nxtSq.getX()) {
                                 mvsCount += 1;
                                 runCount -= 1;
                             }
@@ -756,7 +758,6 @@ public class FinalProject extends Game {
         super.update(pressedKeys);
 
         if (moving) {
-            frameCount = 0;
             runMoves();
         }
         if (transition != 0)
@@ -822,7 +823,6 @@ public class FinalProject extends Game {
                 if ((frameCount % speed == 0)) {
                     Random numGen = new Random();
                     if (mvsCount < 1 || this.Levels.get(currLev).getMovesTaken().get(mvsCount - 1) != Moves.COND || this.fwdSq() != 8) {
-                        //System.out.println(frameCount + "" + frameCount % 30 + "generating 1");
                         randomNum1 = numGen.nextInt(2);
                     }
                 }
@@ -832,8 +832,8 @@ public class FinalProject extends Game {
 
                 // set square occupied by enemy to true, unoccupied square to false
                 if (randomNum1 == 1) {
-                    grid.get(8 + randomNum1).setX(false);
-                    grid.get(8 + randomNum1).setY(Obstacles.ENEMY);
+                    grid.get(9).setX(false);
+                    grid.get(9).setY(Obstacles.ENEMY);
                 }
                 if (randomNum1 == 0) {
                     grid.get(9).setX(true);
@@ -906,8 +906,10 @@ public class FinalProject extends Game {
        run.setBounds(500, 400, 93, 67);
        run.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent e) {
-               if (Levels.get(currLev).getMovesTaken() != null && !Levels.get(currLev).getMovesTaken().isEmpty())
+               if (Levels.get(currLev).getMovesTaken() != null && !Levels.get(currLev).getMovesTaken().isEmpty()) {
                    moving = true;
+                   frameCount = 0;
+               }
            }
        });
 
