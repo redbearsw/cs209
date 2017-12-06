@@ -116,8 +116,6 @@ public class FinalProject extends Game {
         for (i = 0; i < numLevs; i++)
             Levels.add(null);
 
-
-
         /* Levels */
 
         /* Level 1 */
@@ -222,7 +220,7 @@ public class FinalProject extends Game {
         Point pos3 = new Point(0, 0);
 
         //creating level 3
-        Level lev3 = new Level(initGrid3, mvsAvail3, pos3, 3, 14, 2, 20);
+        Level lev3 = new Level(initGrid3, mvsAvail3, pos3, 3, 14, 2, 22);
 
         this.Levels.add(3, lev3);
 
@@ -327,8 +325,9 @@ public class FinalProject extends Game {
     //checks if forward move is legal
     private Boolean legalFwd() {
         int newSq = this.fwdSq();
-        if (newSq > -1)
+        if (newSq > -1) {
             return this.Levels.get(currLev).getCurrGrid().get(newSq).getX();
+        }
         else
             return false;
     }
@@ -367,8 +366,9 @@ public class FinalProject extends Game {
                                 winState = true;
                                 movesTaken = mvs.size();
                             }
-                        } else
+                        } else {
                             moving = false;
+                        }
                     } else if (runCount % speed == speed - 1)
                         mvsCount += 1;
                     break;
@@ -388,9 +388,7 @@ public class FinalProject extends Game {
                         mvsCount += 1;
                     if (runCount % speed == 0) {
                         if (this.legalStab()) {
-
                             // TODO: stabbing animation
-
                             Tuple<Boolean, Obstacles> nxtSq = this.Levels.get(currLev).getCurrGrid().get(this.fwdSq());
                             if (nxtSq.getY() == Obstacles.ENEMY) {
                                 nxtSq.setX(true);
@@ -402,8 +400,6 @@ public class FinalProject extends Game {
                                 nxtSq.setX(true);
                                 nxtSq.setY(Obstacles.NOTHING);
                                 //}
-
-
                             }
                         }
                     else {
@@ -417,7 +413,6 @@ public class FinalProject extends Game {
                         Moves inner = mvs.get(mvsCount + 1);
                         mvs.add(mvsCount + 1, inner);
                         mvs.add(mvsCount + 1, inner); // adds move 2x because it's already there once
-                        mvs.add(mvsCount + 1, inner); // adds move twice because already there once
                         mvs.add(mvsCount + 4, Moves.ENDLOOP);
                         runCount += speed - 1;
                         mvsCount += 1;
@@ -429,9 +424,21 @@ public class FinalProject extends Game {
                     break;
                 case COND:
                     if (legalCond()) {
-                        //if enemy, run next move
-                        //if (this.Levels.get(currLev).getCurrGrid().get(this.posToGridSquare(this.hero.getPosition())).)
-                        // else, skip next move
+                        if (runCount % speed == 0) {
+                            //if enemy, run next move
+                            if (this.Levels.get(currLev).getCurrGrid().get(this.fwdSq()).getY() == Obstacles.ENEMY) {
+                                mvsCount += 1;
+                                runCount -= 1;
+                            }
+
+                            else {
+                                this.Levels.get(currLev).getCurrGrid().get(this.fwdSq()).setY(Obstacles.ENEMY);
+                                this.Levels.get(currLev).getCurrGrid().get(this.fwdSq()).setX(true);
+                                mvsCount += 2;
+                                runCount -= 1;
+                            }
+
+                        }
                     }
                     else {
                         // TODO: confused animation
@@ -550,7 +557,7 @@ public class FinalProject extends Game {
         {
             loopLocs = indexOfAll(Moves.LOOP3,moves);
             if(loopLocs.get(i)+4 <= moves.size()-1){
-                System.out.println("HELLO, SIZE = " + moves.size() + "INDEX = " + loopLocs.get(i)+4);
+               // System.out.println("HELLO, SIZE = " + moves.size() + "INDEX = " + loopLocs.get(i)+4);
                 if(moves.get(loopLocs.get(i)+4) == Moves.ENDLOOP) {
                     moves.remove(loopLocs.get(i)+2);
                     moves.remove(loopLocs.get(i)+2);
@@ -567,8 +574,8 @@ public class FinalProject extends Game {
         if (this.Levels != null && this.Levels.get(currLev) != null) {
             ArrayList<Moves> moves = new ArrayList<>(this.Levels.get(currLev).getMovesTaken());
             moves = resetLoop(moves);
-            System.out.println(moves);
-            System.out.println(this.Levels.get(currLev).getMovesTaken());
+            //System.out.println(moves);
+            //System.out.println(this.Levels.get(currLev).getMovesTaken());
             if(moves.size() == 0){
                 this.select.setPosition(new Point(499, 53));
                 select.draw(g);
@@ -634,41 +641,38 @@ public class FinalProject extends Game {
     }
 
 
-
     /* Displays score on victory */
     public void onVictory(Graphics g) {
         // display score
         int bS = this.Levels.get(currLev).getBestScore();
-        if(movesTaken <= bS){
-            if(threeStar != null){
+        if (movesTaken <= bS){
+            if (threeStar != null) {
                 threeStar.draw(g);
             }
         } else if (movesTaken < bS + 2) {
-            if(twoStar != null){twoStar.draw(g);}
+            if (twoStar != null) {twoStar.draw(g);}
         } else {
-            if(oneStar != null){oneStar.draw(g);}
+            if (oneStar != null) {oneStar.draw(g);}
         }
 
         // display next and restart buttons
-        JButton next = new JButton("Next");
-        next.setBounds(430, 250 , 100, 25);
-
+        if (currLev < 3) {
+            JButton next = new JButton("Next");
+            next.setBounds(430, 250, 100, 25);
+            super.getScenePanel().add(next);
+            next.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    if (currLev < numLevs)
+                        transition = 1;
+                    winState = false;
+                }
+            });
+        }
 
         JButton restart = new JButton("Restart");
         restart.setBounds(0,0, 100, 25);
-
-        super.getScenePanel().add(next);
         super.getScenePanel().add(restart);
 
-
-
-        next.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (currLev < numLevs)
-                    transition = 1;
-                    winState = false;
-            }
-        });
 
         restart.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -737,26 +741,46 @@ public class FinalProject extends Game {
            hero.draw(g);
        }
 
-       // draw enemy in level 2
+       // draw enemy in level 3
 
         if (currLev == 3) {
+            ArrayList <Tuple<Boolean, Obstacles>> grid = this.Levels.get(currLev).getCurrGrid();
+
+            //enemy sprites
             Sprite enemy1 = new Sprite("Enemy1", "enemy.png");
             Sprite enemy2 = new Sprite("Enemy2", "enemy.png");
-            Random numGen = new Random();
-            if (frameCount % speed == 0) {
-                randomNum1 = numGen.nextInt(2);
-                randomNum2 = numGen.nextInt(2);
+
+            //generate new number every 30 frames, unless in the middle of dealing with a conditional block
+            if ((frameCount % speed == 0)) {
+                Random numGen = new Random();
+                if (mvsCount < 1 || this.Levels.get(currLev).getMovesTaken().get(mvsCount - 1) != Moves.COND || this.fwdSq() != 8 + randomNum1)
+                    randomNum1 = numGen.nextInt(2);
+                if (mvsCount < 1 || this.Levels.get(currLev).getMovesTaken().get(mvsCount - 1) != Moves.COND || this.fwdSq() != 16 + randomNum1)
+                    randomNum2 = numGen.nextInt(2);
             }
+
+            // set enemy positions to randomly chosen square
             enemy1.setPosition(gridSquareToPos(8 + randomNum1));
             enemy2.setPosition(gridSquareToPos(16 + randomNum2));
-            if (this.Levels.get(currLev).getCurrGrid().get(8 + randomNum1).getY() == Obstacles.ENEMY)
+
+            // set square occupied by enemy to true, unoccupied square to false
+            grid.get(8 + randomNum1).setX(true);
+            grid.get(8 + (1 - randomNum1)).setX(false);
+            grid.get(16 + randomNum1).setX(true);
+            grid.get(16 + (1 - randomNum1)).setX(false);
+
+            // if enemy still an obstacle in that square (i.e. not removed by STAB), it's visible
+            if (grid.get(8 + randomNum1).getY() == Obstacles.ENEMY)
                 enemy1.setVisible(true);
             else
                 enemy1.setVisible(false);
-            if (this.Levels.get(currLev).getCurrGrid().get(16 + randomNum2).getY() == Obstacles.ENEMY)
+
+            if (grid.get(16 + randomNum2).getY() == Obstacles.ENEMY)
                 enemy2.setVisible(true);
             else
                 enemy2.setVisible(false);
+
+            // draw enemies
             enemy1.draw(g);
             enemy2.draw(g);
         }
@@ -768,7 +792,7 @@ public class FinalProject extends Game {
        drawMovesTaken(g);
 
        // display score and transition buttons on victory
-       if(winState)
+       if (winState)
            onVictory(g);
 
        /* Run, Backspace, Clear Buttons (TO BE REPLACED WITH IMAGES) */
