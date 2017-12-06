@@ -372,7 +372,7 @@ public class FinalProject extends Game {
         return ((mv != null) && (mv != Moves.COND));
     }
 
-    /* Updates game state to run through moves. Moves get executed in this.speed number of frames */
+    /* Updates game state to run through moves. Moves get executed in speed number of frames */
     private void runMoves() {
         ArrayList<Moves> mvs = this.Levels.get(currLev).getMovesTaken();
         if (mvs != null && !mvs.isEmpty()) {
@@ -414,7 +414,7 @@ public class FinalProject extends Game {
                             this.hero.animate("stab");
 
                             Tuple<Boolean, Obstacles> nxtSq = this.Levels.get(currLev).getCurrGrid().get(this.fwdSq());
-                            if (nxtSq.getY() == Obstacles.ENEMY) {
+                            if (nxtSq.getY() == Obstacles.ENEMY && nxtSq.getX() == false) {
                                 nxtSq.setX(true);
                                 nxtSq.setY(Obstacles.NOTHING);
                             }
@@ -449,19 +449,19 @@ public class FinalProject extends Game {
                 case COND:
                     if (legalCond()) {
                         if (runCount % speed == 0) {
+                            Tuple <Boolean, Obstacles> nxtSq = this.Levels.get(currLev).getCurrGrid().get(this.fwdSq());
                             //if enemy, run next move
-                            if (this.Levels.get(currLev).getCurrGrid().get(this.fwdSq()).getY() == Obstacles.ENEMY) {
+                            if (nxtSq.getY() == Obstacles.ENEMY) {
                                 mvsCount += 1;
                                 runCount -= 1;
                             }
 
                             else {
-                                this.Levels.get(currLev).getCurrGrid().get(this.fwdSq()).setY(Obstacles.ENEMY);
-                                this.Levels.get(currLev).getCurrGrid().get(this.fwdSq()).setX(true);
+                                nxtSq.setY(Obstacles.NOTHING);
+                                nxtSq.setX(true);
                                 mvsCount += 2;
                                 runCount -= 1;
                             }
-
                         }
                     }
                     else {
@@ -472,6 +472,7 @@ public class FinalProject extends Game {
                 case ENDLOOP:
                     // just want it to keep going and skip this here but not sure how to do that
                     mvsCount += 1;
+                    runCount -= 1;
                 default:
                     break;
             }
@@ -706,6 +707,7 @@ public class FinalProject extends Game {
         if (transition > (speed * 2)) {
             if (currLev < 3)
                 currLev += 1;
+            hero.setRotation(0);
             transition = 0;
         }
         frameCount++;
@@ -754,43 +756,81 @@ public class FinalProject extends Game {
         if (currLev == 3) {
             ArrayList <Tuple<Boolean, Obstacles>> grid = this.Levels.get(currLev).getCurrGrid();
 
-            //enemy sprites
-            Sprite enemy1 = new Sprite("Enemy1", "enemy.png");
-            Sprite enemy2 = new Sprite("Enemy2", "enemy.png");
+            if (grid.get(9).getY() == Obstacles.ENEMY) {
 
-            //generate new number every 30 frames, unless in the middle of dealing with a conditional block
-            if ((frameCount % speed == 0)) {
-                Random numGen = new Random();
-                if (mvsCount < 1 || this.Levels.get(currLev).getMovesTaken().get(mvsCount - 1) != Moves.COND || this.fwdSq() != 8 + randomNum1)
-                    randomNum1 = numGen.nextInt(2);
-                if (mvsCount < 1 || this.Levels.get(currLev).getMovesTaken().get(mvsCount - 1) != Moves.COND || this.fwdSq() != 16 + randomNum1)
-                    randomNum2 = numGen.nextInt(2);
+                //enemy sprite
+                Sprite enemy1 = new Sprite("Enemy1", "enemy.png");
+
+                //generate new number every 30 frames, unless in the middle of dealing with a conditional block
+                if ((frameCount % speed == 0)) {
+                    Random numGen = new Random();
+                    if (mvsCount < 1 || this.Levels.get(currLev).getMovesTaken().get(mvsCount - 1) != Moves.COND || this.fwdSq() != 8) {
+                        //System.out.println(frameCount + "" + frameCount % 30 + "generating 1");
+                        randomNum1 = numGen.nextInt(2);
+                    }
+                }
+
+                // set enemy positions to randomly chosen square
+                enemy1.setPosition(gridSquareToPos(8 + randomNum1));
+
+                // set square occupied by enemy to true, unoccupied square to false
+                if (randomNum1 == 1) {
+                    grid.get(8 + randomNum1).setX(false);
+                    grid.get(8 + randomNum1).setY(Obstacles.ENEMY);
+                }
+                if (randomNum1 == 0) {
+                    grid.get(9).setX(true);
+                    grid.get(9).setY(Obstacles.ENEMY);
+                }
+
+                // if enemy still an obstacle in that square (i.e. not removed by STAB), it's visible
+                if (grid.get(8 + randomNum1).getY() == Obstacles.ENEMY)
+                    enemy1.setVisible(true);
+                else
+                    enemy1.setVisible(false);
+
+                // draw enemies
+                enemy1.draw(g);
+
+
+            }
+            if (grid.get(17).getY() == Obstacles.ENEMY) {
+
+                //enemy sprite
+                Sprite enemy2 = new Sprite("Enemy2", "enemy.png");
+
+                //generate new number every 30 frames, unless in the middle of dealing with a conditional block
+                if ((frameCount % speed == 0)) {
+                    Random numGen = new Random();
+                    if (mvsCount < 1 || this.Levels.get(currLev).getMovesTaken().get(mvsCount - 1) != Moves.COND || this.fwdSq() != 17) {
+                       // System.out.println("generating 2");
+                        randomNum2 = numGen.nextInt(2);
+                    }
+                }
+
+                // set enemy positions to randomly chosen square
+                enemy2.setPosition(gridSquareToPos(16 + randomNum2));
+
+                // set square occupied by enemy to true, unoccupied square to false
+                if (randomNum2 == 1) {
+                    grid.get(16 + randomNum2).setX(false);
+                    grid.get(16 + randomNum2).setY(Obstacles.ENEMY);
+                }
+                if (randomNum2 == 0) {
+                    grid.get(17).setX(true);
+                    grid.get(17).setY(Obstacles.ENEMY);
+                }
+
+                // if enemy still an obstacle in that square (i.e. not removed by STAB), it's visible
+                if (grid.get(16 + randomNum2).getY() == Obstacles.ENEMY)
+                    enemy2.setVisible(true);
+                else
+                    enemy2.setVisible(false);
+
+                // draw enemies
+                enemy2.draw(g);
             }
 
-            // set enemy positions to randomly chosen square
-            enemy1.setPosition(gridSquareToPos(8 + randomNum1));
-            enemy2.setPosition(gridSquareToPos(16 + randomNum2));
-
-            // set square occupied by enemy to true, unoccupied square to false
-            grid.get(8 + randomNum1).setX(true);
-            grid.get(8 + (1 - randomNum1)).setX(false);
-            grid.get(16 + randomNum1).setX(true);
-            grid.get(16 + (1 - randomNum1)).setX(false);
-
-            // if enemy still an obstacle in that square (i.e. not removed by STAB), it's visible
-            if (grid.get(8 + randomNum1).getY() == Obstacles.ENEMY)
-                enemy1.setVisible(true);
-            else
-                enemy1.setVisible(false);
-
-            if (grid.get(16 + randomNum2).getY() == Obstacles.ENEMY)
-                enemy2.setVisible(true);
-            else
-                enemy2.setVisible(false);
-
-            // draw enemies
-            enemy1.draw(g);
-            enemy2.draw(g);
         }
 
        // draw all moves
