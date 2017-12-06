@@ -30,7 +30,6 @@ public class FinalProject extends Game {
     private Sprite threeStar; // three stars full
     private Sprite barricade; // barricade
 
-
     /* Various game states and trackers */
     private int speed; // number of frames it takes to run one move, transition to new level
     private int mvsCount; // tracks which move is currently running
@@ -66,6 +65,9 @@ public class FinalProject extends Game {
 
     private int borderWidth;
 
+    /* Music and Sound Effects */
+
+    private SoundManager sounds = new SoundManager();
 
     /* Constructor */
     public FinalProject() {
@@ -98,6 +100,7 @@ public class FinalProject extends Game {
         this.oneStar = new Sprite("OneStar", "oneStar.png");
         this.barricade = new Sprite("barricade1", "barricade1.png");
             this.barricade.setPosition(gridSquareToPos(13));
+
 
         /* Populating Animation Frames */
         /* Stab */
@@ -136,6 +139,9 @@ public class FinalProject extends Game {
 
         an = new Animation("confused", 12, 23);
         hero.setAnimations(an);
+
+        /* Adding Sound Effects */
+        sounds.LoadSoundEffect("Huh", "huh.wav");
 
         /* Game States*/
         this.speed = 15;
@@ -419,7 +425,10 @@ public class FinalProject extends Game {
                         } else {
                             this.hero.setPlaying(true);
                             this.hero.animate("confused");
-                            moving = false;
+                            sounds.PlaySoundEffect("Huh");
+                            if(runCount == 13) {
+                                moving = false;
+                            }
                         }
                     } else if (runCount % speed == speed - 1)
                         mvsCount += 1;
@@ -468,7 +477,10 @@ public class FinalProject extends Game {
                     else {
                             this.hero.setPlaying(true);
                             this.hero.animate("confused");
-                            moving = false;
+                            sounds.PlaySoundEffect("Huh");
+                            if(runCount == 13) {
+                                moving = false;
+                            }
                         }
                     }
                     break;
@@ -484,7 +496,10 @@ public class FinalProject extends Game {
                     else {
                         this.hero.setPlaying(true);
                         this.hero.animate("confused");
-                        moving = false;
+                        sounds.PlaySoundEffect("Huh");
+                        if(runCount == 13) {
+                            moving = false;
+                        }
                     }
                     break;
                 case COND:
@@ -508,7 +523,10 @@ public class FinalProject extends Game {
                     else {
                         this.hero.setPlaying(true);
                         this.hero.animate("confused");
-                        moving = false;
+                        sounds.PlaySoundEffect("Huh");
+                        if(runCount == 13) {
+                            moving = false;
+                        }
                     }
                     break;
                 case ENDLOOP:
@@ -522,8 +540,10 @@ public class FinalProject extends Game {
 
             //set mvsCount to 0 and moving to false when all moves complete
             if (mvsCount >= mvs.size()) {
+                this.Levels.get(currLev).setMovesTaken(resetLoop(this.Levels.get(currLev).getMovesTaken()));
                 mvsCount = 0;
                 this.moving = false;
+
             }
 
         }
@@ -732,7 +752,7 @@ public class FinalProject extends Game {
         } else {
             if (oneStar != null) {oneStar.draw(g);}
         }
-
+        moving = false;
         // display next and restart buttons
         if (currLev < 3) {
             JButton next = new JButton("Next");
@@ -743,6 +763,7 @@ public class FinalProject extends Game {
                     if (currLev < numLevs)
                         transition = 1;
                     winState = false;
+                    mvsCount = 0;
                 }
             });
         }
@@ -754,8 +775,7 @@ public class FinalProject extends Game {
 
         restart.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                hero.setPosition(gridSquareToPos(Levels.get(currLev).getStartSquare()));
-                hero.setRotation(0);
+                resetPos();
                 runCount = 0;
                 winState = false;
                 mvsCount = 0;
@@ -780,10 +800,9 @@ public class FinalProject extends Game {
             transition = 0;
         }
         frameCount++;
-        if(frameCount % speed == 0 && !moving){
-            mvsCount = 0;
-            runCount = 0;
+        if(frameCount % speed == 0 && !moving && !winState){
             resetPos();
+
         }
     }
 
@@ -964,24 +983,20 @@ public class FinalProject extends Game {
            public void actionPerformed(ActionEvent e) {
                resetPos();
                runCount = 0;
-               mvsCount = 0;
            }
        });
 
        // adds run, clear, back buttons to screen
 
         if (winState) {
+            // super.getScenePanel().removeAll();
             onVictory(g);
-            super.getScenePanel().remove(run);
-            super.getScenePanel().remove(clear);
-            super.getScenePanel().remove(back);
-            super.getScenePanel().remove(reset);
+            mvsCount = 0;
 
         } else {
             super.getScenePanel().add(run);
             super.getScenePanel().add(clear);
             super.getScenePanel().add(back);
-            super.getScenePanel().add(reset);
         }
 
 
