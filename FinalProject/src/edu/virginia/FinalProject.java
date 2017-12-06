@@ -974,7 +974,7 @@ public class FinalProject extends Game {
        back.setBounds(610,400, 93,67);
        back.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent e) {
-               if (Levels.get(currLev).getMovesTaken().size()!=0) {
+               if (Levels.get(currLev).getMovesTaken().size()!=0 && !moving) {
                    if(Levels.get(currLev).getMovesTaken().get(Levels.get(currLev).getMovesTaken().size()-1)
                            == Moves.ENDLOOP) {
                        Levels.get(currLev).getMovesTaken().remove(Levels.get(currLev).getMovesTaken().size() - 1);
@@ -991,7 +991,9 @@ public class FinalProject extends Game {
        clear.setBounds(720,400, 93,67);
        clear.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent e) {
-               Levels.get(currLev).getMovesTaken().clear();
+               if (!moving) {
+                   Levels.get(currLev).getMovesTaken().clear();
+               }
            }
        });
 
