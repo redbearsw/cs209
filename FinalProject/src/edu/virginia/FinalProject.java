@@ -225,7 +225,7 @@ public class FinalProject extends Game {
         Point pos2 = new Point(0, mazeHeight - sqHeight);
 
         //creating level 2
-        Level lev2 = new Level(initGrid2, mvsAvail2, pos2, 2, 14, 3, 22);
+        Level lev2 = new Level(initGrid2, mvsAvail2, pos2, 2, 16, 3, 22);
 
         this.Levels.add(2, lev2);
 
@@ -264,7 +264,7 @@ public class FinalProject extends Game {
         Point pos3 = new Point(0, 0);
 
         //creating level 3
-        Level lev3 = new Level(initGrid3, mvsAvail3, pos3, 3, 14, 2, 22);
+        Level lev3 = new Level(initGrid3, mvsAvail3, pos3, 3, 15, 2, 22);
 
         this.Levels.add(3, lev3);
 
@@ -420,7 +420,6 @@ public class FinalProject extends Game {
                             if (this.posToGridSquare(new Point (hero.getPosition().x, hero.getPosition().y + 24))
                                     == this.Levels.get(currLev).getWinSquare()) {
                                 winState = true;
-                                movesTaken = mvs.size();
                             }
                         } else {
                             this.hero.setPlaying(true);
@@ -761,13 +760,14 @@ public class FinalProject extends Game {
 
     /* Displays score on victory */
     public void onVictory(Graphics g) {
-        // display score
+        // resetting loops in moves taken to properly account for score
+        ArrayList<Moves> finalScr = resetLoop(new ArrayList<> (this.Levels.get(currLev).getMovesTaken()));
         int bS = this.Levels.get(currLev).getBestScore();
-        if (movesTaken <= bS){
+        if (finalScr.size() <= bS){
             if (threeStar != null) {
                 threeStar.draw(g);
             }
-        } else if (movesTaken < bS + 2) {
+        } else if (finalScr.size() < bS + 2) {
             if (twoStar != null) {twoStar.draw(g);}
         } else {
             if (oneStar != null) {oneStar.draw(g);}
