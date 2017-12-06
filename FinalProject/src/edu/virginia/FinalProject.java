@@ -425,9 +425,7 @@ public class FinalProject extends Game {
                             this.hero.setPlaying(true);
                             this.hero.animate("confused");
                             sounds.PlaySoundEffect("Huh");
-                            if(runCount == 13) {
-                                moving = false;
-                            }
+                            moving = false;
                         }
                     } else if (runCount % speed == speed - 1)
                         mvsCount += 1;
@@ -512,7 +510,7 @@ public class FinalProject extends Game {
                             }
 
                             else {
-                                nxtSq.setY(Obstacles.NOTHING);
+                                nxtSq.setY(Obstacles.ENEMY);
                                 nxtSq.setX(true);
                                 mvsCount += 2;
                                 runCount -= 1;
@@ -818,11 +816,14 @@ public class FinalProject extends Game {
                 currLev += 1;
             hero.setRotation(0);
             transition = 0;
+            mvsCount = 0;
+            runCount = 0;
         }
         frameCount++;
         if(frameCount % speed == 0 && !moving && !winState && transition==0){
             resetPos();
-
+            runCount = 0;
+            mvsCount = 0;
         }
     }
 
@@ -886,14 +887,12 @@ public class FinalProject extends Game {
                 enemy1.setPosition(gridSquareToPos(8 + randomNum1));
 
                 // set square occupied by enemy to true, unoccupied square to false
-                if (randomNum1 == 1) {
-                    grid.get(9).setX(false);
-                    grid.get(9).setY(Obstacles.ENEMY);
-                }
-                if (randomNum1 == 0) {
-                    grid.get(9).setX(true);
-                    grid.get(9).setY(Obstacles.ENEMY);
-                }
+                grid.get(8 + randomNum1).setX(false);
+                grid.get(8 + randomNum1).setY(Obstacles.ENEMY);
+
+
+                grid.get(8 + (1 - randomNum1)).setX(true);
+                grid.get(8 + (1 - randomNum1)).setY(Obstacles.ENEMY);
 
                 // if enemy still an obstacle in that square (i.e. not removed by STAB), it's visible
                 if (grid.get(8 + randomNum1).getY() == Obstacles.ENEMY)
@@ -923,14 +922,12 @@ public class FinalProject extends Game {
                 enemy2.setPosition(gridSquareToPos(16 + randomNum2));
 
                 // set square occupied by enemy to true, unoccupied square to false
-                if (randomNum2 == 1) {
-                    grid.get(16 + randomNum2).setX(false);
-                    grid.get(16 + randomNum2).setY(Obstacles.ENEMY);
-                }
-                if (randomNum2 == 0) {
-                    grid.get(17).setX(true);
-                    grid.get(17).setY(Obstacles.ENEMY);
-                }
+                grid.get(16 + randomNum2).setX(false);
+                grid.get(16 + randomNum2).setY(Obstacles.ENEMY);
+
+
+                grid.get(16 + (1 - randomNum2)).setX(true);
+                grid.get(16 + (1 - randomNum2)).setY(Obstacles.ENEMY);
 
                 // if enemy still an obstacle in that square (i.e. not removed by STAB), it's visible
                 if (grid.get(16 + randomNum2).getY() == Obstacles.ENEMY)
@@ -975,7 +972,7 @@ public class FinalProject extends Game {
        back.setBounds(610,400, 93,67);
        back.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent e) {
-               if (Levels.get(currLev).getMovesTaken().size()!=0) {
+               if (Levels.get(currLev).getMovesTaken().size()!=0 && !moving) {
                    if(Levels.get(currLev).getMovesTaken().get(Levels.get(currLev).getMovesTaken().size()-1)
                            == Moves.ENDLOOP) {
                        Levels.get(currLev).getMovesTaken().remove(Levels.get(currLev).getMovesTaken().size() - 1);
@@ -992,7 +989,9 @@ public class FinalProject extends Game {
        clear.setBounds(720,400, 93,67);
        clear.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent e) {
-               Levels.get(currLev).getMovesTaken().clear();
+               if (!moving) {
+                   Levels.get(currLev).getMovesTaken().clear();
+               }
            }
        });
 
