@@ -29,6 +29,7 @@ public class DisplayObjectContainer extends DisplayObject{
         this.setScaleY(1.0);
         this.setCount(30);
         this.children = new ArrayList<DisplayObjectContainer>();
+
     }
 
     public DisplayObjectContainer(String id, String fileName) {

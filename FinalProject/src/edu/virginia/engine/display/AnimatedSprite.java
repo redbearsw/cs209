@@ -137,7 +137,7 @@ public class AnimatedSprite extends Sprite {
         int cf = this.getCurrentFrame();
         BufferedImage frame;
 
-            if (playing == true) {
+            if (playing) {
                 frame = this.frames.get(cf);
                 if (cf == ef) {
                     this.setCurrentFrame(sf);

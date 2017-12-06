@@ -88,7 +88,7 @@ public class FinalProject extends Game {
         this.moves = new Sprite("Move Board", "moves.png");
             this.moves.setPosition(new Point(469,0));
         this.hero = new AnimatedSprite("Hero", "frame00.png");
-            hero.setPosition(this.gridSquareToPos(0));
+            hero.setPosition(new Point(this.gridSquareToPos(0).x + 1, this.gridSquareToPos(0).y -21));
             this.hero.setPivotPoint(new Point (this.hero.getUnscaledWidth() / 2, this.hero.getUnscaledHeight() / 2));
         this.select = new Sprite ("Select", "nextPlace.png");
             this.select.setPosition(new Point(499, 53));
@@ -261,6 +261,7 @@ public class FinalProject extends Game {
 
     }
 
+
     /* Create and zero out initial grid */
     private ArrayList<Tuple<Boolean, Obstacles>> createInitGrid() {
         ArrayList<Tuple<Boolean, Obstacles>> grid = new ArrayList<Tuple<Boolean, Obstacles>>(24);
@@ -270,6 +271,11 @@ public class FinalProject extends Game {
         return grid;
     }
 
+    /* Resets Hero's position to grid one */
+    private void resetPos(){
+        this.hero.setPosition(new Point(this.gridSquareToPos(0).x, this.gridSquareToPos(0).y -21));
+        this.hero.setRotation(0);
+    }
     /* Helper that returns column given x coordinate */
     private int xToCol(int x) {
         if (x < (sideBarWidth + sqWidth) && (x >= sideBarWidth))
@@ -335,7 +341,8 @@ public class FinalProject extends Game {
 
     /* Helper function that returns square in front of hero. Returns -1 if invalid input or fwd square doesn't exist. */
     private int fwdSq() {
-        int heroSq = posToGridSquare(this.hero.getPosition());
+        int heroSq = posToGridSquare(new Point (this.hero.getPosition().x, this.hero.getPosition().y + 25));
+        System.out.println(heroSq);
         if (heroSq >= 0 && heroSq <= 23) {
             ArrayList<Tuple<Boolean, Obstacles>> grid = this.Levels.get(currLev).getCurrGrid();
             if ((hero.getRotation() == 0) && (heroSq < 20)) {
@@ -397,6 +404,7 @@ public class FinalProject extends Game {
                     if (runCount % speed == 0) {
                         if (legalFwd()) {
                             hero.setPosition(this.gridSquareToPos(this.fwdSq()));
+                            hero.setPosition(new Point (hero.getPosition().x, hero.getPosition().y - 21));
                             if (this.posToGridSquare(hero.getPosition()) == this.Levels.get(currLev).getWinSquare()) {
                                 winState = true;
                                 movesTaken = mvs.size();
@@ -446,7 +454,7 @@ public class FinalProject extends Game {
                     else {
                             this.hero.setPlaying(true);
                             this.hero.animate("confused");
-                            // TODO: reset?
+                            moving = false;
                         }
                     }
                     break;
@@ -462,7 +470,7 @@ public class FinalProject extends Game {
                     else {
                         this.hero.setPlaying(true);
                         this.hero.animate("confused");
-                        // TODO: reset?
+                        moving = false;
                     }
                     break;
                 case COND:
@@ -486,11 +494,10 @@ public class FinalProject extends Game {
                     else {
                         this.hero.setPlaying(true);
                         this.hero.animate("confused");
-                        // TODO: reset?
+                        moving = false;
                     }
                     break;
                 case ENDLOOP:
-                    // just want it to keep going and skip this here but not sure how to do that
                     mvsCount += 1;
                     runCount -= 1;
                 default:
@@ -504,6 +511,8 @@ public class FinalProject extends Game {
                 mvsCount = 0;
                 this.moving = false;
             }
+            if (runCount % speed == 0)
+                if(!moving) {resetPos();}
 
         }
     }
@@ -616,52 +625,80 @@ public class FinalProject extends Game {
     }
     /* Draws the moves that have been taken in the grid */
     public void drawMovesTaken(Graphics g) {
+
+        int sqDraw = 0;
+
         if (this.Levels != null && this.Levels.get(currLev) != null) {
             ArrayList<Moves> moves = new ArrayList<>(this.Levels.get(currLev).getMovesTaken());
             moves = resetLoop(moves);
-            //System.out.println(moves);
-            //System.out.println(this.Levels.get(currLev).getMovesTaken());
+
             if(moves.size() == 0){
                 this.select.setPosition(new Point(499, 53));
                 select.draw(g);
             }
+
             for(int i = 0; i < moves.size(); i++) {
                 switch (moves.get(i)) {
                     case FORWARD:
                         Sprite fw = new Sprite("Forward" + i, "forward.png");
-                        fw.setPosition(new Point(497 + (i % 5) * 85, 51 + 94 * (i / 5)));
+                        fw.setPosition(new Point(497 + (sqDraw % 5) * 85, 51 + 94 * (sqDraw / 5)));
+                        if(i-1 >= 0) {
+                            if (moves.get(i - 1) == Moves.LOOP3) {
+                                fw.setScaleX(.5);
+                                fw.setScaleY(.5);
+                                fw.setPosition(new Point(fw.getPosition().x + 18 - 85, fw.getPosition().y + 18));
+                                sqDraw--;
+                            }
+                        }
                         fw.draw(g);
-
                         break;
                     case ROTATE:
                         Sprite rt = new Sprite("Rotate" + i, "turn.png");
-                        rt.setPosition(new Point(497 + (i % 5) * 85, 51 + 94 * (i / 5)));
+                        rt.setPosition(new Point(497 + (sqDraw % 5) * 85, 51 + 94 * (sqDraw / 5)));
+                        if(i-1 >= 0) {
+                            if (moves.get(i - 1) == Moves.LOOP3) {
+                                rt.setScaleX(.5);
+                                rt.setScaleY(.5);
+                                rt.setPosition(new Point(rt.getPosition().x + 18 - 85, rt.getPosition().y + 18));
+                                sqDraw--;
+                            }
+                        }
                         rt.draw(g);
 
                         break;
                     case STAB:
                         Sprite st = new Sprite("Stab" + i, "stab.png");
-                        st.setPosition(new Point(497 + (i % 5) * 85, 51 + 94 * (i / 5)));
+                        st.setPosition(new Point(497 + (sqDraw % 5) * 85, 51 + 94 * (sqDraw / 5)));
+                        if(i-1 >= 0) {
+                            if (moves.get(i - 1) == Moves.LOOP3) {
+                                sqDraw--;
+                                st.setScaleX(.6);
+                                st.setScaleY(.6);
+                                st.setPosition(new Point(st.getPosition().x + 18 - 85,  + 18));
+
+                            }
+                        }
                         st.draw(g);
+
                         break;
                     case COND:
                         Sprite cd = new Sprite("Conditional" + i, "conditional.png");
-                        cd.setPosition(new Point(497 + (i % 5) * 85, 51 + 94 * (i / 5)));
+                        cd.setPosition(new Point(497 + (sqDraw % 5) * 85, 51 + 94 * (sqDraw / 5)));
                         cd.draw(g);
                         break;
                     case LOOP3:
                         Sprite lp = new Sprite("Loop" + i, "loop.png");
-                        lp.setPosition(new Point(490 + (i % 5) * 86, 48 + 89 * (i / 5)));
-                        lp.setPosition(new Point(497 + (i % 5) * 85, 51 + 94 * (i / 5)));
+                        lp.setPosition(new Point(497 + (sqDraw % 5) * 85, 51 + 94 * (sqDraw / 5)));
                         lp.draw(g);
                         break;
                     default:
                         break;
                 }
                     if (this.select != null) {
-                        this.select.setPosition(new Point(499 + ((i + 1) % 5) * 85, 53 + 94 * ((i + 1) / 5)));
+                        this.select.setPosition(new Point(499 + ((sqDraw + 1) % 5) * 85, 53 + 94 * ((sqDraw + 1) / 5)));
                         this.select.draw(g);
                     }
+                    sqDraw++;
                 }
 
 
@@ -895,8 +932,7 @@ public class FinalProject extends Game {
        reset.setBounds(830,400, 93,67);
        reset.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent e) {
-               hero.setPosition(gridSquareToPos(Levels.get(currLev).getStartSquare()));
-               hero.setRotation(0);
+               resetPos();
                runCount = 0;
            }
        });
