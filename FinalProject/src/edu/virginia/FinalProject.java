@@ -769,6 +769,10 @@ public class FinalProject extends Game {
             transition = 0;
         }
         frameCount++;
+        if(frameCount % speed == 0 && !moving){
+            mvsCount = 0;
+            resetPos();
+        }
     }
 
 
