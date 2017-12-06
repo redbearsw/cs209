@@ -1,11 +1,7 @@
 package edu.virginia;
 
-import edu.virginia.engine.display.DisplayObjectContainer;
-import edu.virginia.engine.display.DisplayObject;
-import edu.virginia.engine.display.Game;
-import edu.virginia.engine.display.Level;
+import edu.virginia.engine.display.*;
 import edu.virginia.engine.util.Tuple;
-import edu.virginia.engine.display.Sprite;
 import edu.virginia.engine.util.SoundManager;
 
 import java.awt.*;
@@ -13,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JButton;
@@ -26,7 +23,7 @@ public class FinalProject extends Game {
     /* Sprites */
     private Sprite allLevels; // background image
     private Sprite moves; // image that gets populated with moves
-    private Sprite hero; // character
+    private AnimatedSprite hero; // character
     private Sprite select; // highlighted next slot box
     private Sprite oneStar; // one star full
     private Sprite twoStar; // two stars full
@@ -79,8 +76,8 @@ public class FinalProject extends Game {
         this.mazeHeight = 636;
         this.gameWidth = 940;
         this.gameHeight = 728;
-        this.charWidth = 96;
-        this.charHeight = 103;
+        this.charWidth = 103;
+        this.charHeight = 127;
         this.sqWidth = 106;
         this.sqHeight = 106;
         this.borderWidth = 32;
@@ -90,14 +87,36 @@ public class FinalProject extends Game {
             this.allLevels.setPosition(new Point (sideBarWidth, 0));
         this.moves = new Sprite("Move Board", "moves.png");
             this.moves.setPosition(new Point(469,0));
-        this.hero = new Sprite("Hero", "character.png");
-            this.hero.setPosition(new Point(32,106*5));
+        this.hero = new AnimatedSprite("Hero", "frame00.png");
+            hero.setPosition(this.gridSquareToPos(0));
             this.hero.setPivotPoint(new Point (this.hero.getUnscaledWidth() / 2, this.hero.getUnscaledHeight() / 2));
         this.select = new Sprite ("Select", "nextPlace.png");
             this.select.setPosition(new Point(499, 53));
         this.threeStar = new Sprite("ThreeStar", "threeStar.png");
         this.twoStar = new Sprite ("TwoStar", "twoStar.png");
         this.oneStar = new Sprite("OneStar", "oneStar.png");
+
+        /* Populating Animation Frames */
+        /* Stab */
+
+        this.hero.addFrame("frame00.png");
+        this.hero.addFrame("frame01.png");
+        this.hero.addFrame("frame02.png");
+        this.hero.addFrame("frame03.png");
+        this.hero.addFrame("frame04.png");
+        this.hero.addFrame("frame05.png");
+        this.hero.addFrame("frame06.png");
+        this.hero.addFrame("frame07.png");
+        this.hero.addFrame("frame08.png");
+        this.hero.addFrame("frame09.png");
+        this.hero.addFrame("frame10.png");
+        this.hero.addFrame("frame11.png");
+        this.hero.addFrame("frame12.png");
+
+        Animation an = new Animation("stab", 0, 11);
+        hero.setAnimations(an);
+
+
 
         /* Game States*/
         this.speed = 15;
@@ -387,8 +406,13 @@ public class FinalProject extends Game {
                     if (runCount % speed == speed - 1)
                         mvsCount += 1;
                     if (runCount % speed == 0) {
+
                         if (this.legalStab()) {
                             // TODO: stabbing animation
+
+                            this.hero.setPlaying(true);
+                            this.hero.animate("stab");
+
                             Tuple<Boolean, Obstacles> nxtSq = this.Levels.get(currLev).getCurrGrid().get(this.fwdSq());
                             if (nxtSq.getY() == Obstacles.ENEMY) {
                                 nxtSq.setX(true);
