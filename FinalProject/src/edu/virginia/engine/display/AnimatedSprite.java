@@ -29,7 +29,7 @@ public class AnimatedSprite extends Sprite {
         this.setCount(30);
         this.initGameClock();
         this.setId(id);
-        this.setImage(fn);
+        this.setDisplayImage(fn);
         this.setAnimationSpeed(DEFAULT_ANIMATION_SPEED);
         this.setStartFrame(0);
         this.setEndFrame(0);

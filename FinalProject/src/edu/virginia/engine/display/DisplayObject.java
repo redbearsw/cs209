@@ -74,7 +74,7 @@ public class DisplayObject {
 
 	public DisplayObject(String id, String fileName) {
 		this.setId(id);
-		this.setImage(fileName);
+		this.setDisplayImage(fileName);
 		this.setPosition(new Point (0, 0));
 		this.setPivotPoint(new Point (0, 0));
 		this.setRotation(0);
@@ -130,7 +130,7 @@ public class DisplayObject {
 		return this.displayImage;
 	}
 
-	protected void setImage(String imageName) {
+	public void setDisplayImage(String imageName) {
 		if (imageName == null) {
 			return;
 		}

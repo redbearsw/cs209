@@ -28,6 +28,7 @@ public class FinalProject extends Game {
     private Sprite oneStar; // one star full
     private Sprite twoStar; // two stars full
     private Sprite threeStar; // three stars full
+    private Sprite barricade; // barricade
 
 
     /* Various game states and trackers */
@@ -95,6 +96,8 @@ public class FinalProject extends Game {
         this.threeStar = new Sprite("ThreeStar", "threeStar.png");
         this.twoStar = new Sprite ("TwoStar", "twoStar.png");
         this.oneStar = new Sprite("OneStar", "oneStar.png");
+        this.barricade = new Sprite("barricade1", "barricade1.png");
+            this.barricade.setPosition(gridSquareToPos(13));
 
         /* Populating Animation Frames */
         /* Stab */
@@ -448,11 +451,18 @@ public class FinalProject extends Game {
                                     nxtSq.setY(Obstacles.NOTHING);
                                 }
                             if (nxtSq.getY() == Obstacles.BARRICADE) {
-                                // TODO: update barricade image to next image
-                                // if barricade image was final image {
-                                nxtSq.setX(true);
-                                nxtSq.setY(Obstacles.NOTHING);
-                                //}
+
+                                if(this.barricade.getId().equals("barricade1")) {
+                                    this.barricade.setId("barricade2");
+                                    this.barricade.setDisplayImage("barricade2.png");
+                                } else if(this.barricade.getId().equals("barricade2")){
+                                    this.barricade.setId("barricade3");
+                                    this.barricade.setDisplayImage("barricade3.png");
+                                } else {
+                                    nxtSq.setX(true);
+                                    nxtSq.setY(Obstacles.NOTHING);
+                                    this.barricade.setVisible(false);
+                                }
                             }
                         }
                     else {
@@ -892,6 +902,11 @@ public class FinalProject extends Game {
                 enemy2.draw(g);
             }
 
+        }
+
+        // draws barricade on level 3
+        if(currLev == 2){
+            barricade.draw(g);
         }
 
        // draw all moves

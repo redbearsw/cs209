@@ -34,7 +34,7 @@ public class DisplayObjectContainer extends DisplayObject{
 
     public DisplayObjectContainer(String id, String fileName) {
         this.setId(id);
-        this.setImage(fileName);
+        this.setDisplayImage(fileName);
         this.setPosition(new Point (0, 0));
         this.setPivotPoint(new Point (0, 0));
         this.setRotation(0);
