@@ -674,12 +674,20 @@ public class FinalProject extends Game {
                     case FORWARD:
                         Sprite fw = new Sprite("Forward" + i, "forward.png");
                         fw.setPosition(new Point(497 + (sqDraw % 5) * 85, 51 + 94 * (sqDraw / 5)));
-                        if(i-1 >= 0) {
+                        if(i - 1 >= 0) {
                             if (moves.get(i - 1) == Moves.LOOP3) {
                                 fw.setScaleX(.5);
                                 fw.setScaleY(.5);
-                                fw.setPosition(new Point(fw.getPosition().x + 18 - 85, fw.getPosition().y + 18));
+                                if (fw.getPosition().x >= 497 && fw.getPosition().x < 572) {
+                                    fw.setPosition(new Point(fw.getPosition().x + 18 + 340, fw.getPosition().y + 18 - 94));
+
+                                }
+                                else {
+                                    fw.setPosition(new Point(fw.getPosition().x + 18 - 85, fw.getPosition().y + 18));
+                                }
+
                                 sqDraw--;
+
                             }
                         }
                         fw.draw(g);
@@ -691,7 +699,13 @@ public class FinalProject extends Game {
                             if (moves.get(i - 1) == Moves.LOOP3) {
                                 rt.setScaleX(.5);
                                 rt.setScaleY(.5);
-                                rt.setPosition(new Point(rt.getPosition().x + 18 - 85, rt.getPosition().y + 18));
+                                if (rt.getPosition().x >= 497 && rt.getPosition().x < 572) {
+                                    rt.setPosition(new Point(rt.getPosition().x + 18 + 340, rt.getPosition().y + 18 - 94));
+
+                                }
+                                else {
+                                    rt.setPosition(new Point(rt.getPosition().x + 18 - 85, rt.getPosition().y + 18));
+                                }
                                 sqDraw--;
                             }
                         }
@@ -704,9 +718,15 @@ public class FinalProject extends Game {
                         if(i-1 >= 0) {
                             if (moves.get(i - 1) == Moves.LOOP3) {
                                 sqDraw--;
-                                st.setScaleX(.6);
-                                st.setScaleY(.6);
-                                st.setPosition(new Point(st.getPosition().x + 18 - 85,  st.getPosition().y + 18));
+                                st.setScaleX(.5);
+                                st.setScaleY(.5);
+                                if (st.getPosition().x >= 497 && st.getPosition().x < 572) {
+                                    st.setPosition(new Point(st.getPosition().x + 18 + 340, st.getPosition().y + 18 - 94));
+
+                                }
+                                else {
+                                    st.setPosition(new Point(st.getPosition().x + 18 - 85, st.getPosition().y + 18));
+                                }
 
                             }
                         }
@@ -895,7 +915,6 @@ public class FinalProject extends Game {
                 if ((frameCount % speed == 0)) {
                     Random numGen = new Random();
                     if (mvsCount < 1 || this.Levels.get(currLev).getMovesTaken().get(mvsCount - 1) != Moves.COND || this.fwdSq() != 17) {
-                       // System.out.println("generating 2");
                         randomNum2 = numGen.nextInt(2);
                     }
                 }
