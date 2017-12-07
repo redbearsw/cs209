@@ -888,32 +888,6 @@ public class FinalProject extends Game {
         back.setVisible(false);
 
         // display next and restart buttons
-        if (currLev < 3) {
-            next = new JButton(new ImageIcon("resources/next.png"));
-            next.setBounds(360, 450, 75, 75);
-            super.getScenePanel().add(next);
-            next.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    if (currLev < numLevs)
-                        transition = 1;
-                    winState = false;
-                    mvsCount = 0;
-                }
-            });
-
-        restart = new JButton(new ImageIcon("resources/restart.png"));
-        restart.setBounds(480,450, 75, 75);
-        super.getScenePanel().add(restart);
-
-            restart.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    resetPos();
-                    runCount = 0;
-                    winState = false;
-                    mvsCount = 0;
-                }
-            });
-        }
             restart.setVisible(true);
             next.setVisible(true);
             if(currLev == 3){
@@ -929,7 +903,6 @@ public class FinalProject extends Game {
         if (moving) {
             runMoves();
         }
-
         if (transition != 0){
             restart.setVisible(false);
             next.setVisible(false);
