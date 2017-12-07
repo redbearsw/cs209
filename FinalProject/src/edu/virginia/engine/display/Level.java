@@ -63,7 +63,7 @@ public class Level {
     /* getters and setters */
     public ArrayList <Tuple <Boolean, Obstacles>> getInitGrid() {return this.initGrid;}
     public  void setInitGrid(ArrayList <Tuple <Boolean, Obstacles>> grid) {
-        this.initGrid = new ArrayList<Tuple<Boolean, Obstacles>>();
+        this.initGrid = new ArrayList<>();
         int i;
         for (i = 0; i < grid.size(); i++) {
             if (i < initGrid.size())
@@ -76,7 +76,7 @@ public class Level {
 
     public ArrayList <Tuple <Boolean, Obstacles>> getCurrGrid() {return this.currGrid;}
     public  void setCurrGrid(ArrayList <Tuple <Boolean, Obstacles>> grid) {
-        this.currGrid = new ArrayList<Tuple<Boolean, Obstacles>>();
+        this.currGrid = new ArrayList<>();
 
         int i;
         for (i = 0; i < grid.size(); i++) {
