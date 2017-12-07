@@ -30,6 +30,7 @@ public class FinalProject extends Game {
     private Sprite threeStar; // three stars full
     private Sprite barricade; // barricade
     private Sprite background; // grey background
+    private Sprite endFrame;
 
     /* Various game states and trackers */
     private int speed; // number of frames it takes to run one move, transition to new level
@@ -109,6 +110,7 @@ public class FinalProject extends Game {
         this.oneStar = new Sprite("OneStar", "oneStar.png");
         this.barricade = new Sprite("barricade1", "barricade1.png");
             this.barricade.setPosition(gridSquareToPos(13));
+        this.endFrame = new Sprite("endFrame", "end.png");
 
 
 
@@ -772,7 +774,11 @@ public class FinalProject extends Game {
                 this.select.setPosition(new Point(499, 53));
                 select.draw(g);
             }
-
+            if(endFrame !=null){
+                endFrame.setPosition(new Point (497+(((this.Levels.get(currLev).getMoveLimit())-1)%5)*85+75,
+                        45 + 94 * 3));
+                endFrame.draw(g);
+            }
             for(int i = 0; i < moves.size(); i++) {
                 switch (moves.get(i)) {
                     case FORWARD:

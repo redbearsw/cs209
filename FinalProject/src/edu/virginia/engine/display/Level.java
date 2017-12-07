@@ -46,7 +46,7 @@ public class Level {
 
 
     /* Constructor */
-    public Level(ArrayList <Tuple <Boolean, Obstacles>> iG, ArrayList <Moves> mvAv, Point position, int id, int bestScore, int moveLimit,int strt, int end) {
+    public Level(ArrayList <Tuple <Boolean, Obstacles>> iG, ArrayList <Moves> mvAv, Point position, int id, int bestScore, int moveLimit, int strt, int end) {
         this.setId(id);
         this.setPosition(position);
         this.setMovesAvail(mvAv);
