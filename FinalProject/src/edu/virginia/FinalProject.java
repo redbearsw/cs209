@@ -74,6 +74,8 @@ public class FinalProject extends Game {
     JButton run;
     JButton back;
     JButton clear;
+    JButton restart;
+    JButton next;
 
     /* Constructor */
     public FinalProject() {
@@ -522,7 +524,7 @@ public class FinalProject extends Game {
                                 } else {
                                     nxtSq.setX(true);
                                     nxtSq.setY(Obstacles.NOTHING);
-                                    this.barricade.setVisible(false);
+
                                 }
                             }
                         }
@@ -848,7 +850,7 @@ public class FinalProject extends Game {
 
         // display next and restart buttons
         if (currLev < 3) {
-            JButton next = new JButton(new ImageIcon("resources/next.png"));
+            next = new JButton(new ImageIcon("resources/next.png"));
             next.setBounds(360, 450, 75, 75);
             super.getScenePanel().add(next);
             next.addActionListener(new ActionListener() {
@@ -860,13 +862,9 @@ public class FinalProject extends Game {
                 }
             });
 
-        JButton restart = new JButton(new ImageIcon("resources/restart.png"));
+        restart = new JButton(new ImageIcon("resources/restart.png"));
         restart.setBounds(480,450, 75, 75);
         super.getScenePanel().add(restart);
-
-            JButton restart = new JButton("Restart");
-            restart.setBounds(480, 450, 100, 25);
-            super.getScenePanel().add(restart);
 
             restart.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -892,8 +890,13 @@ public class FinalProject extends Game {
         if (moving) {
             runMoves();
         }
-        if (transition != 0)
-                super.getScenePanel().removeAll();
+        if (transition != 0){
+            super.getScenePanel().removeAll();
+            super.getScenePanel().add(run);
+            super.getScenePanel().add(clear);
+            super.getScenePanel().add(back);
+        }
+
         if (transition > (speed * 2)) {
             if (currLev < 3)
                 currLev += 1;
@@ -909,9 +912,8 @@ public class FinalProject extends Game {
             mvsCount = 0;
         }
 
-        run.setVisible(true);
-        clear.setVisible(true);
-        back.setVisible(true);
+        super.getScenePanel().revalidate();
+        super.getScenePanel().repaint();
     }
 
 
@@ -919,6 +921,7 @@ public class FinalProject extends Game {
     public void draw(Graphics g) {
 
        super.draw(g);
+
         if(background!=null) {background.draw(g);}
        // offset for background and hero during transition
         int offset = ((mazeHeight - sqHeight) * transition / (speed * 2));
@@ -1040,11 +1043,20 @@ public class FinalProject extends Game {
        drawMovesTaken(g);
 
        // display score and transition buttons on victory
-
+//        if(run!=null && clear!=null && back!=null) {
+//            super.getScenePanel().add(run);
+//            super.getScenePanel().add(clear);
+//            super.getScenePanel().add(back);
+//
+//        }
 
         if (winState) {
             onVictory(g);
             mvsCount = 0;
+        } else {
+            clear.setVisible(true);
+            back.setVisible(true);
+            run.setVisible(true);
         }
 
 
