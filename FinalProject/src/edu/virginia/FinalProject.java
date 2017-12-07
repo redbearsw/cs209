@@ -72,11 +72,11 @@ public class FinalProject extends Game {
     private SoundManager sounds = new SoundManager();
 
     /* JButtons */
-    JButton run;
-    JButton back;
-    JButton clear;
-    JButton restart;
-    JButton next;
+    private JButton run;
+    private JButton back;
+    private JButton clear;
+    private JButton restart;
+    private JButton next;
 
     /* Constructor */
     public FinalProject() {
@@ -111,8 +111,6 @@ public class FinalProject extends Game {
         this.barricade = new Sprite("barricade1", "barricade1.png");
             this.barricade.setPosition(gridSquareToPos(13));
         this.endFrame = new Sprite("endFrame", "end.png");
-
-
 
 
 
@@ -349,7 +347,6 @@ public class FinalProject extends Game {
 
         restart.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("RESTART");
                 resetPos();
                 runCount = 0;
                 winState = false;
