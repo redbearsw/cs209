@@ -29,6 +29,7 @@ public class FinalProject extends Game {
     private Sprite twoStar; // two stars full
     private Sprite threeStar; // three stars full
     private Sprite barricade; // barricade
+    private Sprite background; // grey background
 
     /* Various game states and trackers */
     private int speed; // number of frames it takes to run one move, transition to new level
@@ -86,6 +87,7 @@ public class FinalProject extends Game {
         this.borderWidth = 32;
 
         /* Sprites */
+        this.background = new Sprite ("background", "background.png");
         this.allLevels = new Sprite("All Levels", "levels.png");
             this.allLevels.setPosition(new Point (sideBarWidth, 0));
         this.moves = new Sprite("Move Board", "moves.png");
@@ -187,7 +189,7 @@ public class FinalProject extends Game {
         Point pos1 = new Point(0, 2 * (mazeHeight - sqHeight));
 
         //creating level 1
-        Level lev1 = new Level(initGrid1, mvsAvail1, pos1, 1, 12, 0 ,23);
+        Level lev1 = new Level(initGrid1, mvsAvail1, pos1, 1, 12, 20,0 ,23);
 
         this.Levels.add(1, lev1);
 
@@ -225,7 +227,7 @@ public class FinalProject extends Game {
         Point pos2 = new Point(0, mazeHeight - sqHeight);
 
         //creating level 2
-        Level lev2 = new Level(initGrid2, mvsAvail2, pos2, 2, 16, 3, 22);
+        Level lev2 = new Level(initGrid2, mvsAvail2, pos2, 2, 16, 19,3, 22);
 
         this.Levels.add(2, lev2);
 
@@ -264,7 +266,7 @@ public class FinalProject extends Game {
         Point pos3 = new Point(0, 0);
 
         //creating level 3
-        Level lev3 = new Level(initGrid3, mvsAvail3, pos3, 3, 15, 2, 22);
+        Level lev3 = new Level(initGrid3, mvsAvail3, pos3, 3, 15, 16,2, 22);
 
         this.Levels.add(3, lev3);
 
@@ -352,7 +354,6 @@ public class FinalProject extends Game {
     /* Helper function that returns square in front of hero. Returns -1 if invalid input or fwd square doesn't exist. */
     private int fwdSq() {
         int heroSq = posToGridSquare(new Point (this.hero.getPosition().x, this.hero.getPosition().y + 25));
-        System.out.println(heroSq);
         if (heroSq >= 0 && heroSq <= 23) {
             ArrayList<Tuple<Boolean, Obstacles>> grid = this.Levels.get(currLev).getCurrGrid();
             if ((hero.getRotation() == 0) && (heroSq < 20)) {
@@ -410,7 +411,6 @@ public class FinalProject extends Game {
     private void runMoves() {
         ArrayList<Moves> mvs = this.Levels.get(currLev).getMovesTaken();
         if (mvs != null && !mvs.isEmpty()) {
-            System.out.println(mvs.get(mvsCount));
             switch (mvs.get(mvsCount)) {
                 case FORWARD:
                     if (runCount % speed == 0) {
@@ -560,7 +560,11 @@ public class FinalProject extends Game {
         fwd.setBounds(left + gap, top, width, height);
         fwd.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Levels.get(currLev).getMovesTaken().add(Moves.FORWARD);
+                if(resetLoop(new ArrayList<> (Levels.get(currLev).getMovesTaken())).size()
+                        < Levels.get(currLev).getMoveLimit()) {
+                    Levels.get(currLev).getMovesTaken().add(Moves.FORWARD);
+                }
+
             }
         });
 
@@ -568,7 +572,10 @@ public class FinalProject extends Game {
         turn.setBounds(left + width + (2 * gap), top, width, height);
         turn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Levels.get(currLev).getMovesTaken().add(Moves.ROTATE);
+                if(resetLoop(new ArrayList<> (Levels.get(currLev).getMovesTaken())).size()
+                        < Levels.get(currLev).getMoveLimit()) {
+                    Levels.get(currLev).getMovesTaken().add(Moves.ROTATE);
+                }
             }
         });
 
@@ -576,7 +583,10 @@ public class FinalProject extends Game {
         stab.setBounds(left + (2 * width) + (3 * gap), top, width, height);
         stab.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Levels.get(currLev).getMovesTaken().add(Moves.STAB);
+                if(resetLoop(new ArrayList<> (Levels.get(currLev).getMovesTaken())).size()
+                        < Levels.get(currLev).getMoveLimit()) {
+                    Levels.get(currLev).getMovesTaken().add(Moves.STAB);
+                }
             }
         });
 
@@ -584,7 +594,10 @@ public class FinalProject extends Game {
         loop.setBounds(left + (3 * width) + (4 * gap), top, width, height);
         loop.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Levels.get(currLev).getMovesTaken().add(Moves.LOOP3);
+                if(resetLoop(new ArrayList<> (Levels.get(currLev).getMovesTaken())).size()
+                        < Levels.get(currLev).getMoveLimit()) {
+                    Levels.get(currLev).getMovesTaken().add(Moves.LOOP3);
+                }
             }
         });
 
@@ -592,7 +605,10 @@ public class FinalProject extends Game {
         condStab.setBounds(left + (4 * width) + (5 * gap), top, width, height);
         condStab.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Levels.get(currLev).getMovesTaken().add(Moves.COND);
+                if(resetLoop(new ArrayList<> (Levels.get(currLev).getMovesTaken())).size()
+                        < Levels.get(currLev).getMoveLimit()) {
+                    Levels.get(currLev).getMovesTaken().add(Moves.COND);
+                }
             }
         });
 
@@ -640,7 +656,6 @@ public class FinalProject extends Game {
         {
             loopLocs = indexOfAll(Moves.LOOP3,moves);
             if(loopLocs.get(i)+4 <= moves.size()-1){
-               // System.out.println("HELLO, SIZE = " + moves.size() + "INDEX = " + loopLocs.get(i)+4);
                 if(moves.get(loopLocs.get(i)+4) == Moves.ENDLOOP) {
                     moves.remove(loopLocs.get(i)+2);
                     moves.remove(loopLocs.get(i)+2);
@@ -773,8 +788,8 @@ public class FinalProject extends Game {
         moving = false;
         // display next and restart buttons
         if (currLev < 3) {
-            JButton next = new JButton("Next");
-            next.setBounds(360, 450, 100, 25);
+            JButton next = new JButton(new ImageIcon("resources/next.png"));
+            next.setBounds(360, 450, 75, 75);
             super.getScenePanel().add(next);
             next.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -786,8 +801,8 @@ public class FinalProject extends Game {
             });
         }
 
-        JButton restart = new JButton("Restart");
-        restart.setBounds(480,450, 100, 25);
+        JButton restart = new JButton(new ImageIcon("resources/restart.png"));
+        restart.setBounds(480,450, 75, 75);
         super.getScenePanel().add(restart);
 
 
@@ -832,7 +847,7 @@ public class FinalProject extends Game {
     public void draw(Graphics g) {
 
        super.draw(g);
-
+        if(background!=null) {background.draw(g);}
        // offset for background and hero during transition
         int offset = ((mazeHeight - sqHeight) * transition / (speed * 2));
 
@@ -999,7 +1014,6 @@ public class FinalProject extends Game {
        // adds run, clear, back buttons to screen
 
         if (winState) {
-            // super.getScenePanel().removeAll();
             onVictory(g);
             mvsCount = 0;
 
