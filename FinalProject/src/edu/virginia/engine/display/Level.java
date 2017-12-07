@@ -62,10 +62,30 @@ public class Level {
 
     /* getters and setters */
     public ArrayList <Tuple <Boolean, Obstacles>> getInitGrid() {return this.initGrid;}
-    public  void setInitGrid(ArrayList <Tuple <Boolean, Obstacles>> grid) {this.initGrid = grid;}
+    public  void setInitGrid(ArrayList <Tuple <Boolean, Obstacles>> grid) {
+        this.initGrid = new ArrayList<Tuple<Boolean, Obstacles>>();
+        int i;
+        for (i = 0; i < grid.size(); i++) {
+            if (i < initGrid.size())
+                this.initGrid.set(i, new Tuple<>(grid.get(i).getX(), grid.get(i).getY()));
+            else
+                this.initGrid.add(i, new Tuple<>(grid.get(i).getX(), grid.get(i).getY()));
+        }
+
+    }
 
     public ArrayList <Tuple <Boolean, Obstacles>> getCurrGrid() {return this.currGrid;}
-    public  void setCurrGrid(ArrayList <Tuple <Boolean, Obstacles>> grid) {this.currGrid = new ArrayList<>(grid);}
+    public  void setCurrGrid(ArrayList <Tuple <Boolean, Obstacles>> grid) {
+        this.currGrid = new ArrayList<Tuple<Boolean, Obstacles>>();
+
+        int i;
+        for (i = 0; i < grid.size(); i++) {
+            if (i < currGrid.size())
+                this.currGrid.set(i, new Tuple<>(grid.get(i).getX(), grid.get(i).getY()));
+            else
+                this.currGrid.add(i, new Tuple<>(grid.get(i).getX(), grid.get(i).getY()));
+        }
+    }
 
     public ArrayList <Moves> getMovesAvail() {return this.movesAvail;}
     public void setMovesAvail(ArrayList <Moves> moves) {this.movesAvail = moves;}

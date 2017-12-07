@@ -173,7 +173,7 @@ public class FinalProject extends Game {
         run.setBounds(500, 400, 93, 67);
         run.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (Levels.get(currLev).getMovesTaken() != null && !Levels.get(currLev).getMovesTaken().isEmpty()) {
+                if (Levels.get(currLev).getMovesTaken() != null && !Levels.get(currLev).getMovesTaken().isEmpty() && !moving) {
                     moving = true;
                     frameCount = 0;
                 }
@@ -347,6 +347,7 @@ public class FinalProject extends Game {
 
         restart.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                System.out.println("RESTART");
                 resetPos();
                 runCount = 0;
                 winState = false;
@@ -568,9 +569,7 @@ public class FinalProject extends Game {
                             this.hero.setPlaying(true);
                             this.hero.animate("confused");
                             sounds.PlaySoundEffect("Huh");
-                            if(runCount == 13) {
-                                moving = false;
-                            }
+                            moving = false;
                         }
                     }
                     break;
@@ -587,9 +586,7 @@ public class FinalProject extends Game {
                         this.hero.setPlaying(true);
                         this.hero.animate("confused");
                         sounds.PlaySoundEffect("Huh");
-                        if(runCount == 13) {
-                            moving = false;
-                        }
+                        moving = false;
                     }
                     break;
                 case COND:
@@ -614,9 +611,7 @@ public class FinalProject extends Game {
                         this.hero.setPlaying(true);
                         this.hero.animate("confused");
                         sounds.PlaySoundEffect("Huh");
-                        if(runCount == 13) {
-                            moving = false;
-                        }
+                        moving = false;
                     }
                     break;
                 case ENDLOOP:
@@ -925,6 +920,7 @@ public class FinalProject extends Game {
             runCount = 0;
             mvsCount = 0;
             this.Levels.get(currLev).setMovesTaken(resetLoop(this.Levels.get(currLev).getMovesTaken()));
+            this.Levels.get(currLev).setCurrGrid(this.Levels.get(currLev).getInitGrid());
 
         }
 
@@ -1076,8 +1072,6 @@ public class FinalProject extends Game {
                 run.setVisible(true);
             }
         }
-
-
     }
 
     public static void main(String[] args) {
