@@ -874,12 +874,7 @@ public class FinalProject extends Game {
                     mvsCount = 0;
                 }
             });
-
-
-
         }
-
-
     }
 
 
@@ -890,6 +885,7 @@ public class FinalProject extends Game {
         if (moving) {
             runMoves();
         }
+
         if (transition != 0){
             super.getScenePanel().removeAll();
             super.getScenePanel().add(run);
