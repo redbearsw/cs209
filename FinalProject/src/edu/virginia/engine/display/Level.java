@@ -65,7 +65,7 @@ public class Level {
     public  void setInitGrid(ArrayList <Tuple <Boolean, Obstacles>> grid) {this.initGrid = grid;}
 
     public ArrayList <Tuple <Boolean, Obstacles>> getCurrGrid() {return this.currGrid;}
-    public  void setCurrGrid(ArrayList <Tuple <Boolean, Obstacles>> grid) {this.currGrid = grid;}
+    public  void setCurrGrid(ArrayList <Tuple <Boolean, Obstacles>> grid) {this.currGrid = new ArrayList<>(grid);}
 
     public ArrayList <Moves> getMovesAvail() {return this.movesAvail;}
     public void setMovesAvail(ArrayList <Moves> moves) {this.movesAvail = moves;}

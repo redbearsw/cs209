@@ -356,6 +356,7 @@ public class FinalProject extends Game {
                 barricade.setId("barricade1");
                 restart.setVisible(false);
                 next.setVisible(false);
+                Levels.get(currLev).setCurrGrid(Levels.get(currLev).getInitGrid());
             }
         });
         restart.setVisible(false);
@@ -903,7 +904,8 @@ public class FinalProject extends Game {
             runMoves();
         }
         if (transition != 0){
-            super.getScenePanel().removeAll();
+            restart.setVisible(false);
+            next.setVisible(false);
             super.getScenePanel().add(run);
             super.getScenePanel().add(clear);
             super.getScenePanel().add(back);
