@@ -207,11 +207,11 @@ public class FinalProject extends Game {
             }
         });
 
+
         // adds run, clear, back buttons to screen
         super.getScenePanel().add(run);
         super.getScenePanel().add(clear);
         super.getScenePanel().add(back);
-
 
         /* ArrayList of levels */
         this.Levels = new ArrayList<Level>();
@@ -326,6 +326,40 @@ public class FinalProject extends Game {
         Level lev3 = new Level(initGrid3, mvsAvail3, pos3, 3, 15, 16,2, 22);
 
         this.Levels.add(3, lev3);
+
+        // restart and next buttons
+         /* next and restart buttons */
+        next = new JButton(new ImageIcon("resources/next.png"));
+        next.setBounds(360, 450, 75, 75);
+        super.getScenePanel().add(next);
+        next.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (currLev < numLevs)
+                    transition = 1;
+                winState = false;
+                mvsCount = 0;
+            }
+        });
+
+        restart = new JButton(new ImageIcon("resources/restart.png"));
+        restart.setBounds(480,450, 75, 75);
+        super.getScenePanel().add(restart);
+
+        restart.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                resetPos();
+                runCount = 0;
+                winState = false;
+                mvsCount = 0;
+                barricade.setVisible(true);
+                barricade.setDisplayImage("barricade1.png");
+                barricade.setId("barricade1");
+                restart.setVisible(false);
+                next.setVisible(false);
+            }
+        });
+        restart.setVisible(false);
+        next.setVisible(false);
 
     }
 
@@ -522,6 +556,7 @@ public class FinalProject extends Game {
                                     this.barricade.setId("barricade3");
                                     this.barricade.setDisplayImage("barricade3.png");
                                 } else {
+                                    barricade.setVisible(false);
                                     nxtSq.setX(true);
                                     nxtSq.setY(Obstacles.NOTHING);
 
@@ -594,7 +629,6 @@ public class FinalProject extends Game {
 
             //set mvsCount to 0 and moving to false when all moves complete
             if (mvsCount >= mvs.size()) {
-                this.Levels.get(currLev).setMovesTaken(resetLoop(this.Levels.get(currLev).getMovesTaken()));
                 mvsCount = 0;
                 this.moving = false;
 
@@ -831,16 +865,20 @@ public class FinalProject extends Game {
     /* Displays score on victory */
     public void onVictory(Graphics g) {
         // resetting loops in moves taken to properly account for score
-        ArrayList<Moves> finalScr = resetLoop(new ArrayList<> (this.Levels.get(currLev).getMovesTaken()));
+        ArrayList<Moves> finalScr = resetLoop(new ArrayList<>(this.Levels.get(currLev).getMovesTaken()));
         int bS = this.Levels.get(currLev).getBestScore();
-        if (finalScr.size() <= bS){
+        if (finalScr.size() <= bS) {
             if (threeStar != null) {
                 threeStar.draw(g);
             }
         } else if (finalScr.size() < bS + 2) {
-            if (twoStar != null) {twoStar.draw(g);}
+            if (twoStar != null) {
+                twoStar.draw(g);
+            }
         } else {
-            if (oneStar != null) {oneStar.draw(g);}
+            if (oneStar != null) {
+                oneStar.draw(g);
+            }
         }
         moving = false;
 
@@ -875,6 +913,11 @@ public class FinalProject extends Game {
                 }
             });
         }
+            restart.setVisible(true);
+            next.setVisible(true);
+            if(currLev == 3){
+                next.setVisible(false);
+            }
     }
 
 
@@ -906,6 +949,8 @@ public class FinalProject extends Game {
             resetPos();
             runCount = 0;
             mvsCount = 0;
+            this.Levels.get(currLev).setMovesTaken(resetLoop(this.Levels.get(currLev).getMovesTaken()));
+
         }
 
         super.getScenePanel().revalidate();
@@ -1050,9 +1095,11 @@ public class FinalProject extends Game {
             onVictory(g);
             mvsCount = 0;
         } else {
-            clear.setVisible(true);
-            back.setVisible(true);
-            run.setVisible(true);
+            if(clear!=null && back!=null && run!=null) {
+                clear.setVisible(true);
+                back.setVisible(true);
+                run.setVisible(true);
+            }
         }
 
 
