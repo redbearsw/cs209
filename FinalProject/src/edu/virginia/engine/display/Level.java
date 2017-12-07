@@ -61,7 +61,7 @@ public class Level {
     }
 
     /* getters and setters */
-    public ArrayList <Tuple <Boolean, Obstacles>> getInitGrid() {return this.initGrid;}
+    public ArrayList <Tuple <Boolean, Obstacles>> getInitGrid() {return new ArrayList<>(this.initGrid);}
     public  void setInitGrid(ArrayList <Tuple <Boolean, Obstacles>> grid) {this.initGrid = grid;}
 
     public ArrayList <Tuple <Boolean, Obstacles>> getCurrGrid() {return this.currGrid;}

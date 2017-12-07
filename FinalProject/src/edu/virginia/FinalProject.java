@@ -379,6 +379,8 @@ public class FinalProject extends Game {
         hero.setPosition(new Point(gridSquareToPos(Levels.get(currLev).getStartSquare()).x,
                 gridSquareToPos(Levels.get(currLev).getStartSquare()).y - 21));
         this.hero.setRotation(0);
+        Levels.get(currLev).setCurrGrid(Levels.get(currLev).getInitGrid());
+
     }
     /* Helper that returns column given x coordinate */
     private int xToCol(int x) {
@@ -794,6 +796,22 @@ public class FinalProject extends Game {
 
                             }
                         }
+                        if(i - 1 >= 0) {
+                            if (moves.get(i - 1) == Moves.COND) {
+                                fw.setScaleX(.3);
+                                fw.setScaleY(.3);
+                                if (fw.getPosition().x >= 497 && fw.getPosition().x < 572) {
+                                    fw.setPosition(new Point(fw.getPosition().x + 44 + 340, fw.getPosition().y + 45 - 94));
+
+                                }
+                                else {
+                                    fw.setPosition(new Point(fw.getPosition().x + 44 - 85, fw.getPosition().y + 45));
+                                }
+
+                                sqDraw--;
+
+                            }
+                        }
                         fw.draw(g);
                         break;
                     case ROTATE:
@@ -811,6 +829,22 @@ public class FinalProject extends Game {
                                     rt.setPosition(new Point(rt.getPosition().x + 18 - 85, rt.getPosition().y + 18));
                                 }
                                 sqDraw--;
+                            }
+                        }
+                        if(i - 1 >= 0) {
+                            if (moves.get(i - 1) == Moves.COND) {
+                                rt.setScaleX(.5);
+                                rt.setScaleY(.5);
+                                if (rt.getPosition().x >= 497 && rt.getPosition().x < 572) {
+                                    rt.setPosition(new Point(rt.getPosition().x + 44 + 340, rt.getPosition().y + 45 - 94));
+
+                                }
+                                else {
+                                    rt.setPosition(new Point(rt.getPosition().x + 44 - 85, rt.getPosition().y + 45));
+                                }
+
+                                sqDraw--;
+
                             }
                         }
                         rt.draw(g);
@@ -831,6 +865,22 @@ public class FinalProject extends Game {
                                 else {
                                     st.setPosition(new Point(st.getPosition().x + 18 - 85, st.getPosition().y + 18));
                                 }
+
+                            }
+                        }
+                        if(i - 1 >= 0) {
+                            if (moves.get(i - 1) == Moves.COND) {
+                                st.setScaleX(.5);
+                                st.setScaleY(.5);
+                                if (st.getPosition().x >= 497 && st.getPosition().x < 572) {
+                                    st.setPosition(new Point(st.getPosition().x + 44 + 340, st.getPosition().y + 45 - 94));
+
+                                }
+                                else {
+                                    st.setPosition(new Point(st.getPosition().x + 44 - 85, st.getPosition().y + 45));
+                                }
+
+                                sqDraw--;
 
                             }
                         }
@@ -900,7 +950,7 @@ public class FinalProject extends Game {
     public void update(ArrayList<Integer> pressedKeys) {
         super.update(pressedKeys);
 
-        if (moving) {
+        if (moving!=null && moving) {
             runMoves();
         }
         if (transition != 0){
