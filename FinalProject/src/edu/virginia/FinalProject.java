@@ -834,8 +834,8 @@ public class FinalProject extends Game {
                         }
                         if(i - 1 >= 0) {
                             if (moves.get(i - 1) == Moves.COND) {
-                                rt.setScaleX(.5);
-                                rt.setScaleY(.5);
+                                rt.setScaleX(.3);
+                                rt.setScaleY(.3);
                                 if (rt.getPosition().x >= 497 && rt.getPosition().x < 572) {
                                     rt.setPosition(new Point(rt.getPosition().x + 44 + 340, rt.getPosition().y + 45 - 94));
 
@@ -871,8 +871,8 @@ public class FinalProject extends Game {
                         }
                         if(i - 1 >= 0) {
                             if (moves.get(i - 1) == Moves.COND) {
-                                st.setScaleX(.5);
-                                st.setScaleY(.5);
+                                st.setScaleX(.3);
+                                st.setScaleY(.3);
                                 if (st.getPosition().x >= 497 && st.getPosition().x < 572) {
                                     st.setPosition(new Point(st.getPosition().x + 44 + 340, st.getPosition().y + 45 - 94));
 
