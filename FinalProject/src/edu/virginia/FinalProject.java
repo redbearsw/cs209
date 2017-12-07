@@ -170,7 +170,7 @@ public class FinalProject extends Game {
          /* Run, Backspace, Clear Buttons */
         // create buttons
         this.run = new JButton(new ImageIcon("resources/play.png"));
-        run.setBounds(500, 400, 93, 67);
+        run.setBounds(500, 420, 93, 67);
         run.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (Levels.get(currLev).getMovesTaken() != null && !Levels.get(currLev).getMovesTaken().isEmpty() && !moving) {
@@ -181,7 +181,7 @@ public class FinalProject extends Game {
         });
 
         this.back = new JButton(new ImageIcon("resources/backspace.png"));
-        back.setBounds(610,400, 93,67);
+        back.setBounds(610,420, 93,67);
         back.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (Levels.get(currLev).getMovesTaken().size()!=0 && !moving) {
@@ -198,7 +198,7 @@ public class FinalProject extends Game {
             }
         });
         this.clear = new JButton(new ImageIcon("resources/clear.png"));
-        clear.setBounds(720,400, 93,67);
+        clear.setBounds(720,420, 93,67);
         clear.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (!moving) {
@@ -381,6 +381,9 @@ public class FinalProject extends Game {
                 gridSquareToPos(Levels.get(currLev).getStartSquare()).y - 21));
         this.hero.setRotation(0);
         Levels.get(currLev).setCurrGrid(Levels.get(currLev).getInitGrid());
+        barricade.setVisible(true);
+        barricade.setDisplayImage("barricade1.png");
+        barricade.setId("barricade1");
 
     }
     /* Helper that returns column given x coordinate */
