@@ -70,6 +70,11 @@ public class FinalProject extends Game {
 
     private SoundManager sounds = new SoundManager();
 
+    /* JButtons */
+    JButton run;
+    JButton back;
+    JButton clear;
+
     /* Constructor */
     public FinalProject() {
         super("Final Project", 940, 748);
@@ -102,6 +107,10 @@ public class FinalProject extends Game {
         this.oneStar = new Sprite("OneStar", "oneStar.png");
         this.barricade = new Sprite("barricade1", "barricade1.png");
             this.barricade.setPosition(gridSquareToPos(13));
+
+
+
+
 
 
         /* Populating Animation Frames */
@@ -155,6 +164,52 @@ public class FinalProject extends Game {
         this.winState = false;
         this.transition = 0;
         this.frameCount = 0;
+
+         /* Run, Backspace, Clear Buttons */
+        // create buttons
+        this.run = new JButton(new ImageIcon("resources/play.png"));
+        run.setBounds(500, 400, 93, 67);
+        run.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (Levels.get(currLev).getMovesTaken() != null && !Levels.get(currLev).getMovesTaken().isEmpty()) {
+                    moving = true;
+                    frameCount = 0;
+                }
+            }
+        });
+
+        this.back = new JButton(new ImageIcon("resources/backspace.png"));
+        back.setBounds(610,400, 93,67);
+        back.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (Levels.get(currLev).getMovesTaken().size()!=0 && !moving) {
+                    if(Levels.get(currLev).getMovesTaken().get(Levels.get(currLev).getMovesTaken().size()-1)
+                            == Moves.ENDLOOP) {
+                        Levels.get(currLev).getMovesTaken().remove(Levels.get(currLev).getMovesTaken().size() - 1);
+                        Levels.get(currLev).getMovesTaken().remove(Levels.get(currLev).getMovesTaken().size() - 1);
+                        Levels.get(currLev).getMovesTaken().remove(Levels.get(currLev).getMovesTaken().size() - 1);
+                        Levels.get(currLev).getMovesTaken().remove(Levels.get(currLev).getMovesTaken().size() - 1);
+                    } else {
+                        Levels.get(currLev).getMovesTaken().remove(Levels.get(currLev).getMovesTaken().size() - 1);
+                    }
+                }
+            }
+        });
+        this.clear = new JButton(new ImageIcon("resources/clear.png"));
+        clear.setBounds(720,400, 93,67);
+        clear.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (!moving) {
+                    Levels.get(currLev).getMovesTaken().clear();
+                }
+            }
+        });
+
+        // adds run, clear, back buttons to screen
+        super.getScenePanel().add(run);
+        super.getScenePanel().add(clear);
+        super.getScenePanel().add(back);
+
 
         /* ArrayList of levels */
         this.Levels = new ArrayList<Level>();
@@ -786,6 +841,11 @@ public class FinalProject extends Game {
             if (oneStar != null) {oneStar.draw(g);}
         }
         moving = false;
+
+        run.setVisible(false);
+        clear.setVisible(false);
+        back.setVisible(false);
+
         // display next and restart buttons
         if (currLev < 3) {
             JButton next = new JButton(new ImageIcon("resources/next.png"));
@@ -799,20 +859,28 @@ public class FinalProject extends Game {
                     mvsCount = 0;
                 }
             });
-        }
 
         JButton restart = new JButton(new ImageIcon("resources/restart.png"));
         restart.setBounds(480,450, 75, 75);
         super.getScenePanel().add(restart);
 
+            JButton restart = new JButton("Restart");
+            restart.setBounds(480, 450, 100, 25);
+            super.getScenePanel().add(restart);
 
-        restart.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                resetPos();
-                runCount = 0;
-                winState = false;
-                mvsCount = 0;
-            }});
+            restart.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    resetPos();
+                    runCount = 0;
+                    winState = false;
+                    mvsCount = 0;
+                }
+            });
+
+
+
+        }
+
 
     }
 
@@ -840,6 +908,10 @@ public class FinalProject extends Game {
             runCount = 0;
             mvsCount = 0;
         }
+
+        run.setVisible(true);
+        clear.setVisible(true);
+        back.setVisible(true);
     }
 
 
@@ -970,57 +1042,9 @@ public class FinalProject extends Game {
        // display score and transition buttons on victory
 
 
-       /* Run, Backspace, Clear Buttons (TO BE REPLACED WITH IMAGES) */
-       // create buttons
-       JButton run = new JButton(new ImageIcon("resources/play.png"));
-       run.setBounds(500, 400, 93, 67);
-       run.addActionListener(new ActionListener() {
-           public void actionPerformed(ActionEvent e) {
-               if (Levels.get(currLev).getMovesTaken() != null && !Levels.get(currLev).getMovesTaken().isEmpty()) {
-                   moving = true;
-                   frameCount = 0;
-               }
-           }
-       });
-
-       JButton back = new JButton(new ImageIcon("resources/backspace.png"));
-       back.setBounds(610,400, 93,67);
-       back.addActionListener(new ActionListener() {
-           public void actionPerformed(ActionEvent e) {
-               if (Levels.get(currLev).getMovesTaken().size()!=0 && !moving) {
-                   if(Levels.get(currLev).getMovesTaken().get(Levels.get(currLev).getMovesTaken().size()-1)
-                           == Moves.ENDLOOP) {
-                       Levels.get(currLev).getMovesTaken().remove(Levels.get(currLev).getMovesTaken().size() - 1);
-                       Levels.get(currLev).getMovesTaken().remove(Levels.get(currLev).getMovesTaken().size() - 1);
-                       Levels.get(currLev).getMovesTaken().remove(Levels.get(currLev).getMovesTaken().size() - 1);
-                       Levels.get(currLev).getMovesTaken().remove(Levels.get(currLev).getMovesTaken().size() - 1);
-                   } else {
-                       Levels.get(currLev).getMovesTaken().remove(Levels.get(currLev).getMovesTaken().size() - 1);
-                   }
-               }
-           }
-       });
-       JButton clear = new JButton(new ImageIcon("resources/clear.png"));
-       clear.setBounds(720,400, 93,67);
-       clear.addActionListener(new ActionListener() {
-           public void actionPerformed(ActionEvent e) {
-               if (!moving) {
-                   Levels.get(currLev).getMovesTaken().clear();
-               }
-           }
-       });
-
-
-       // adds run, clear, back buttons to screen
-
         if (winState) {
             onVictory(g);
             mvsCount = 0;
-
-        } else {
-            super.getScenePanel().add(run);
-            super.getScenePanel().add(clear);
-            super.getScenePanel().add(back);
         }
 
 
